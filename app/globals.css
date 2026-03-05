@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html, body {
+  height: 100%;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #0B0F14;
+  color: #F2F5F8;
+  overflow-x: hidden;
+}
+
+/* ------------------------------
+   Project Scroll System
+-------------------------------- */
+
+.project-scroll {
+  scroll-snap-type: y mandatory;
+}
+
+.project-section {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  min-height: 100vh;
+}
+
+/* ------------------------------
+   Subtle grid + grain helpers
+-------------------------------- */
+
+.grid-overlay {
+  background-image:
+    linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(circle at 30% 0%, rgba(0,0,0,0.9), transparent 70%);
+}
+
+.grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.08;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/></filter><rect width="160" height="160" filter="url(%23n)" opacity="0.35"/></svg>');
+  mix-blend-mode: overlay;
+}
+
+/* ------------------------------
+   Focus Styling
+-------------------------------- */
+
+:focus-visible {
+  outline: 2px solid rgba(0,229,255,0.7);
+  outline-offset: 3px;
+}
