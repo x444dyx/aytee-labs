@@ -54,60 +54,59 @@ export default function Home() {
 
       <Nav />
 
-      {/* HERO */}
-      <section id="top" className="relative flex min-h-[100svh] items-center justify-center px-5">
-        <motion.div style={{ opacity: heroOpacity, y: heroY }} className="w-full max-w-5xl">
-
-          {/* Animated Badge */}
-          <motion.div
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="mt-10 mb-8 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs tracking-widest uppercase text-white/50"
-          >
-            <motion.span
-              animate={{ opacity: [0.5, 1, 0.5] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="h-2 w-2 rounded-full bg-emerald-400"
-            />
-            9+ Years In Tech
-          </motion.div>
-
-<Reveal delay={0.06}>
-  <h1 className="font-serif leading-[0.9] text-[clamp(3.5rem,9vw,8rem)] tracking-tight">
-    Adil Aslam
-  </h1>
-</Reveal>
-
-<Reveal delay={0.12}>
-  <p className="mt-4 text-xs uppercase tracking-[0.28em] text-yellow-400/80 md:text-sm">
-    Founder — AyTee Labs
-  </p>
-</Reveal>
-
-            <Reveal delay={0.12}>
-              <p className="mt-6 max-w-2xl text-lg text-muted md:text-xl">
-                <span className="text-text">Quality Engineering Lead</span> &amp; Product Developer.
-                I design & test quality systems, build automation frameworks, and ship web + iOS products.
-              </p>
-            </Reveal>
-
-            <Reveal delay={0.18}>
-              <div className="mt-8 flex flex-wrap gap-3">
-                <a href="#projects" className="rounded-xl bg-white/10 px-5 py-3 text-sm font-medium hover:bg-white/15 transition">
-                  View Projects
-                </a>
-                <a href="#stack" className="rounded-xl border border-white/12 px-5 py-3 text-sm font-medium hover:bg-white/5 transition">
-                  Skills & Stack
-                </a>
-                <a href="#contact" className="rounded-xl border border-white/12 px-5 py-3 text-sm font-medium hover:bg-white/5 transition">
-                  Contact
-                </a>
-              </div>
-            </Reveal>
-          </div>
-        </motion.div>
-      </section>
+	{/* HERO */}
+	<section id="top" className="relative flex min-h-[100svh] items-center justify-center px-5">
+	  <motion.div style={{ opacity: heroOpacity, y: heroY }} className="w-full max-w-5xl">
+	
+	    <Reveal delay={0.06}>
+	      <h1 className="font-serif leading-[0.9] text-[clamp(3.5rem,9vw,8rem)] tracking-tight">
+	        Adil Aslam
+	      </h1>
+	    </Reveal>
+	
+	    <Reveal delay={0.12}>
+	      <p className="mt-4 text-xs uppercase tracking-[0.28em] text-yellow-400/80 md:text-sm">
+	        Founder — AyTee Labs
+	      </p>
+	    </Reveal>
+	
+	    <motion.div
+	      initial={{ opacity: 0, y: 8 }}
+	      animate={{ opacity: 1, y: 0 }}
+	      transition={{ duration: 0.6 }}
+	      className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs tracking-widest uppercase text-white/50"
+	    >
+	      <motion.span
+	        animate={{ opacity: [0.5, 1, 0.5] }}
+	        transition={{ duration: 2, repeat: Infinity }}
+	        className="h-2 w-2 rounded-full bg-emerald-400"
+	      />
+	      9+ Years In Tech
+	    </motion.div>
+	
+	    <Reveal delay={0.12}>
+	      <p className="mt-6 max-w-2xl text-lg text-muted md:text-xl">
+	        <span className="text-text">Quality Engineering Lead</span> &amp; Product Developer.
+	        I design & test quality systems, build automation frameworks, and ship web + iOS products.
+	      </p>
+	    </Reveal>
+	
+	    <Reveal delay={0.18}>
+	      <div className="mt-8 flex flex-wrap gap-3">
+	        <a href="#projects" className="rounded-xl bg-white/10 px-5 py-3 text-sm font-medium hover:bg-white/15 transition">
+	          View Projects
+	        </a>
+	        <a href="#stack" className="rounded-xl border border-white/12 px-5 py-3 text-sm font-medium hover:bg-white/5 transition">
+	          Skills & Stack
+	        </a>
+	        <a href="#contact" className="rounded-xl border border-white/12 px-5 py-3 text-sm font-medium hover:bg-white/5 transition">
+	          Contact
+	        </a>
+	      </div>
+	    </Reveal>
+	
+	  </motion.div>
+	</section>
 
       {/* ABOUT */}
       <section id="about" className="mx-auto w-full max-w-5xl px-5 pb-20">
