@@ -73,26 +73,24 @@ export default function Home() {
             9+ Years In Tech
           </motion.div>
 
-          <Reveal>
-            <div className="flex items-center gap-5">
-              <img src="/logo.png" alt="AyTee Labs Logo" className="h-24 w-auto" />
-              <div className="leading-tight">
-                <p className="text-4xl font-semibold tracking-tight text-text">
-                  Adil Aslam
-                </p>
-                <p className="text-sm text-muted tracking-wide">
-                  Founder — AyTee Labs
-                </p>
-              </div>
-            </div>
-          </Reveal>
-
-          <div className="mt-10">
-            <Reveal delay={0.06}>
-              <h1 className="font-serif leading-[0.9] text-[clamp(3.5rem,9vw,8rem)] tracking-tight">
-                Build. Refine. Ship.
-              </h1>
-            </Reveal>
+		<Reveal>
+		  <div className="flex items-center gap-5">
+		    <img src="/logo.png" alt="AyTee Labs Logo" className="h-24 w-auto" />
+		  </div>
+		</Reveal>
+		
+		<div className="mt-10">
+		  <Reveal delay={0.06}>
+		    <h1 className="font-serif leading-[0.9] text-[clamp(3.5rem,9vw,8rem)] tracking-tight">
+		      Adil Aslam
+		    </h1>
+		  </Reveal>
+		
+		  <Reveal delay={0.12}>
+		    <p className="mt-3 text-xs uppercase tracking-[0.28em] text-yellow-400/80 md:text-sm">
+		      Founder — AyTee Labs
+		    </p>
+		  </Reveal>
 
             <Reveal delay={0.12}>
               <p className="mt-6 max-w-2xl text-lg text-muted md:text-xl">
