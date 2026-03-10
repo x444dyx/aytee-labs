@@ -115,7 +115,7 @@ export default function Home() {
 
             <div className="mt-3 space-y-4 text-muted">
               <p>
-                I’m a Software Test Lead at Panintelligence with 9+ years in Quality Engineering and 5+ years designing automation frameworks for production systems.
+                I’m a Software Test Lead with 9+ years in Quality Engineering and 5+ years designing automation frameworks for production systems.
               </p>
               <p>
                 My career began in manual testing, where I developed a deep understanding of system behaviour and risk. I transitioned into automation engineering, building frameworks from scratch and scaling structured testing practices across delivery pipelines.
