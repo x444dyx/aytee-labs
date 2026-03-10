@@ -44,7 +44,7 @@ export const projects: Project[] = [
     category: 'AyTee Labs',
     year: '2026',
     status: 'Live',
-    href: 'pulse.ayteelabs.com',
+    href: 'https://pulse.ayteelabs.com',
     blurb:
       'Fast-paced browser arcade game focused on reaction timing and escalating difficulty.',
     mission:
