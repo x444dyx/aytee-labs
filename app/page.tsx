@@ -91,22 +91,21 @@ export default function Home() {
 	      </p>
 	    </Reveal>
 	
-	    <Reveal delay={0.18}>
-	      <div className="mt-8 flex flex-wrap gap-3">
-	        <a href="#projects" className="rounded-xl bg-white/10 px-5 py-3 text-sm font-medium hover:bg-white/15 transition">
-	          View Projects
-	        </a>
-	        <a href="#stack" className="rounded-xl border border-white/12 px-5 py-3 text-sm font-medium hover:bg-white/5 transition">
-	          Skills & Stack
-	        </a>
-	        <a href="#contact" className="rounded-xl border border-white/12 px-5 py-3 text-sm font-medium hover:bg-white/5 transition">
-	          Contact
-	        </a>
-	      </div>
-	    </Reveal>
-	
-	  </motion.div>
-	</section>
+            <Reveal delay={0.18}>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <a href="#projects" className="rounded-xl bg-white/10 px-5 py-3 text-sm font-medium hover:bg-white/15 transition">
+                  View Projects
+                </a>
+                <a href="#stack" className="rounded-xl border border-white/12 px-5 py-3 text-sm font-medium hover:bg-white/5 transition">
+                  Skills & Stack
+                </a>
+                <a href="#contact" className="rounded-xl border border-white/12 px-5 py-3 text-sm font-medium hover:bg-white/5 transition">
+                  Contact
+                </a>
+              </div>
+            </Reveal>
+        </motion.div>
+      </section>
 
       {/* ABOUT */}
       <section id="about" className="mx-auto w-full max-w-5xl px-5 pb-20">
