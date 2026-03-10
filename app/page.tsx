@@ -63,7 +63,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs tracking-widest uppercase text-white/50"
+            className="mt-10 mb-8 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs tracking-widest uppercase text-white/50"
           >
             <motion.span
               animate={{ opacity: [0.5, 1, 0.5] }}
@@ -73,24 +73,21 @@ export default function Home() {
             9+ Years In Tech
           </motion.div>
 
-		<Reveal>
-		  <div className="flex items-center gap-5">
-		    <img src="/logo.png" alt="AyTee Labs Logo" className="h-24 w-auto" />
-		  </div>
-		</Reveal>
-		
-		<div className="mt-10">
-		  <Reveal delay={0.06}>
-		    <h1 className="font-serif leading-[0.9] text-[clamp(3.5rem,9vw,8rem)] tracking-tight">
-		      Adil Aslam
-		    </h1>
-		  </Reveal>
-		
-		  <Reveal delay={0.12}>
-		    <p className="mt-3 text-xs uppercase tracking-[0.28em] text-yellow-400/80 md:text-sm">
-		      Founder — AyTee Labs
-		    </p>
-		  </Reveal>
+<Reveal>
+  <div className="inline-flex items-center gap-4 rounded-full border border-white/10 bg-white/5 px-4 py-2">
+    <img src="/logo.png" alt="AyTee Labs Logo" className="h-6 w-auto" />
+    <p className="text-[11px] uppercase tracking-[0.28em] text-yellow-400/80 md:text-xs">
+      Founder — AyTee Labs
+    </p>
+  </div>
+</Reveal>
+
+<div className="mt-8">
+  <Reveal delay={0.06}>
+    <h1 className="font-serif leading-[0.9] text-[clamp(3.5rem,9vw,8rem)] tracking-tight">
+      Adil Aslam
+    </h1>
+  </Reveal>
 
             <Reveal delay={0.12}>
               <p className="mt-6 max-w-2xl text-lg text-muted md:text-xl">
