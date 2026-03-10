@@ -62,7 +62,7 @@ export default function Home() {
 	      initial={{ opacity: 0, y: 8 }}
 	      animate={{ opacity: 1, y: 0 }}
 	      transition={{ duration: 0.6 }}
-	      className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs tracking-widest uppercase text-white/50"
+	      className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs tracking-widest uppercase text-white/50"
 	    >
 	      <motion.span
 	        animate={{ opacity: [0.5, 1, 0.5] }}
