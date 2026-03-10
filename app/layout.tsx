@@ -3,7 +3,7 @@ import type { Metadata } from 'next'
 import SmoothScroll from '@/components/SmoothScroll'
 
 export const metadata: Metadata = {
-  title: 'AyTee Labs — Build. Refine. Ship.',
+  title: 'AyTee Labs',
   description: 'Adil — Software Test Lead & Product Engineer. AyTee Labs portfolio.',
   icons: {
     icon: '/favicon.ico',
