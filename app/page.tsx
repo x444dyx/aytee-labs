@@ -57,20 +57,8 @@ export default function Home() {
 	{/* HERO */}
 	<section id="top" className="relative flex min-h-[100svh] items-center justify-center px-5">
 	  <motion.div style={{ opacity: heroOpacity, y: heroY }} className="w-full max-w-5xl">
-	
-	    <Reveal delay={0.06}>
-	      <h1 className="font-serif leading-[0.9] text-[clamp(3.5rem,9vw,8rem)] tracking-tight">
-	        Adil Aslam
-	      </h1>
-	    </Reveal>
-	
-	    <Reveal delay={0.12}>
-	      <p className="mt-4 text-xs uppercase tracking-[0.28em] text-yellow-400/80 md:text-sm">
-	        Founder — AyTee Labs
-	      </p>
-	    </Reveal>
-	
-	    <motion.div
+
+		  	    <motion.div
 	      initial={{ opacity: 0, y: 8 }}
 	      animate={{ opacity: 1, y: 0 }}
 	      transition={{ duration: 0.6 }}
@@ -83,6 +71,18 @@ export default function Home() {
 	      />
 	      9+ Years In Tech
 	    </motion.div>
+	
+	    <Reveal delay={0.06}>
+	      <h1 className="font-serif leading-[0.9] text-[clamp(3.5rem,9vw,8rem)] tracking-tight">
+	        Adil Aslam
+	      </h1>
+	    </Reveal>
+	
+	    <Reveal delay={0.12}>
+	      <p className="mt-4 text-xs uppercase tracking-[0.28em] text-yellow-400/80 md:text-sm">
+	        Founder — AyTee Labs
+	      </p>
+	    </Reveal>
 	
 	    <Reveal delay={0.12}>
 	      <p className="mt-6 max-w-2xl text-lg text-muted md:text-xl">
