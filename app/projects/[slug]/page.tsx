@@ -33,12 +33,10 @@ export default function ProjectPage({ params }: Props) {
 
   return (
     <main className="relative min-h-screen project-scroll">
-
       <div className="pointer-events-none absolute inset-0 grid-overlay" />
       <div className="grain" />
 
       <section className="project-section min-h-screen flex flex-col justify-center px-6 max-w-6xl mx-auto">
-
         <Link
           href="/"
           className="fixed top-8 left-8 z-50 text-sm tracking-wide text-white/50 hover:text-white transition"
@@ -58,19 +56,31 @@ export default function ProjectPage({ params }: Props) {
           {project.blurb}
         </p>
 
-        <Link
-          href="#overview"
-          className="mt-16 text-xs uppercase tracking-widest text-white/40 flex items-center gap-2 cursor-pointer"
-        >
-          Explore
-          <motion.span
-            animate={{ y: [0, 6, 0] }}
-            transition={{ duration: 1.6, repeat: Infinity }}
-          >
-            ↓
-          </motion.span>
-        </Link>
+        <div className="mt-10 flex flex-wrap items-center gap-4">
+          {project.href && (
+            <a
+              href={project.href}
+              target="_blank"
+              rel="noreferrer"
+              className="rounded-full border border-white/10 bg-white/5 px-5 py-2.5 text-sm text-white/80 transition hover:border-white/20 hover:bg-white/10 hover:text-white"
+            >
+              Visit live site ↗
+            </a>
+          )}
 
+          <Link
+            href="#overview"
+            className="text-xs uppercase tracking-widest text-white/40 flex items-center gap-2 cursor-pointer"
+          >
+            Explore
+            <motion.span
+              animate={{ y: [0, 6, 0] }}
+              transition={{ duration: 1.6, repeat: Infinity }}
+            >
+              ↓
+            </motion.span>
+          </Link>
+        </div>
       </section>
 
       <section
@@ -78,11 +88,8 @@ export default function ProjectPage({ params }: Props) {
         className="project-section min-h-screen flex items-center px-6 max-w-6xl mx-auto"
       >
         <div className="grid md:grid-cols-2 gap-20 w-full">
-
           <div>
-            <h2 className="text-5xl font-serif mb-10">
-              The Mission
-            </h2>
+            <h2 className="text-5xl font-serif mb-10">The Mission</h2>
 
             <p className="text-white/60 leading-relaxed text-lg">
               {project.mission}
@@ -94,14 +101,11 @@ export default function ProjectPage({ params }: Props) {
           </div>
 
           <div className="border-l border-white/10 pl-12 space-y-14">
-
             <div>
               <p className="text-xs uppercase tracking-widest text-white/40 mb-3">
                 Status
               </p>
-              <p className="text-4xl font-serif">
-                {project.status}
-              </p>
+              <p className="text-4xl font-serif">{project.status}</p>
             </div>
 
             <div>
@@ -121,17 +125,12 @@ export default function ProjectPage({ params }: Props) {
                 {project.category}
               </p>
             </div>
-
           </div>
-
         </div>
       </section>
 
       <section className="project-section min-h-screen flex flex-col justify-center px-6 max-w-6xl mx-auto">
-
-        <h2 className="text-5xl font-serif mb-20">
-          Core Technologies
-        </h2>
+        <h2 className="text-5xl font-serif mb-20">Core Technologies</h2>
 
         <div className="grid md:grid-cols-3 gap-20">
           {project.tags.map((tag) => (
@@ -141,9 +140,7 @@ export default function ProjectPage({ params }: Props) {
             </div>
           ))}
         </div>
-
       </section>
-
     </main>
   )
 }
