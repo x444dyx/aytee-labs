@@ -103,6 +103,19 @@ export const projects: Project[] = [
     'Persistent Memory Systems',
     'Context Engineering',
     'Cross-Model Routing'
+    'Next.js (App Router)'
+    'React'
+    'TypeScript'
+    'Tailwind CSS'
+    'Framer Motion'
+    'React Markdown'
+    'Dexie.js (IndexedDB abstraction)'
+    'IndexedDB (local-first persistence)''
+    'OpenAI API (GPT)'
+    'Google Gemini API'
+    'Node.js'
+    'npm'
+    'Vercel (deployment & edge hosting)''
   ]
 },
 
@@ -123,12 +136,18 @@ export const projects: Project[] = [
   impact:
     'Transforms how developers share in-progress work, reducing feedback loops and eliminating deployment overhead.',
   tags: [
-    'Developer Tooling',
-    'Cloudflare Tunnel',
-    'Preview Environments',
-    'Collaboration',
-    'Feedback Systems'
-  ]
+  'Node.js',
+  'TypeScript',
+  'Express',
+  'WebSockets (ws)',
+  'NGINX',
+  'Let’s Encrypt',
+  'Cloudflare',
+  'Oracle Cloud VM',
+  'PM2',
+  'npm',
+  'Gumroad'
+]
 },
 
   {
