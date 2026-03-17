@@ -33,7 +33,7 @@ export const projects: Project[] = [
     mission:
       'To streamline technical documentation by turning manual screenshot workflows into structured, export-ready documentation.',
     overview:
-      'Built as a Chrome extension with clean state management, structured step tracking, and export pipelines. Designed for QA engineers, product teams, and technical writers.',
+      'Built as a Chrome extension with clean state management, structured step tracking, and export pipelines.',
     impact:
       'Reduces documentation friction and standardises reporting across teams.',
     tags: ['JavaScript', 'Chrome Extension', 'Vercel']
@@ -51,7 +51,7 @@ export const projects: Project[] = [
     mission:
       'To create a minimalist, addictive browser-based arcade experience with increasing speed mechanics.',
     overview:
-      'Built using React and TypeScript with performance-first animation logic and responsive state updates.',
+      'Built using React and TypeScript with performance-first animation logic.',
     impact:
       'Demonstrates rapid product iteration and frontend game architecture.',
     tags: ['React', 'TypeScript', 'Vercel']
@@ -65,13 +65,13 @@ export const projects: Project[] = [
     status: 'Live',
     href: 'https://ayteelabs.com',
     blurb:
-      'The official AyTee Labs portfolio — a production-grade showcase built with Next.js, Framer Motion, and modern UI architecture.',
+      'The official AyTee Labs portfolio.',
     mission:
-      'To establish a structured digital product studio showcasing engineering, design, and AI systems work.',
+      'To establish a structured digital product studio.',
     overview:
-      'Architected using Next.js App Router, motion-based transitions, dynamic routing, and reusable UI components.',
+      'Built using Next.js App Router and modern UI architecture.',
     impact:
-      'Acts as the central brand infrastructure and product showcase platform.',
+      'Acts as the central brand infrastructure.',
     tags: [
       'Next.js',
       'Framer Motion',
@@ -80,75 +80,75 @@ export const projects: Project[] = [
       'Brand Architecture'
     ]
   },
-  
-{
-  slug: 'ankoryn',
-  title: 'Ankoryn',
-  category: 'AI Infrastructure',
-  year: '2026',
-  status: 'Live',
-  href: 'https://www.ankoryn.com',
-  highlight: 'Flagship',
-  blurb:
-    'An AI workspace OS enabling structured cross-model orchestration and long-term contextual memory persistence.',
-  mission:
-    'To eliminate stateless AI workflows by introducing a persistent memory layer enabling true context continuity.',
-  overview:
-    'An orchestration layer managing summarisation pipelines, token-aware trimming, memory lifecycle and cross-model routing.',
-  impact:
-    'Transforms isolated prompt interactions into structured, evolving AI workspaces.',
-  tags: [
-    'AI Workspace Architecture',
-    'LLM Orchestration',
-    'Persistent Memory Systems',
-    'Context Engineering',
-    'Cross-Model Routing'
-    'Next.js (App Router)'
-    'React'
-    'TypeScript'
-    'Tailwind CSS'
-    'Framer Motion'
-    'React Markdown'
-    'Dexie.js (IndexedDB abstraction)'
-    'IndexedDB (local-first persistence)''
-    'OpenAI API (GPT)'
-    'Google Gemini API'
-    'Node.js'
-    'npm'
-    'Vercel (deployment & edge hosting)''
-  ]
-},
 
-{
-  slug: 'portix',
-  title: 'Portix',
-  category: 'Developer Tooling',
-  year: '2026',
-  status: 'Live',
-  href: 'https://portix.ayteelabs.com',
-  highlight: 'New',
-  blurb:
-    'Git-aware localhost preview sharing with instant feedback overlays for teams and clients.',
-  mission:
-    'To eliminate friction in sharing local development work by enabling instant, branch-aware preview environments.',
-  overview:
-    'Portix creates secure public URLs for local projects via tunnel infrastructure, paired with a browser overlay for structured feedback and annotations.',
-  impact:
-    'Transforms how developers share in-progress work, reducing feedback loops and eliminating deployment overhead.',
-  tags: [
-  'Node.js',
-  'TypeScript',
-  'Express',
-  'WebSockets (ws)',
-  'NGINX',
-  'Let’s Encrypt',
-  'Cloudflare',
-  'Oracle Cloud VM',
-  'PM2',
-  'npm',
-  'Gumroad'
-]
-},
+  {
+    slug: 'ankoryn',
+    title: 'Ankoryn',
+    category: 'AI Infrastructure',
+    year: '2026',
+    status: 'Live',
+    href: 'https://www.ankoryn.com',
+    highlight: 'Flagship',
+    blurb:
+      'AI workspace OS enabling structured cross-model orchestration and persistent memory.',
+    mission:
+      'To eliminate stateless AI workflows.',
+    overview:
+      'An orchestration layer managing memory, summarisation and routing.',
+    impact:
+      'Transforms AI into structured workspaces.',
+    tags: [
+      'AI Workspace Architecture',
+      'LLM Orchestration',
+      'Persistent Memory Systems',
+      'Context Engineering',
+      'Cross-Model Routing',
+      'Next.js (App Router)',
+      'React',
+      'TypeScript',
+      'Tailwind CSS',
+      'Framer Motion',
+      'React Markdown',
+      'Dexie.js',
+      'IndexedDB',
+      'OpenAI API',
+      'Google Gemini API',
+      'Node.js',
+      'npm',
+      'Vercel'
+    ]
+  },
+
+  {
+    slug: 'portix',
+    title: 'Portix',
+    category: 'Developer Tooling',
+    year: '2026',
+    status: 'Live',
+    href: 'https://portix.ayteelabs.com',
+    highlight: 'New',
+    blurb:
+      'Git-aware localhost preview sharing with instant feedback overlays.',
+    mission:
+      'To eliminate friction in sharing local development work.',
+    overview:
+      'Creates secure public URLs with feedback overlays.',
+    impact:
+      'Reduces feedback loops and deployment overhead.',
+    tags: [
+      'Node.js',
+      'TypeScript',
+      'Express',
+      'WebSockets (ws)',
+      'NGINX',
+      'Lets Encrypt',
+      'Cloudflare',
+      'Oracle Cloud VM',
+      'PM2',
+      'npm',
+      'Gumroad'
+    ]
+  },
 
   {
     slug: 'moditquick',
@@ -157,13 +157,13 @@ export const projects: Project[] = [
     year: '2026',
     status: 'In Flight',
     blurb:
-      'Web productivity toolkit combining lightweight utilities into a streamlined interface.',
+      'Web productivity toolkit.',
     mission:
-      'To consolidate everyday web utilities into a single high-performance productivity suite.',
+      'To consolidate everyday utilities.',
     overview:
-      'Built with modular Next.js architecture allowing scalable addition of tools without UI complexity.',
+      'Modular Next.js architecture.',
     impact:
-      'Reduces friction between common web-based workflows.',
+      'Reduces workflow friction.',
     tags: ['Next.js', 'TypeScript', 'Vercel']
   },
 
@@ -174,13 +174,13 @@ export const projects: Project[] = [
     year: '2026',
     status: 'In Flight',
     blurb:
-      'iOS arcade game built with Swift & SpriteKit — precision mechanics and polish.',
+      'iOS arcade game.',
     mission:
-      'To create a visually minimal but mechanically demanding arcade game experience.',
+      'Create a precision arcade experience.',
     overview:
-      'Developed in Swift using SpriteKit with structured state handling and scalable shape systems.',
+      'Built with Swift + SpriteKit.',
     impact:
-      'Demonstrates native mobile game architecture and performance optimisation.',
+      'Demonstrates native game architecture.',
     tags: ['Swift', 'SpriteKit', 'iOS']
   },
 
@@ -191,13 +191,13 @@ export const projects: Project[] = [
     year: '2026',
     status: 'In Flight',
     blurb:
-      'Minimalist Islamic prayer & dua iOS app — offline-first, calm UX.',
+      'Minimalist Islamic app.',
     mission:
-      'To provide a distraction-free, offline-first spiritual companion with elegant design.',
+      'Provide calm, offline-first experience.',
     overview:
-      'Structured dataset with verified sources, clean SwiftUI interface, and production-ready architecture.',
+      'Structured dataset + SwiftUI.',
     impact:
-      'Brings clarity and calm design principles into faith-based mobile tooling.',
+      'Clean faith-based UX.',
     tags: ['Swift', 'iOS']
   },
 
@@ -209,13 +209,13 @@ export const projects: Project[] = [
     status: 'Overview',
     highlight: 'High-Level',
     blurb:
-      'Leading quality strategy across production environments — improving release confidence and automation maturity.',
+      'Leading quality strategy.',
     mission:
-      'To embed structured quality practices into live production systems.',
+      'Embed structured QA practices.',
     overview:
-      'Designing automation frameworks, implementing governance standards, and improving release stability.',
+      'Automation + governance.',
     impact:
-      'Improved production confidence and automation maturity across teams.',
+      'Improved production confidence.',
     tags: ['QA Strategy', 'Automation']
   },
 
@@ -227,13 +227,13 @@ export const projects: Project[] = [
     status: 'Overview',
     highlight: 'AI',
     blurb:
-      'Testing and validating AI-driven behaviours with focus on reliability and safe evaluation.',
+      'Testing AI behaviour.',
     mission:
-      'To introduce structured validation methodologies into AI-driven product systems.',
+      'Introduce structured validation.',
     overview:
-      'Evaluating model behaviour, edge cases, hallucination risk and reliability under production constraints.',
+      'Evaluate reliability + hallucinations.',
     impact:
-      'Improved trust and safety standards within AI-enabled enterprise products.',
+      'Improved trust in AI systems.',
     tags: ['LLM Testing', 'Evaluation']
   }
 ]
