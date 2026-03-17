@@ -3,6 +3,7 @@ export type ProjectCategory =
   | 'AyTee Labs'
   | 'AI Infrastructure'
   | 'Portfolio / Brand'
+  | 'Developer Tooling'
 
 export type Project = {
   slug: string
@@ -102,6 +103,31 @@ export const projects: Project[] = [
     'Persistent Memory Systems',
     'Context Engineering',
     'Cross-Model Routing'
+  ]
+},
+
+{
+  slug: 'portix',
+  title: 'Portix',
+  category: 'Developer Tooling',
+  year: '2026',
+  status: 'Live',
+  href: 'https://portix.ayteelabs.com',
+  highlight: 'New',
+  blurb:
+    'Git-aware localhost preview sharing with instant feedback overlays for teams and clients.',
+  mission:
+    'To eliminate friction in sharing local development work by enabling instant, branch-aware preview environments.',
+  overview:
+    'Portix creates secure public URLs for local projects via tunnel infrastructure, paired with a browser overlay for structured feedback and annotations.',
+  impact:
+    'Transforms how developers share in-progress work, reducing feedback loops and eliminating deployment overhead.',
+  tags: [
+    'Developer Tooling',
+    'Cloudflare Tunnel',
+    'Preview Environments',
+    'Collaboration',
+    'Feedback Systems'
   ]
 },
 
