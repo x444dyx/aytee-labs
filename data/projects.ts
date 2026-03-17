@@ -79,6 +79,31 @@ export const projects: Project[] = [
       'Brand Architecture'
     ]
   },
+  
+{
+  slug: 'ankoryn',
+  title: 'Ankoryn',
+  category: 'AI Infrastructure',
+  year: '2026',
+  status: 'Live',
+  href: 'https://www.ankoryn.com',
+  highlight: 'Flagship',
+  blurb:
+    'An AI workspace OS enabling structured cross-model orchestration and long-term contextual memory persistence.',
+  mission:
+    'To eliminate stateless AI workflows by introducing a persistent memory layer enabling true context continuity.',
+  overview:
+    'An orchestration layer managing summarisation pipelines, token-aware trimming, memory lifecycle and cross-model routing.',
+  impact:
+    'Transforms isolated prompt interactions into structured, evolving AI workspaces.',
+  tags: [
+    'AI Workspace Architecture',
+    'LLM Orchestration',
+    'Persistent Memory Systems',
+    'Context Engineering',
+    'Cross-Model Routing'
+  ]
+},
 
   {
     slug: 'moditquick',
@@ -129,30 +154,6 @@ export const projects: Project[] = [
     impact:
       'Brings clarity and calm design principles into faith-based mobile tooling.',
     tags: ['Swift', 'iOS']
-  },
-
-  {
-    slug: 'ankoryn',
-    title: 'Ankoryn',
-    category: 'AI Infrastructure',
-    year: '2026',
-    status: 'In Flight',
-    highlight: 'Flagship',
-    blurb:
-      'An AI workspace OS enabling structured cross-model orchestration and long-term contextual memory persistence.',
-    mission:
-      'To eliminate stateless AI workflows by introducing a persistent memory layer enabling true context continuity.',
-    overview:
-      'An orchestration layer managing summarisation pipelines, token-aware trimming, memory lifecycle and cross-model routing.',
-    impact:
-      'Transforms isolated prompt interactions into structured, evolving AI workspaces.',
-    tags: [
-      'AI Workspace Architecture',
-      'LLM Orchestration',
-      'Persistent Memory Systems',
-      'Context Engineering',
-      'Cross-Model Routing'
-    ]
   },
 
   {
