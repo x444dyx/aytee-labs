@@ -151,38 +151,22 @@ export const projects: Project[] = [
   },
 
   {
-    slug: 'moditquick',
-    title: 'ModitQuick',
-    category: 'AyTee Labs',
-    year: '2026',
-    status: 'In Flight',
-    blurb:
-      'Web productivity toolkit.',
-    mission:
-      'To consolidate everyday utilities.',
-    overview:
-      'Modular Next.js architecture.',
-    impact:
-      'Reduces workflow friction.',
-    tags: ['Next.js', 'TypeScript', 'Vercel']
-  },
-
-  {
-    slug: 'shaper',
-    title: 'Shaper',
-    category: 'AyTee Labs',
-    year: '2026',
-    status: 'In Flight',
-    blurb:
-      'iOS arcade game.',
-    mission:
-      'Create a precision arcade experience.',
-    overview:
-      'Built with Swift + SpriteKit.',
-    impact:
-      'Demonstrates native game architecture.',
-    tags: ['Swift', 'SpriteKit', 'iOS']
-  },
+  slug: 'moditquick',
+  title: 'ModitQuick',
+  category: 'AyTee Labs',
+  year: '2026',
+  status: 'Live',
+  href: 'https://www.moditquick.com',
+  blurb:
+    'Web productivity toolkit.',
+  mission:
+    'To consolidate everyday utilities.',
+  overview:
+    'Modular Next.js architecture.',
+  impact:
+    'Reduces workflow friction.',
+  tags: ['Next.js', 'TypeScript', 'Vercel']
+},
 
   {
     slug: 'qalb',
@@ -203,7 +187,7 @@ export const projects: Project[] = [
 
   {
     slug: 'quality-leadership',
-    title: 'Quality Leadership (Panintelligence)',
+    title: 'Quality Leadership (In Job)',
     category: 'Company',
     year: '2026',
     status: 'Overview',
@@ -221,7 +205,7 @@ export const projects: Project[] = [
 
   {
     slug: 'llm-testing',
-    title: 'AI / LLM Testing (Panintelligence)',
+    title: 'AI / LLM Testing (In Job)',
     category: 'Company',
     year: '2026',
     status: 'Overview',
