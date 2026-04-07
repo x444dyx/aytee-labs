@@ -115,13 +115,13 @@ export default function Home() {
 
             <div className="mt-3 space-y-4 text-muted">
               <p>
-                I’m a Software Test Lead with 9+ years in Quality Engineering and 5+ years designing automation frameworks for production systems.
+                I’m a Software Test Lead with 9+ years shaping quality across fast-moving engineering teams, from hands-on automation to leading QA strategy at the product and organisational level.
               </p>
               <p>
-                My career began in manual testing, where I developed a deep understanding of system behaviour and risk. I transitioned into automation engineering, building frameworks from scratch and scaling structured testing practices across delivery pipelines.
+                I specialise in building quality systems that scale. Designing automation frameworks from the ground up, embedding testing into CI/CD pipelines, and introducing structured evaluation practices for AI and LLM-powered features where traditional approaches break down.
               </p>
               <p>
-                Today, I lead quality strategy in AI-driven and production environments — including testing LLM-based systems — while building independent web and iOS products under AyTee Labs.
+                Beyond the day job, I build and ship independent products under AyTee Labs, from developer tooling and AI infrastructure to iOS apps and a Chromium-based browser. It keeps me sharp, commercially minded, and connected to the full product lifecycle in a way most QA leads aren’t.
               </p>
             </div>
 
@@ -177,7 +177,20 @@ export default function Home() {
                   'Exploratory Testing',
                   'Defect Triage',
                   'Release Confidence',
-                  'Stakeholder Collaboration'
+                  'Stakeholder Collaboration',
+                  'Risk-Based Testing',
+                  'Regression Planning',
+                  'Test Case Design',
+                  'Root Cause Analysis',
+                  'Agile / Scrum',
+                  'Sprint Planning',
+                  'Cross-Squad QA',
+                  'LLM Evaluation',
+                  'AI Behaviour Testing',
+                  'Hallucination Detection',
+                  'Prompt Consistency Testing',
+                  'Non-Deterministic Testing',
+                  'Test Harness Design',
                 ].map((it) => (
                   <span key={it} className="rounded-full border border-white/10 bg-black/20 px-3 py-1 text-xs text-text">
                     {it}
@@ -196,10 +209,30 @@ export default function Home() {
                   'Python',
                   'JavaScript',
                   'TypeScript',
+                  'Swift',
+                  'C++ (learning)',
+                  'SQL',
+                  'HTML / CSS',
+                  'XML',
                   'API Testing',
+                  'REST / JSON',
+                  'WebSockets',
+                  'Selenium',
+                  'Playwright',
+                  'pytest',
+                  'NumPy',
+                  'Jira',
                   'Framework Design',
                   'Logging & Reporting',
-                  'CI/CD Awareness'
+                  'CI/CD Awareness',
+                  'GitHub Actions',
+                  'Git',
+                  'npm / pip',
+                  'PM2',
+                  'NGINX',
+                  'Oracle Cloud',
+                  'Vercel',
+                  'Cloudflare',
                 ].map((it) => (
                   <span key={it} className="rounded-full border border-white/10 bg-black/20 px-3 py-1 text-xs text-text">
                     {it}
@@ -215,16 +248,34 @@ export default function Home() {
               <p className="font-medium">Product Development</p>
               <div className="mt-4 flex flex-wrap gap-2">
                 {[
-					  'Next.js',
-					  'React',
-					  'TypeScript',
-					  'Chrome Extensions',
-					  'Vercel',
-					  'Tailwind',
-					  'Swift / SpriteKit',
-					  'AI Workspace Architecture',
-					  'LLM Orchestration',
-					  'Persistent Memory Systems'
+                  'Next.js',
+                  'React',
+                  'TypeScript',
+                  'Tailwind CSS',
+                  'Framer Motion',
+                  'HTML / CSS',
+                  'Chrome Extensions',
+                  'Swift',
+                  'SwiftUI',
+                  'SpriteKit',
+                  'iOS Development',
+                  'Chromium',
+                  'Browser Engineering',
+                  'AI Workspace Architecture',
+                  'LLM Orchestration',
+                  'Persistent Memory Systems',
+                  'Context Engineering',
+                  'Cross-Model Routing',
+                  'OpenAI API',
+                  'Google Gemini API',
+                  'IndexedDB / Dexie.js',
+                  'Node.js',
+                  'Express',
+                  'WebSockets',
+                  'Vercel',
+                  'Cloudflare',
+                  'NGINX',
+                  'Oracle Cloud VM',
                 ].map((it) => (
                   <span key={it} className="rounded-full border border-white/10 bg-black/20 px-3 py-1 text-xs text-text">
                     {it}
@@ -261,15 +312,28 @@ export default function Home() {
             </p>
 
             <div className="mt-6 flex flex-wrap gap-3">
- 
-<a
-  className="rounded-xl border border-white/12 px-5 py-3 text-sm font-medium hover:bg-white/5 transition"
-  href="https://www.linkedin.com/in/adilaslam/"
-  target="_blank"
-  rel="noreferrer"
->
-  LinkedIn
-</a>
+              <a
+                className="rounded-xl border border-white/12 px-5 py-3 text-sm font-medium hover:bg-white/5 transition"
+                href="https://www.linkedin.com/in/adilaslam/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                LinkedIn
+              </a>
+              <a
+                className="rounded-xl border border-white/12 px-5 py-3 text-sm font-medium hover:bg-white/5 transition"
+                href="https://x.com/x444dyx"
+                target="_blank"
+                rel="noreferrer"
+              >
+                X / Twitter
+              </a>
+              <a
+                className="rounded-xl border border-white/12 px-5 py-3 text-sm font-medium hover:bg-white/5 transition"
+                href="mailto:adil786123@hotmail.co.uk"
+              >
+                Email
+              </a>
             </div>
           </div>
         </Reveal>

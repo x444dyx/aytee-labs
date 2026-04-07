@@ -1,0 +1,281 @@
+export type Post = {
+  slug: string
+  title: string
+  date: string
+  category: string
+  readTime: string
+  excerpt: string
+  content: string
+}
+
+export const posts: Post[] = [
+  {
+    slug: 'kinka-extensions-pivot',
+    title: 'Why I Stopped Fighting Chromium Extensions and Started Building What Actually Matters',
+    date: '7 April 2026',
+    category: 'Build Notes',
+    readTime: '5 min read',
+    excerpt:
+      'Building a Chromium-based browser sounds straightforward until you hit the extension layer. Here is what I learned, why I pulled back, and where Kinka is headed instead.',
+    content: `
+When I started Kinka, the pitch to myself was simple. Take Chromium, strip the noise, add focus tooling, ship a better browser. Straightforward enough, until it wasn't.
+
+The first few weeks were genuinely exciting. Getting a custom Chromium build running, tweaking the UI shell, removing the parts of the browser that have always annoyed me. It felt like real progress. Then I started working on extension support and everything slowed down.
+
+**The extension problem is nastier than it looks**
+
+Chromium's extension architecture is not something you just bolt onto a fork. The Manifest V3 transition alone introduced enough complexity to make my eyes water. Getting extensions to load reliably, handling permissions correctly, ensuring that the extension APIs you're exposing don't introduce security holes, it's an entire engineering discipline in itself. Google has whole teams working on this. I'm one person building in evenings and weekends.
+
+The specific issues I kept hitting were around extension isolation and the way content scripts interact with the browser's internal page model. Some extensions worked fine. Others would silently fail, or worse, appear to work but produce incorrect behaviour that was extremely hard to diagnose. Every fix introduced new edge cases.
+
+I spent a significant chunk of time on a permissions model that honestly still wasn't right by the time I stepped back from it. The deeper I went, the more it became clear that full extension compatibility wasn't a feature I could ship to a quality standard I was happy with. Not yet.
+
+**The decision to pull back**
+
+This wasn't an easy call. Extension support was part of the original vision for Kinka, the idea that you could bring your existing workflow over without friction. But I kept coming back to the same question: what is Kinka actually for?
+
+The answer is focus. A browser that gets out of your way, protects your attention, and works reliably. Shipping a half-broken extension layer is the opposite of that. It would introduce unpredictability into the one thing Kinka is supposed to eliminate.
+
+So I made the call to deprioritise extension support entirely for now and redirect that energy toward the core.
+
+**What I'm building instead**
+
+The area that's absorbed that effort is automation capture, and honestly it's become the most interesting part of the whole project.
+
+The idea is that Kinka should be able to watch what you're doing and help you document, replay, or automate it without you having to set anything up. Native step capture built into the browser itself rather than layered on top as an extension. This is something that tools like Clickument gesture toward from the outside, but doing it natively opens up a completely different set of possibilities.
+
+When the browser owns the capture layer, you get access to context that an extension never can, tab state, navigation events, form interactions, the full picture. The quality of what you can record and replay is in a different league.
+
+I'm still in early stages on this but the direction feels right. It's the kind of feature that only makes sense in a purpose-built browser, which is the whole point of Kinka.
+
+**What this means for the roadmap**
+
+Extension support isn't dead. It's just not the priority right now. When Kinka's core is solid and the automation layer is something I'm genuinely proud of, revisiting extensions with a clearer scope will make more sense. Building a curated set of first-party integrations is probably a better approach than trying to support the entire Chrome Web Store anyway.
+
+For now the focus is: fast, reliable, distraction-free, with native capture that actually works. Everything else follows from that.
+
+If you're interested in following the build, I'll be writing more of these as Kinka develops. The messy, honest version of building a browser from scratch, not the polished retrospective.
+    `.trim()
+  },
+
+  {
+    slug: 'bugreporter-specghost-ai-qa',
+    title: 'Two Quick Builds That Genuinely Changed How I Think About Shifting Left',
+    date: '7 April 2026',
+    category: 'QA & AI',
+    readTime: '6 min read',
+    excerpt:
+      'BugReporter and SpecGhost were built fast. But the impact they have on QA workflows is anything but small. Here is why I built them, what they taught me, and why they represent exactly how AI should be used in quality engineering.',
+    content: `
+I built BugReporter and SpecGhost within a few weeks of each other. Neither took long. Both were scratching an itch I had felt for years working in QA and both ended up being more useful than I expected.
+
+I want to talk about what they are, why they matter, and why I think they're a good example of how to actually use AI in a QA context, rather than just throwing a chatbot at the problem and hoping for the best.
+
+**The problem they're solving**
+
+Anyone who has worked in QA knows the two most tedious parts of the job are writing bug reports and writing test specifications. Not because they're hard, but because they're repetitive. You know what a good bug report looks like. You know what needs to go in it. Writing the same structure out fifty times a sprint is not where your brain should be spending its energy.
+
+Same with test specs. When a new feature lands, someone has to sit down and translate a requirement into structured, reviewable test cases. If you're a one-person QA function or a small team with a lot of surface area to cover, that work piles up fast.
+
+These aren't glamorous problems. But they're real ones, and they slow teams down.
+
+**BugReporter**
+
+BugReporter is a guided defect reporting tool. You fill in a structured form, steps to reproduce, expected behaviour, actual behaviour, environment, severity, and it generates a clean, consistently formatted bug report you can paste straight into Jira or whatever tracker you're using.
+
+The AI layer takes what you've entered and makes sure the output is clear, unambiguous and professionally structured. It doesn't invent information. It works with what you give it and formats it correctly every time.
+
+The key thing here is consistency. One of the biggest frustrations in any QA team is the variation in bug report quality. A senior tester writes a detailed, reproducible report. A junior writes something vague that a developer can't action. BugReporter closes that gap by standardising the output regardless of who's writing it.
+
+**SpecGhost**
+
+SpecGhost does the same thing but for test specifications. You paste in a requirement or a user story and it generates structured test cases covering the core scenarios, edge cases and negative paths.
+
+This is where the shift left angle becomes really interesting. Shift left as a principle is about catching defects earlier in the development cycle, ideally before code is even written. One of the most effective ways to do that is to have detailed test specifications ready at the point requirements are written, not after development has finished.
+
+In practice, writing specs that early is hard because QA teams are usually stretched and the spec work gets pushed back. SpecGhost removes a big chunk of that effort. It doesn't replace the thinking, it does the heavy lifting of structure and coverage so that the tester can focus on reviewing and refining rather than writing from scratch.
+
+**Why this is the right way to use AI in QA**
+
+There's a lot of noise at the moment about AI replacing QA. I don't think that's the right frame at all. What I see AI being genuinely useful for is the repetitive, structured, time-consuming parts of QA work that don't actually require human judgement but do require human time.
+
+Writing the skeleton of a bug report is not where a QA engineer's value lies. Their value is in understanding system behaviour, identifying risk, and knowing which edge cases are actually worth testing. If AI can handle the formatting and structure, the QA engineer gets more time to do the work that actually requires their expertise.
+
+That's what both of these tools are doing. They're not making decisions. They're not replacing the tester. They're handling the scaffolding so the tester can focus on what matters.
+
+The other thing I'm deliberate about is keeping the human review step intact. SpecGhost generates test cases. A tester still reviews them, adjusts them, removes ones that don't apply and adds ones that do. BugReporter generates a report. The person submitting it still reads it before they submit. The AI is doing the hard work of initial structure, not making the final call.
+
+That balance feels important to me. The moment you stop reviewing the output is the moment quality starts to slip through the cracks. These tools are built to accelerate the process, not to bypass the thinking.
+
+**What I took away from building them**
+
+The speed of building these was deliberately a feature. Both were scoped tightly, built quickly and deployed fast. I wanted to prove that useful QA tooling doesn't have to be a six-month project. You can identify a real pain point, build something focused that addresses it, and get it in front of people in days.
+
+That approach is something I think about a lot in the context of QA more broadly. The best quality processes are usually simple, focused and consistently applied. Not complicated frameworks that nobody follows. The same principle applies to tooling.
+
+If you work in QA and you're not experimenting with AI to handle the structural, repetitive parts of your workflow, I'd genuinely encourage you to start. Not to replace your process, but to give yourself more time to do the parts of it that actually require you.
+    `.trim()
+  },
+
+  {
+    slug: 'building-ankoryn',
+    title: 'Building Ankoryn: Why I Wanted Persistent Memory Across AI Sessions and How I Built It',
+    date: '7 April 2026',
+    category: 'Build Notes',
+    readTime: '7 min read',
+    excerpt:
+      'Every AI conversation I had felt like starting from scratch. No context, no memory, no continuity. Ankoryn started as a frustration and turned into the most technically interesting thing I have built.',
+    content: `
+I use AI constantly. For thinking through problems, drafting content, exploring ideas, working through technical decisions. But the thing that kept frustrating me was how every session started from zero.
+
+You explain your context again. You re-establish what you are working on. You remind the model what it said two days ago. If you switch between models, you lose everything. The AI is powerful but it has no memory of you, no continuity, no sense of the broader work you are doing.
+
+That friction compounded over time. I started keeping notes to paste in at the start of sessions. I tried various tools. Nothing felt right. So I built Ankoryn.
+
+**What I actually wanted**
+
+The core thing I wanted was simple to describe and hard to build. I wanted an AI workspace that remembered what I had told it, could summarise and compress older context so it did not eat the whole context window, and could route between different models depending on what I needed at any given moment.
+
+Not a chat interface with a nicer design. A genuine workspace layer that sat on top of the models and managed memory, context and routing in a structured way.
+
+I also wanted it to feel like a place to work, not just a place to chat. There is a difference. Chat interfaces are disposable. A workspace has persistence, structure, and a sense that the work you do there accumulates into something.
+
+**The memory problem**
+
+The hardest part of building this was memory management. Language models have a finite context window. If you just keep appending conversation history, you hit the limit fast and older context gets dropped. So the question is how you compress and summarise what has come before without losing the things that actually matter.
+
+I built a summarisation layer that periodically condenses older conversation segments into compressed summaries, storing them in IndexedDB via Dexie.js. When a new session starts, the relevant summaries are retrieved and injected back into the context alongside the recent conversation history. The model gets enough context to feel continuous without the full raw history eating the window.
+
+Getting this right took longer than anything else in the project. The summarisation has to be aggressive enough to save space but careful enough not to throw away context that will matter later. I went through several iterations before it felt reliable.
+
+**Cross-model routing**
+
+The other thing I wanted was the ability to use different models for different tasks without having to manage multiple interfaces. OpenAI for some things, Gemini for others. The routing layer in Ankoryn lets me switch between them inside the same workspace without losing the thread of what I am working on.
+
+This sounds straightforward but there are edge cases everywhere. Different models handle context differently. Token limits vary. The way you structure a system prompt that works well in one model does not always translate directly to another. A lot of the work was making the routing feel seamless even when the underlying models behave differently.
+
+**What I use it for now**
+
+Ankoryn is my primary AI interface for serious work. When I am working through a complex technical problem, writing something that needs multiple drafts, or planning a new project, I do it in Ankoryn because I know the context will be there when I come back to it.
+
+It is also where I test a lot of ideas before they become products. The workspace structure means I can keep separate threads for different projects without them bleeding into each other.
+
+**What building it taught me**
+
+The biggest lesson was about the gap between what AI demos show and what reliable AI-powered products actually need. A demo of persistent memory is easy. A system that manages memory correctly across hundreds of sessions, different models, varying context lengths and real user behaviour is a different problem entirely.
+
+I also learned a lot about context engineering, which I think is going to become a recognised discipline in the same way prompt engineering has. How you structure the information you give a model, what you include, what you compress, what you leave out, has a massive impact on output quality. Building Ankoryn forced me to think about this at a level I had not before.
+
+If you are building anything AI-powered and you are not thinking carefully about context management, that is probably where your quality problems are coming from.
+    `.trim()
+  },
+
+
+  {
+    slug: 'building-portix',
+    title: 'Portix: The Frustration That Led Me to Build My Own Localhost Sharing Tool',
+    date: '7 April 2026',
+    category: 'Build Notes',
+    readTime: '5 min read',
+    excerpt:
+      'I was sick of waiting for staging deployments just to test a new feature. Portix came from wanting developers to share their work directly with me, earlier, so I could give feedback while it still mattered.',
+    content: `
+The thing that broke me was the wait.
+
+As a QA lead, a big part of my job is testing new features early and giving developers fast, useful feedback. But the workflow was slowing everything down. A developer would build something locally, I would not be able to see it until it was deployed to a staging environment, and by the time it got there it had usually gone through several more changes. The feedback loop was too long and too slow.
+
+Staging deployments take time. They require the feature to be in a state someone is comfortable putting on a shared environment. That means by the time I am looking at something, it is already further along than it needed to be for me to give useful input. Catching a problem at that point costs more to fix than catching it when the work is fresh.
+
+What I actually needed was a way for developers to share what they were building directly from their local machine, before it was ready for staging, so I could see it, test it, and give feedback immediately. Not a screen share. Not a description. The actual running thing, with a URL I could open and interact with properly.
+
+I looked at what existed. Ngrok does the tunnelling but it is generic, has no context about what is being shared or why, and the free tier limits made it awkward for regular daily use. Nothing I found had a feedback layer built in, which meant any comments still had to go through Slack or Jira anyway.
+
+So I built Portix.
+
+**How it works**
+
+Portix runs a lightweight tunnel from your local machine to a public URL hosted on an Oracle Cloud VM behind NGINX. When you start it, you get a URL you can share immediately. The tunnel stays open as long as you need it and closes cleanly when you are done.
+
+The Git integration came from a practical problem. Developers are often working across multiple branches and when they share a link I need to know immediately what I am looking at. Is this the feature branch or main? Is this the fix or the original issue? Portix picks up the current branch name and labels the preview URL with it so when I open the link I can see exactly which branch I am testing. Small thing but it removes a whole category of confusion before the feedback even starts.
+
+The feedback overlay is a floating widget that appears on the shared page. Reviewers can pin comments to specific areas of the page without needing any account or setup. The comments come back to me in real time via WebSockets. No email thread, no separate feedback tool, no trying to decode written descriptions of visual problems.
+
+**The infrastructure decisions**
+
+Running a tunnelling tool means I needed something persistent on the server side. I went with an Oracle Cloud VM because the free tier is genuinely usable, NGINX to handle the routing and SSL termination, PM2 to keep the Node process running reliably, and Cloudflare in front for DNS and additional protection.
+
+The WebSocket layer for real time feedback was the trickiest part to get stable. Keeping connections alive reliably across different network conditions, handling reconnects gracefully, making sure feedback posted from a reviewer actually arrives even if there is a brief drop in connectivity, all of that needed more attention than I expected.
+
+**What it changed about the QA workflow**
+
+The feedback loop is genuinely faster now. Developers share a Portix link when something is ready for a first look, I open it, test it properly in the browser rather than watching someone scroll around on a call, pin my comments directly onto the relevant parts of the page, and they have actionable feedback within minutes.
+
+The quality of the feedback has improved too. When I am actually interacting with a feature rather than watching a demo, I find things I would not have found otherwise. Real interactions, real edge cases, the kind of stuff that only surfaces when you are actually using the thing.
+
+The other shift is that developers share earlier now because the barrier is low. There is no deployment, no preparation, just a link. That means I am seeing features at a stage where changing direction is still cheap. That is exactly where QA input should be landing.
+
+Before Portix I was either waiting for staging or asking developers to walk me through things on a call. Both options were slower, more disruptive, and produced worse feedback. Removing that friction changed how the whole team works together.
+
+It is available at portix.ayteelabs.com if you want to try it.
+    `.trim()
+  },
+
+
+  {
+    slug: 'shipping-products-full-time-job',
+    title: 'How I Ship Independent Products While Working a Full Time Job',
+    date: '7 April 2026',
+    category: 'Perspective',
+    readTime: '6 min read',
+    excerpt:
+      'I work full time as a Test Lead. I also build and maintain a portfolio of independent products. Here is how I actually make that work without burning out.',
+    content: `
+People ask me how I find the time. The honest answer is that I do not find it, I make deliberate choices about where my time goes and I have built habits that make building sustainable rather than exhausting.
+
+I am not going to pretend I have some perfect system. Some weeks I ship a lot. Some weeks the day job is intense and the side work barely moves. But over time, across a full year, the output has been real. Multiple live products, a growing portfolio, things I am genuinely proud of.
+
+Here is what actually works for me.
+
+**Scope is everything**
+
+The biggest mistake I see people make with side projects is building something too large to finish in the time they have. You start something ambitious, life gets in the way, the project stalls, and then the half-finished thing sits there making you feel bad every time you think about it.
+
+I deliberately scope everything small. Not because I lack ambition, but because a finished small thing is worth more than an unfinished big thing in every possible way. It is in front of users. It is building evidence of what I can do. It is teaching me things.
+
+BugReporter and SpecGhost were both built in a few evenings. Deliberately. I could have added ten more features to each of them before shipping. I chose not to. Get it out, see if it is useful, iterate from there.
+
+**Protect the hours that work for you**
+
+I know when I do my best building work and I protect those hours. For me it is early morning before the day job starts and sometimes late evening after everything else is done. Not every day, but consistently enough to keep momentum.
+
+The key thing is not trying to build in whatever time is left over. Leftover time is fragmented, low energy and easily stolen by other things. If building matters to you, you have to treat it like it matters and give it time that is actually yours.
+
+**The day job makes me a better builder**
+
+This is something I genuinely believe. Working as a Test Lead means I think about quality, reliability and user experience constantly. I think about what breaks, what confuses people, what makes software painful to use. That perspective feeds directly into the products I build.
+
+I also work in an AI-driven product environment, which means I am seeing how AI features behave in production, what the real failure modes are, what users actually struggle with. That informs how I build tools like Ankoryn and SpecGhost in ways that purely academic building would not.
+
+The two things are not in competition. They inform each other.
+
+**Keep a short list**
+
+I keep a list of things I want to build. Not a backlog with priorities and estimates, just a short list of ideas I am genuinely excited about. When I have time to start something new I look at the list and pick the thing I am most motivated by right now.
+
+Motivation matters more than most productivity advice acknowledges. If I am building something I am genuinely interested in, I will find time for it. If I am building something that feels like obligation, it will stall.
+
+**Ship before it feels ready**
+
+This one took me a while to internalise. The version of the product in my head is always better than the version I can build in the time I have. If I wait until it matches the version in my head I will never ship it.
+
+Shipping something imperfect that works is more valuable than not shipping something perfect. The feedback you get from real users is worth more than any amount of internal iteration. And honestly, the things I thought were imperfect when I shipped them have almost never been the things users cared about.
+
+**The compound effect**
+
+The thing I would tell anyone who is thinking about starting is that the value compounds. The first project teaches you things. The second is faster because of the first. By the time you have several things live, you have a body of work that speaks for itself without you having to explain it.
+
+That is where I am trying to get to. Not a single impressive project but a consistent track record of building things, shipping them, and learning from them. Over time that becomes something that is hard to argue with.
+    `.trim()
+  }
+
+]

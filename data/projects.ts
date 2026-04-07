@@ -1,6 +1,6 @@
 export type ProjectCategory =
   | 'Company'
-  | 'AyTee Labs'
+  | 'Product'
   | 'AI Infrastructure'
   | 'Portfolio / Brand'
   | 'Developer Tooling'
@@ -24,36 +24,36 @@ export const projects: Project[] = [
   {
     slug: 'clickument',
     title: 'Clickument',
-    category: 'AyTee Labs',
+    category: 'Product',
     year: '2026',
     status: 'Live',
     href: 'https://clickument.com',
     blurb:
-      'Chrome extension for generating structured step-by-step documentation with screenshots and clean exports.',
+      'A Chrome extension that captures your workflow step-by-step — with screenshots, annotations and structured exports — turning manual processes into clean, shareable documentation in minutes.',
     mission:
-      'To streamline technical documentation by turning manual screenshot workflows into structured, export-ready documentation.',
+      'To eliminate the time sink of manual documentation by automating the capture and formatting of step-by-step processes directly inside the browser.',
     overview:
-      'Built as a Chrome extension with clean state management, structured step tracking, and export pipelines.',
+      'Clickument sits inside Chrome and records each action as a numbered step with an accompanying screenshot. Users can annotate, reorder and export their documentation into clean formats ready for internal wikis, client handoffs or team onboarding — without ever leaving the browser.',
     impact:
-      'Reduces documentation friction and standardises reporting across teams.',
+      'Cuts documentation time dramatically and produces consistent, professional output — removing the inconsistency of manually written guides across teams.',
     tags: ['JavaScript', 'Chrome Extension', 'Vercel']
   },
 
    {
     slug: 'arcade',
     title: 'Arcade',
-    category: 'AyTee Labs',
+    category: 'Product',
     year: '2026',
     status: 'Live',
     href: 'https://arcade.ayteelabs.com',
     blurb:
-      'Fast-paced browser arcade game focused on reaction timing and escalating difficulty.',
+      'A collection of fast-paced browser games built around reaction timing, pattern recognition and escalating difficulty — designed to be instantly playable with no setup.',
     mission:
-      'To create a minimalist, addictive browser-based arcade experience with increasing speed mechanics.',
+      'To build a tight, addictive arcade experience in the browser that proves you can deliver genuinely fun gameplay with lean, performant frontend code.',
     overview:
-      'Built using React and TypeScript with performance-first animation logic.',
+      'Arcade is built with React and TypeScript, prioritising smooth 60fps animation and responsive input handling. Each game is self-contained with its own difficulty curve, score tracking and restart flow — kept intentionally minimal so the gameplay does the talking.',
     impact:
-      'Demonstrates rapid product iteration and frontend game architecture.',
+      'Demonstrates rapid product iteration, frontend game architecture, and the ability to ship polished, complete experiences outside of traditional app frameworks.',
     tags: ['React', 'TypeScript', 'Vercel']
   },
 
@@ -65,13 +65,13 @@ export const projects: Project[] = [
     status: 'Live',
     href: 'https://ayteelabs.com',
     blurb:
-      'The official AyTee Labs portfolio.',
+      'The official home of AyTee Labs — a digital product studio building focused tools, AI infrastructure and developer utilities under one independent brand.',
     mission:
-      'To establish a structured digital product studio.',
+      'To establish a structured, credible product studio that houses every independent build — giving each project a professional home and a coherent identity under one roof.',
     overview:
-      'Built using Next.js App Router and modern UI architecture.',
+      'Built with Next.js App Router, Framer Motion and a custom design system, the AyTee Labs portfolio is itself a product — designed to reflect the quality and craft behind every project it showcases. Smooth scroll, reveal animations and a dark minimal aesthetic set the tone for the brand.',
     impact:
-      'Acts as the central brand infrastructure.',
+      'Acts as the central brand infrastructure and public-facing proof of work — turning a collection of independent projects into a cohesive studio identity.',
     tags: [
       'Next.js',
       'Framer Motion',
@@ -90,13 +90,13 @@ export const projects: Project[] = [
     href: 'https://www.ankoryn.com',
     highlight: 'Flagship',
     blurb:
-      'AI workspace OS enabling structured cross-model orchestration and persistent memory.',
+      'An AI workspace OS that brings persistent memory, cross-model orchestration and structured context management to every conversation — eliminating the stateless, disposable nature of standard AI chat.',
     mission:
-      'To eliminate stateless AI workflows.',
+      'To eliminate stateless AI workflows by building a persistent, intelligent layer that remembers context across sessions, routes between models intelligently, and treats every conversation as part of a larger working system.',
     overview:
-      'An orchestration layer managing memory, summarisation and routing.',
+      'Ankoryn is an orchestration layer built on Next.js App Router that manages memory storage via IndexedDB, routes prompts across OpenAI and Google Gemini APIs, and surfaces structured summaries back to the user. It handles context windowing, memory compression and conversation continuity — turning isolated AI interactions into a coherent, evolving workspace.',
     impact:
-      'Transforms AI into structured workspaces.',
+      'Transforms AI from a one-shot tool into a structured, persistent workspace — giving power users the memory, context and multi-model flexibility that standard interfaces lack.',
     tags: [
       'AI Workspace Architecture',
       'LLM Orchestration',
@@ -128,13 +128,13 @@ export const projects: Project[] = [
     href: 'https://portix.ayteelabs.com',
     highlight: 'New',
     blurb:
-      'Git-aware localhost preview sharing with instant feedback overlays.',
+      'A developer tool that instantly exposes your localhost to a secure public URL — with Git branch awareness and a floating feedback overlay so collaborators can comment directly on what they see.',
     mission:
-      'To eliminate friction in sharing local development work.',
+      'To eliminate the friction of sharing in-progress local work — removing the need to deploy to staging just to get feedback on a feature that isn\'t ready yet.',
     overview:
-      'Creates secure public URLs with feedback overlays.',
+      'Portix runs a lightweight tunnel from your local machine to a live public URL, with Git integration that labels each preview by branch. A non-intrusive feedback overlay lets reviewers pin comments to specific areas of the page — all without the developer needing to touch their deployment pipeline. Built on Node.js, Express, WebSockets and hosted on an Oracle Cloud VM behind NGINX.',
     impact:
-      'Reduces feedback loops and deployment overhead.',
+      'Shortens feedback loops significantly — letting developers share work-in-progress instantly and receive contextual, precise feedback without staging deployments or screen recordings.',
     tags: [
       'Node.js',
       'TypeScript',
@@ -153,18 +153,18 @@ export const projects: Project[] = [
   {
     slug: 'moditquick',
     title: 'ModitQuick',
-    category: 'AyTee Labs',
+    category: 'Product',
     year: '2026',
     status: 'Live',
     href: 'https://www.moditquick.com',
     blurb:
-      'Web productivity toolkit.',
+      'A modular web productivity toolkit that consolidates the small but frequent tasks that slow down your day — from text transformation to quick calculations and formatting utilities.',
     mission:
-      'To consolidate everyday utilities.',
+      'To replace the habit of Googling for one-off tools by providing a fast, clean, always-available suite of everyday utilities in a single browser tab.',
     overview:
-      'Modular Next.js architecture.',
+      'ModitQuick is built as a modular Next.js application where each utility is a self-contained component — making it easy to extend with new tools without touching existing ones. The interface is intentionally minimal: no accounts, no friction, just open and use.',
     impact:
-      'Reduces workflow friction.',
+      'Reduces the small but constant workflow interruptions caused by hunting for the right tool — keeping focus intact and day-to-day tasks moving faster.',
     tags: ['Next.js', 'TypeScript', 'Vercel']
   },
 
@@ -207,7 +207,7 @@ export const projects: Project[] = [
   {
     slug: 'ageineverything',
     title: 'AgeInEverything',
-    category: 'AyTee Labs',
+    category: 'Product',
     year: '2026',
     status: 'Live',
     href: 'https://ageineverything.ayteelabs.com',
@@ -225,7 +225,7 @@ export const projects: Project[] = [
   {
     slug: 'kinka',
     title: 'Kinka',
-    category: 'AyTee Labs',
+    category: 'Product',
     year: '2026',
     status: 'In Flight',
     blurb:
@@ -273,5 +273,41 @@ export const projects: Project[] = [
     impact:
       'Established a repeatable LLM testing practice from scratch — improving stakeholder confidence in AI feature releases and reducing unpredictable output incidents in production.',
     tags: ['LLM Evaluation', 'AI Testing', 'Prompt Engineering', 'Hallucination Detection', 'Python', 'Test Harness Design', 'Non-Deterministic Testing']
+  },
+
+  {
+    slug: 'team-leadership',
+    title: 'Team Leadership & Mentoring',
+    category: 'Company',
+    year: '2024–Present',
+    status: 'Overview',
+    highlight: 'People',
+    blurb:
+      'Leading and mentoring a mixed team of manual and automation testers — building capability, instilling a culture of continuous improvement, and keeping quality at the centre of every delivery.',
+    mission:
+      'To grow a high-performing QA team by investing in people as much as process — coaching testers to think critically, solve problems proactively, and take ownership of quality outcomes rather than just executing test cases.',
+    overview:
+      'I lead day-to-day QA team operations across manual and automation disciplines — running sprint ceremonies, unblocking individuals, and creating space for skills growth. I mentor testers at varying experience levels, pairing technical coaching with softer skills around communication, commercial awareness and working effectively in fast-moving agile environments. I actively shape team culture by encouraging knowledge sharing, retrospective honesty, and a mindset of continuous improvement.',
+    impact:
+      'Built a more confident, capable and self-sufficient QA team — reducing dependency on reactive firefighting and creating a culture where quality is owned collectively, not bolted on at the end.',
+    tags: ['Team Leadership', 'Mentoring', 'Coaching', 'Agile / Scrum', 'Continuous Improvement', 'People Management', 'Knowledge Sharing', 'Cross-Functional Collaboration']
+  },
+
+  {
+    slug: 'delivery-compliance',
+    title: 'Delivery, Risk & Compliance',
+    category: 'Company',
+    year: '2024–Present',
+    status: 'Overview',
+    highlight: 'Governance',
+    blurb:
+      'Owning end-to-end QA delivery across cloud-enabled products — covering CI/CD pipelines, risk assessments, data-handling reviews, and audit readiness across performance, security and usability.',
+    mission:
+      'To ensure quality is not just a test phase but a thread running through every stage of delivery — from roadmap planning to production release — with governance processes that hold up under scrutiny.',
+    overview:
+      'I oversee QA across cloud-enabled products with AWS and non-AWS infrastructure, working within robust CI/CD pipelines to ensure reliable, repeatable deployments. I carry out risk assessments and data-handling reviews aligned to compliance and audit requirements, and extend quality coverage beyond functional testing to encompass performance, security and usability. I work directly with product managers, developers and stakeholders to translate business requirements into testable strategies — maintaining real-time visibility of product quality through tooling and dashboards.',
+    impact:
+      'Delivered high-profile features — including AI modules — on time and to standard, with audit-ready QA processes and measurable improvements in release reliability and cross-functional delivery confidence.',
+    tags: ['CI/CD', 'AWS', 'Risk Assessment', 'Compliance', 'Audit Readiness', 'Performance Testing', 'Security Testing', 'Usability Testing', 'Data Handling', 'Roadmap Delivery', 'Stakeholder Management', 'Jira', 'SQL', 'Python', 'Selenium']
   }
 ]

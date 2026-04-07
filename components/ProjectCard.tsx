@@ -5,27 +5,49 @@ import { motion } from 'framer-motion'
 import { useState } from 'react'
 import type { Project } from '../data/projects'
 
+const categoryTheme: Record<string, {
+  dot: string
+  gradient: string
+  border: string
+  glow: string
+}> = {
+  'Company': {
+    dot: 'bg-purple-400',
+    gradient: 'from-purple-500/40 via-purple-400/10 to-transparent',
+    border: 'group-hover:border-purple-500/40',
+    glow: 'rgba(168,85,247,0.25)',
+  },
+  'Developer Tooling': {
+    dot: 'bg-emerald-400',
+    gradient: 'from-emerald-500/40 via-emerald-400/10 to-transparent',
+    border: 'group-hover:border-emerald-500/40',
+    glow: 'rgba(52,211,153,0.25)',
+  },
+  'AI Infrastructure': {
+    dot: 'bg-cyan-400',
+    gradient: 'from-cyan-500/40 via-cyan-400/10 to-transparent',
+    border: 'group-hover:border-cyan-500/40',
+    glow: 'rgba(34,211,238,0.25)',
+  },
+  'Portfolio / Brand': {
+    dot: 'bg-amber-400',
+    gradient: 'from-amber-500/40 via-amber-400/10 to-transparent',
+    border: 'group-hover:border-amber-500/40',
+    glow: 'rgba(251,191,36,0.25)',
+  },
+  'Product': {
+    dot: 'bg-red-400',
+    gradient: 'from-red-500/40 via-red-400/10 to-transparent',
+    border: 'group-hover:border-red-500/40',
+    glow: 'rgba(248,113,113,0.25)',
+  },
+}
+
 export default function ProjectCard({ project }: { project: Project }) {
   const [mouse, setMouse] = useState({ x: 0, y: 0 })
   const [hovered, setHovered] = useState(false)
 
-  const isCompany = project.category === 'Company'
-
-  const theme = isCompany
-    ? {
-        dot: 'bg-blue-400',
-        gradient:
-          'from-purple-500/40 via-yellow-400/10 to-transparent',
-        border: 'group-hover:border-yellow-500/50',
-        glow: 'rgba(250,204,21,0.25)',
-      }
-    : {
-        dot: 'bg-emerald-400',
-        gradient:
-          'from-emerald-500/40 via-yellow-400/10 to-transparent',
-        border: 'group-hover:border-yellow-500/40',
-        glow: 'rgba(250,204,21,0.25)',
-      }
+  const theme = categoryTheme[project.category] ?? categoryTheme['Product']
 
   function handleMove(e: React.MouseEvent<HTMLDivElement>) {
     const rect = e.currentTarget.getBoundingClientRect()
