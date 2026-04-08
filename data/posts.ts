@@ -276,6 +276,51 @@ The thing I would tell anyone who is thinking about starting is that the value c
 
 That is where I am trying to get to. Not a single impressive project but a consistent track record of building things, shipping them, and learning from them. Over time that becomes something that is hard to argue with.
     `.trim()
+  },
+
+  {
+    slug: 'arcade-volumes-2-3-4',
+    title: 'Arcade Just Got a Lot Bigger: Volumes 2 and 3 Are Live and Volume 4 Is Coming',
+    date: '8 April 2026',
+    category: 'Build Notes',
+    readTime: '4 min read',
+    excerpt:
+      'Volume 1 launched with three games and proved the concept. Now Volumes 2 and 3 are live, four more games are playable, and Volume 4 is already in the works.',
+    content: `
+When I launched Arcade with Volume 1, the idea was simple. Three minimal browser games, no accounts, no installs, just open and play. Pulse, Sync and Fold. Each one testing something different: timing, pattern recognition, spatial reasoning. The response was good enough to keep going.
+
+So I kept going.
+
+**Volume 2: New Challenges**
+
+Volume 2 adds three new games and pushes the difficulty in a different direction. Where Volume 1 was about rhythm and flow, Volume 2 is about pressure and memory.
+
+Pair puts a grid of shapes in front of you and asks you to find the only matching pair before time runs out. Every level has exactly one correct match hidden in plain sight. It sounds straightforward until the grid gets bigger and the shapes start looking very similar very quickly.
+
+Recall is the most cognitively demanding game in the collection so far. You watch a sequence of shapes appear, then you have to recreate it from memory. Each round adds to the sequence. It is a direct test of visual working memory and it gets uncomfortable fast in the best possible way.
+
+Adapt is probably my favourite of the three. The rules change as you play. You might be told to tap circles, then the rule flips and you have to tap triangles, then it changes again. Staying sharp when the ground keeps shifting under you is a different kind of challenge to anything in Volume 1.
+
+**Volume 3: In Motion**
+
+Volume 3 is a single game and it earns that focus entirely.
+
+Flow is a trail navigation game where you move through obstacles as your path grows behind you. The rule is simple: do not cross your own trail. The execution gets harder the longer you survive because every move you make narrows the space available for future moves. It has that quality where you understand immediately what you did wrong the moment it goes wrong, and you want to try again immediately.
+
+It is the kind of game I could play for twenty minutes without noticing.
+
+**Volume 4: Coming Soon**
+
+Volume 4 is in progress and the theme is Control Systems. Three games: Shift, Split and Stack. I am not revealing too much yet but the direction is about managing multiple moving parts at the same time rather than responding to a single challenge. It is going to be the most complex volume yet.
+
+**Why I am building this in volumes**
+
+The volume structure was a deliberate choice. Launching everything at once would have meant either shipping fewer games or taking much longer to ship anything. Releasing in volumes means each release is a real event, each one adds to something that already exists, and the collection grows in a way that feels intentional rather than random.
+
+It also keeps me honest. Each volume has to have a coherent identity. Volume 1 is The Originals. Volume 2 is New Challenges. Volume 3 is In Motion. Volume 4 is Control Systems. That framing forces me to think about what each game is actually testing and whether it belongs in the set.
+
+Arcade is at arcade.ayteelabs.com. Everything is free, no account needed. Go play something.
+    `.trim()
   }
 
 ]
