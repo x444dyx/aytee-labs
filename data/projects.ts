@@ -309,5 +309,23 @@ export const projects: Project[] = [
     impact:
       'Delivered high-profile features — including AI modules — on time and to standard, with audit-ready QA processes and measurable improvements in release reliability and cross-functional delivery confidence.',
     tags: ['CI/CD', 'AWS', 'Risk Assessment', 'Compliance', 'Audit Readiness', 'Performance Testing', 'Security Testing', 'Usability Testing', 'Data Handling', 'Roadmap Delivery', 'Stakeholder Management', 'Jira', 'SQL', 'Python', 'Selenium']
+  },
+
+  {
+    slug: 'dev-defect-resolution',
+    title: 'Defect Investigation & Dev Fix Contribution',
+    category: 'Company',
+    year: '2025–Present',
+    status: 'Overview',
+    highlight: 'Impact',
+    blurb:
+      'Going beyond traditional QA by investigating complex defects at a system and code level, identifying root causes, and contributing verified fixes directly to the development team.',
+    mission:
+      'To close the gap between finding a defect and fixing it by doing the investigative heavy lifting myself rather than simply raising a ticket and waiting, accelerating resolution and reducing back-and-forth between QA and engineering.',
+    overview:
+      'Across several high-priority issues I have gone beyond standard defect reporting to investigate root causes at a deeper technical level. This has involved diagnosing environment-specific failures related to system PATH configuration, installer behaviour across operating systems, and upgrade script compatibility. In each case I identified not just the problem but a working solution, verified it independently, and shared the fix with the engineering team for implementation. Issues have spanned Windows and Linux environments, installer tooling, certificate configuration, and shell scripting. The cross-platform nature of these investigations required careful analysis of how the same process behaves differently across operating systems and deployment contexts.',
+    impact:
+      'Multiple production-affecting issues resolved faster than the standard defect lifecycle would allow. Fixes I identified and verified have been implemented directly into release candidates, reducing customer-facing friction and support overhead. Demonstrates a QA approach that treats defect resolution as a collaborative engineering activity rather than a handoff process.',
+    tags: ['Root Cause Analysis', 'Windows', 'Linux', 'Shell Scripting', 'Installer Engineering', 'Cross-Platform Testing', 'Environment Debugging', 'Dev Collaboration', 'Release Impact']
   }
 ]
