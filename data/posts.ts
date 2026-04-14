@@ -323,4 +323,106 @@ Arcade is at arcade.ayteelabs.com. Everything is free, no account needed. Go pla
     `.trim()
   }
 
+  {
+    slug: 'kinka-google-auth',
+    title: 'Getting Google Auth Working in a Chromium Fork Is More Painful Than It Should Be',
+    date: '14 April 2026',
+    category: 'Build Notes',
+    readTime: '5 min read',
+    excerpt:
+      'I am still working on it. Google OAuth in a custom Chromium build is a different problem to Google OAuth in a web app and I want to be honest about why.',
+    content: `
+I want to write about something I have not solved yet. That feels important to say upfront. Most build notes are retrospectives. This one is not. This is an honest account of a problem I am still working through.
+
+Google authentication in Kinka is not working the way I want it to. And the reason is not simple.
+
+**Why this is harder than it sounds**
+
+If you have ever implemented Google OAuth in a web app or a standard Electron app, you might assume it is the same problem in a Chromium fork. It is not. Not even close.
+
+Google's OAuth flow involves a redirect back to a registered URI after authentication. In a web app that URI is a domain you control. In a standard app it might be a localhost callback or a custom protocol handler. Both of those are well-documented, well-supported paths.
+
+In a custom Chromium fork you are in different territory. The browser itself is the client. You are not just implementing OAuth inside a browser, you are implementing it as a browser. The way Chromium handles OAuth internally for Google services like Chrome Sync involves APIs and credential flows that are not part of the public Chromium source in a clean, drop-in way. They are tied to Google's internal infrastructure and the keys that ship with the official Chrome binary.
+
+**The key problem**
+
+When you build Chromium from source, you can apply for API keys from Google to enable certain services. The process is documented, but the approval and scope of what those keys give you access to is limited compared to what ships in the official Chrome build.
+
+For basic OAuth flows where a user is logging into a website through Kinka, this is not the issue. That works fine because the browser is just a container for a standard web OAuth flow. The problem is when I want Kinka itself to have a deeper integration, where the browser has its own authenticated identity, where features inside Kinka can interact with Google services on behalf of the user at a browser level rather than a page level.
+
+That is the thing I am trying to build and that is where it gets complicated.
+
+**Where I am right now**
+
+I have been working through a few different approaches. The first was trying to use the standard OAuth flow with a custom URI scheme registered for Kinka. That gets partway there but the callback handling inside a Chromium fork requires more plumbing than I initially expected, particularly around how the browser processes the redirect and surfaces the token to the right internal component.
+
+The second approach has been looking at how other Chromium-based browsers have handled this. Brave, Vivaldi, Arc. They have all had to solve versions of this problem. The solutions are not always documented publicly but reading through their open source repositories and issue trackers gives you a clearer picture of what is involved.
+
+I am still in that phase. Reading, experimenting, hitting walls, trying something different.
+
+**Why I am writing about this now**
+
+Because I think there is value in being honest about the parts of building that are not going well yet. Everything I write here about Kinka could be polished into a neat narrative of progress and forward momentum. But that would not be fully accurate.
+
+Kinka is a real project with real technical challenges. Some of those challenges are taking longer than I would like. Google auth is one of them. I am not shelving it, I am not giving up on it, but I am also not pretending it is solved.
+
+When I do get it working I will write about that too. The full picture of what the problem actually was and what the solution turned out to be. That post will be more useful to anyone else building in this space than a vague success story would be.
+
+For now, it is still in progress. And that is fine.
+    `.trim()
+  },
+
+  {
+    slug: 'qa-engineers-who-understand-code',
+    title: 'Why QA Engineers Who Understand Code Are Worth More Than Those Who Do Not',
+    date: '14 April 2026',
+    category: 'QA & AI',
+    readTime: '6 min read',
+    excerpt:
+      'There is a version of QA that stops at the ticket. Reproduce it, log it, move on. I have been doing something different lately and the difference in impact is hard to ignore.',
+    content: `
+There is a version of QA that stops at the ticket. You find a bug, you write it up clearly with steps to reproduce, you assign it to a developer, and you wait. That is the job done, technically. The defect is documented. The ball is in someone else's court.
+
+I have never been fully satisfied with that version of the job.
+
+The issues I have been working through recently made this clearer than ever. Three separate problems, all complex, all cross-platform, all the kind of thing that could sit in a backlog for weeks if the approach was purely to log and wait. In each case I went further than the ticket.
+
+**The certificate configuration failure**
+
+The first was a fatal error thrown by a configuration tool when processing custom CA certificates. The error message pointed to a missing executable in the system PATH. On the surface it looked like an environment issue. The kind of thing that gets closed as works on my machine and handed back to the customer.
+
+I dug into it. The tool was running as its own process, which meant it did not inherit user-level PATH changes. The bundled Java runtime had the keytool executable right there in the installation directory but the system PATH did not include it. The fix was a single PowerShell command to add the correct path at the machine level rather than the user level.
+
+I verified it worked, documented exactly why it had to be the system PATH specifically, and handed it to the team with a working solution rather than a problem.
+
+**The missing directory on Windows**
+
+The second issue was subtler. A folder that should have existed after installation was simply not there on Windows. The same process worked fine on Linux because the directory gets created as part of the Docker image build. On Windows, the installer was not explicitly told to create it.
+
+I traced it to the installer configuration file. Inno Setup will not create an empty directory unless you tell it to in the dirs section explicitly. One line needed adding, matching the pattern already used for a similar directory in the same installer. I identified the fix, explained why it behaved differently across platforms, and it went straight into the next release.
+
+**The Linux upgrade script**
+
+The third had been broken since February. An upgrade script on Linux was failing silently and nobody had had a stable Linux environment to test on properly until I got access to one. I found the issue, identified a one line fix in the shell script, verified it worked, and got it into the April release.
+
+That last one is worth dwelling on. A broken upgrade path is a serious thing. Customers hitting it would have no clean way forward without support intervention. A one line fix, verified and documented, got it resolved before it became a wide-scale problem.
+
+**What this has to do with understanding code**
+
+None of those investigations would have gone the way they did if I had treated them as black box defects. Understanding how system PATH resolution works, how installer tools handle directory creation, how shell scripts behave differently across environments. That knowledge is what turned three vague problems into three specific, actionable fixes.
+
+QA is often described as finding problems. I think the more accurate and more valuable version is understanding problems. There is a meaningful difference. Finding tells you something is wrong. Understanding tells you why, where, and what it would take to fix it.
+
+A QA engineer who can read code can look at a failing test and understand whether the test is wrong or the product is wrong. They can look at a stack trace and know which layer of the system to focus on. They can look at a configuration file and spot what is missing. These are not developer skills that QA engineers happen to have. They are QA skills that become significantly more powerful when paired with technical literacy.
+
+**The practical argument**
+
+The team I work with trusts me to go deep on problems rather than just surface them. That trust was built over time by consistently doing exactly that. When something breaks in an unusual way, the expectation is that I will come back with more than a reproduction case. I will come back with a theory, often a fix, and always a clearer picture of what actually happened.
+
+That changes how quickly things get resolved. It changes how the relationship between QA and development works. It changes what gets into releases and what gets deprioritised.
+
+If you are a QA engineer and you are not investing in your technical skills, I would genuinely encourage you to start. Not to become a developer. But because the problems you are paid to understand are almost always technical at their root, and understanding them properly makes everything you do more valuable.
+    `.trim()
+  },
+
 ]
