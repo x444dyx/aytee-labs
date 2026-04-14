@@ -321,7 +321,7 @@ It also keeps me honest. Each volume has to have a coherent identity. Volume 1 i
 
 Arcade is at arcade.ayteelabs.com. Everything is free, no account needed. Go play something.
     `.trim()
-  }
+  },
 
   {
     slug: 'kinka-google-auth',
