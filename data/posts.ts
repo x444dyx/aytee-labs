@@ -425,4 +425,74 @@ If you are a QA engineer and you are not investing in your technical skills, I w
     `.trim()
   },
 
+  {
+    slug: 'building-linkdrop',
+    title: 'I Built a Link-in-Bio Tool From Scratch. Here Is What That Actually Involved.',
+    date: '17 April 2026',
+    category: 'Build Notes',
+    readTime: '8 min read',
+    excerpt:
+      'Linkdrop is live. A full-stack link-in-bio platform with auth, analytics, themes, QR codes and an explore page — built in a single sprint. Here is the honest version of how that went.',
+    content: `
+Linkdrop is live at linkdrop.ayteelabs.com.
+
+The pitch is simple. A link-in-bio tool that actually looks good, gives you real data, and does not charge you for features that should be free. Four layouts. Full theming. Click analytics. Profile views. Password-protected builder. An explore page where you can browse other profiles and copy themes. QR codes. All of it free.
+
+I want to write about how it was actually built, what was harder than expected, and why I made the decisions I did.
+
+**Why I built it**
+
+I have used Linktree. Most people in the space have. It works, but it has always frustrated me. The free tier is aggressively limited. The paid features are things that should be table stakes. The design is generic. You can tell immediately when someone is using it because everything looks the same.
+
+I wanted something with a distinct aesthetic. Something that felt like it belonged in the same visual world as Nothing's products, minimal, high contrast, intentional. And I wanted analytics without a paywall. Knowing which links people are actually clicking is not a premium insight. It is just useful information.
+
+So I built it.
+
+**The stack**
+
+Next.js App Router, Supabase for the database and auth, TypeScript throughout, deployed on Vercel. No UI library. Every component written from scratch with inline styles.
+
+The decision to avoid a UI library was deliberate. I wanted full control over the aesthetic. When you are building something with a specific visual identity, the compromises you make to fit a component library's opinions show up everywhere. Inline styles with a consistent set of colour variables gave me exactly what I wanted.
+
+Supabase handled more than I initially expected it to. Database, auth, storage for profile photos and link images, row-level security policies, even the password reset flow via their built-in email provider. It is genuinely impressive how much you can build on top of it without reaching for additional services.
+
+**What went well**
+
+The builder came together faster than I expected. The core loop of editing profile data and seeing it update in the preview in real time is satisfying to build. React's state model is well suited to that kind of immediate feedback, and keeping the profile object as a derived value from all the individual state slices meant the preview was always in sync without any extra work.
+
+The theme system was also straightforward once I committed to how it should work. Five presets, each with a background and accent colour pair, plus custom hex pickers that let you override both independently. The accent colour does a lot of work throughout the profile, text, borders, interactive states, so getting that right mattered. The contrast auto-detection that flips text dark or light based on the background luminance was a small detail that made a big difference to how profiles look across different themes.
+
+The explore page ended up being one of the more interesting surfaces to design. The idea of showing real profile previews rather than static cards was the right call. You immediately understand what the product does just by looking at it.
+
+**What was harder than expected**
+
+Auth took longer than it should have. Not the implementation itself, Supabase's auth APIs are clean, but all the edge cases around it. Account lockout after failed attempts. Clearing that lockout after a password reset. Making sure the apply-theme feature required password verification so nobody could change your theme without permission. The forgot password flow that validates both handle and email before sending a reset link. Each of those individually is not complicated. The combination of them adds up.
+
+The explore page card alignment was a rabbit hole. The core problem was that I was using CSS transform scale to shrink the profile previews down to card size. Transform scale shrinks the visual representation but the browser still reserves the original layout space, so the footer below each card floated in empty space. I went through several approaches before landing on CSS zoom, which unlike transform actually collapses the layout to match the visual size. Once I understood that distinction the fix was one line. Getting to that understanding took considerably longer.
+
+Link click tracking introduced a subtle bug that took me a while to track down. The click handler was only wired up on one layout variant. Rows worked. Bubbles, grid and icons silently dropped the event. The fix was straightforward once I found it, but it is a good example of how easy it is to miss something when you are building quickly and not testing every variant systematically after every change.
+
+The QR code was a nice problem to solve. I did not want to just call a third-party API and display the result. The branded version uses a canvas element where I draw the QR code, overlay the Linkdrop logo mark in the centre, add the LINKDROP header, the dot matrix, the handle and URL in the footer. The result looks like it belongs to the product rather than a generic QR generator.
+
+**The deploy pipeline**
+
+Vercel connected to GitHub. Push to main, auto-deploy. Env vars set in the Vercel dashboard, never committed to the repo. Custom subdomain via a CNAME record pointing at Vercel's edge network. The whole process from first deployment to custom domain took about twenty minutes once the build errors were fixed.
+
+There was one build error. A duplicate onClick attribute on an anchor element in the PublicProfile component. TypeScript catches that at build time but not in local dev, which is the kind of thing that only shows up when you run a proper production build. The lesson there is to run next build locally before pushing rather than treating Vercel as your build system.
+
+**What is next for it**
+
+A few things I want to add. The main one is scheduled link expiry, the ability to set a date after which a link automatically deactivates. Useful for time-limited offers or events. Profile verification badges are another, something that differentiates claimed and verified accounts on the explore page.
+
+The analytics layer could go deeper too. Right now it tracks total profile views and per-link clicks. Time-series data, referrer information, geographic breakdown, those would all be genuinely useful. The data is already being collected, it is just a question of what surfaces to build on top of it.
+
+**The honest summary**
+
+Linkdrop took roughly three weeks of evenings and weekends to get from nothing to deployed. It is a complete product. Auth, analytics, theming, QR codes, explore, docs, a landing page. Not a prototype. Not an MVP with obvious gaps. A thing I would actually use and be comfortable pointing people at.
+
+The thing I find most interesting about building products like this is how much the difficulty is distributed differently to where you expect. The things that sound complicated, a full auth system, real-time preview, a QR code generator, end up being tractable with the right tools. The things that sound trivial, card alignment on an explore page, consistent click tracking across layout variants, end up consuming disproportionate amounts of time.
+
+If you want to try it, it is at linkdrop.ayteelabs.com. Free, no credit card, takes about a minute to set up.
+    `.trim()
+  }
 ]
