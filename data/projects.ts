@@ -22,66 +22,6 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    slug: 'clickument',
-    title: 'Clickument',
-    category: 'Product',
-    year: '2026',
-    status: 'Live',
-    href: 'https://clickument.com',
-    blurb:
-      'A Chrome extension that captures your workflow step-by-step — with screenshots, annotations and structured exports — turning manual processes into clean, shareable documentation in minutes.',
-    mission:
-      'To eliminate the time sink of manual documentation by automating the capture and formatting of step-by-step processes directly inside the browser.',
-    overview:
-      'Clickument sits inside Chrome and records each action as a numbered step with an accompanying screenshot. Users can annotate, reorder and export their documentation into clean formats ready for internal wikis, client handoffs or team onboarding — without ever leaving the browser.',
-    impact:
-      'Cuts documentation time dramatically and produces consistent, professional output — removing the inconsistency of manually written guides across teams.',
-    tags: ['JavaScript', 'Chrome Extension', 'Vercel']
-  },
-
-   {
-    slug: 'arcade',
-    title: 'Arcade',
-    category: 'Product',
-    year: '2026',
-    status: 'Live',
-    href: 'https://arcade.ayteelabs.com',
-    blurb:
-      'A collection of fast-paced browser games built around reaction timing, pattern recognition and escalating difficulty — designed to be instantly playable with no setup.',
-    mission:
-      'To build a tight, addictive arcade experience in the browser that proves you can deliver genuinely fun gameplay with lean, performant frontend code.',
-    overview:
-      'Arcade is built with React and TypeScript, prioritising smooth 60fps animation and responsive input handling. Each game is self-contained with its own difficulty curve, score tracking and restart flow — kept intentionally minimal so the gameplay does the talking.',
-    impact:
-      'Demonstrates rapid product iteration, frontend game architecture, and the ability to ship polished, complete experiences outside of traditional app frameworks.',
-    tags: ['React', 'TypeScript', 'Vercel']
-  },
-
-  {
-    slug: 'aytee-labs',
-    title: 'AyTee Labs',
-    category: 'Portfolio / Brand',
-    year: '2026',
-    status: 'Live',
-    href: 'https://ayteelabs.com',
-    blurb:
-      'The official home of AyTee Labs — a digital product studio building focused tools, AI infrastructure and developer utilities under one independent brand.',
-    mission:
-      'To establish a structured, credible product studio that houses every independent build — giving each project a professional home and a coherent identity under one roof.',
-    overview:
-      'Built with Next.js App Router, Framer Motion and a custom design system, the AyTee Labs portfolio is itself a product — designed to reflect the quality and craft behind every project it showcases. Smooth scroll, reveal animations and a dark minimal aesthetic set the tone for the brand.',
-    impact:
-      'Acts as the central brand infrastructure and public-facing proof of work — turning a collection of independent projects into a cohesive studio identity.',
-    tags: [
-      'Next.js',
-      'Framer Motion',
-      'Tailwind',
-      'Design System',
-      'Brand Architecture'
-    ]
-  },
-
-  {
     slug: 'ankoryn',
     title: 'Ankoryn',
     category: 'AI Infrastructure',
@@ -120,87 +60,110 @@ export const projects: Project[] = [
   },
 
   {
-    slug: 'portix',
-    title: 'Portix',
-    category: 'Developer Tooling',
+    slug: 'aytee-labs',
+    title: 'AyTee Labs',
+    category: 'Portfolio / Brand',
     year: '2026',
     status: 'Live',
-    href: 'https://portix.ayteelabs.com',
+    href: 'https://ayteelabs.com',
+    blurb:
+      'The official home of AyTee Labs — a digital product studio building focused tools, AI infrastructure and developer utilities under one independent brand.',
+    mission:
+      'To establish a structured, credible product studio that houses every independent build — giving each project a professional home and a coherent identity under one roof.',
+    overview:
+      'Built with Next.js App Router, Framer Motion and a custom design system, the AyTee Labs portfolio is itself a product — designed to reflect the quality and craft behind every project it showcases. Smooth scroll, reveal animations and a dark minimal aesthetic set the tone for the brand.',
+    impact:
+      'Acts as the central brand infrastructure and public-facing proof of work — turning a collection of independent projects into a cohesive studio identity.',
+    tags: [
+      'Next.js',
+      'Framer Motion',
+      'Tailwind',
+      'Design System',
+      'Brand Architecture'
+    ]
+  },
+
+  {
+    slug: 'clickument',
+    title: 'Clickument',
+    category: 'Product',
+    year: '2026',
+    status: 'Live',
+    href: 'https://clickument.com',
+    blurb:
+      'A Chrome extension that captures your workflow step-by-step — with screenshots, annotations and structured exports — turning manual processes into clean, shareable documentation in minutes.',
+    mission:
+      'To eliminate the time sink of manual documentation by automating the capture and formatting of step-by-step processes directly inside the browser.',
+    overview:
+      'Clickument sits inside Chrome and records each action as a numbered step with an accompanying screenshot. Users can annotate, reorder and export their documentation into clean formats ready for internal wikis, client handoffs or team onboarding — without ever leaving the browser.',
+    impact:
+      'Cuts documentation time dramatically and produces consistent, professional output — removing the inconsistency of manually written guides across teams.',
+    tags: ['JavaScript', 'Chrome Extension', 'Vercel']
+  },
+
+  {
+    slug: 'arcade',
+    title: 'Arcade',
+    category: 'Product',
+    year: '2026',
+    status: 'Live',
+    href: 'https://arcade.ayteelabs.com',
+    blurb:
+      'A collection of fast-paced browser games built around reaction timing, pattern recognition and escalating difficulty — designed to be instantly playable with no setup.',
+    mission:
+      'To build a tight, addictive arcade experience in the browser that proves you can deliver genuinely fun gameplay with lean, performant frontend code.',
+    overview:
+      'Arcade is built with React and TypeScript, prioritising smooth 60fps animation and responsive input handling. Each game is self-contained with its own difficulty curve, score tracking and restart flow — kept intentionally minimal so the gameplay does the talking.',
+    impact:
+      'Demonstrates rapid product iteration, frontend game architecture, and the ability to ship polished, complete experiences outside of traditional app frameworks.',
+    tags: ['React', 'TypeScript', 'Vercel']
+  },
+
+  {
+    slug: 'linkdrop',
+    title: 'Linkdrop',
+    category: 'Product',
+    year: '2026',
+    status: 'Live',
+    href: 'https://linkdrop.ayteelabs.com',
     highlight: 'New',
     blurb:
-      'A developer tool that instantly exposes your localhost to a secure public URL — with Git branch awareness and a floating feedback overlay so collaborators can comment directly on what they see.',
+      'A minimal, design-forward link-in-bio tool built on the Nothing UI aesthetic — four layouts, full theming, click analytics and profile views, all behind a secure password-protected builder.',
     mission:
-      'To eliminate the friction of sharing in-progress local work — removing the need to deploy to staging just to get feedback on a feature that isn\'t ready yet.',
+      'To build a link-in-bio tool that actually looks good and gives creators real data — without the bloat, paywalls or generic templates of mainstream alternatives.',
     overview:
-      'Portix runs a lightweight tunnel from your local machine to a live public URL, with Git integration that labels each preview by branch. A non-intrusive feedback overlay lets reviewers pin comments to specific areas of the page — all without the developer needing to touch their deployment pipeline. Built on Node.js, Express, WebSockets and hosted on an Oracle Cloud VM behind NGINX.',
+      'Linkdrop is a full-stack Next.js application with Supabase as the backend. Users claim a handle, set a password, and get a live profile at linkdrop.ayteelabs.com/handle. The builder offers four layouts (rows, bubbles, grid, icons), per-link sizing, drag-to-reorder, pinning, per-link images, and a full theme system with hex colour pickers. Analytics track profile views and per-link click counts — shown live in the builder. An explore page lets users browse all profiles, sort by views or recency, search, and copy themes from other profiles with password verification. Security features include account lockout after 5 failed attempts, email-based password reset, and full account deletion.',
     impact:
-      'Shortens feedback loops significantly — letting developers share work-in-progress instantly and receive contextual, precise feedback without staging deployments or screen recordings.',
+      'Shipped as a complete, production-ready SaaS product — demonstrating full-stack architecture, auth systems, real-time data, complex UI state management, and polished design execution from zero to deployed.',
     tags: [
-      'Node.js',
+      'Next.js (App Router)',
+      'React',
       'TypeScript',
-      'Express',
-      'WebSockets (ws)',
-      'NGINX',
-      'Lets Encrypt',
-      'Cloudflare',
-      'Oracle Cloud VM',
-      'PM2',
-      'npm',
-      'Gumroad'
+      'Supabase',
+      'PostgreSQL',
+      'Supabase Auth',
+      'Supabase Storage',
+      'Vercel',
+      'Nothing UI',
+      'Full-stack',
     ]
   },
 
   {
     slug: 'moditquick',
     title: 'ModitQuick',
-    category: 'Product',
-    year: '2026',
-    status: 'Live',
-    href: 'https://www.moditquick.com',
-    blurb:
-      'A modular web productivity toolkit that consolidates the small but frequent tasks that slow down your day — from text transformation to quick calculations and formatting utilities.',
-    mission:
-      'To replace the habit of Googling for one-off tools by providing a fast, clean, always-available suite of everyday utilities in a single browser tab.',
-    overview:
-      'ModitQuick is built as a modular Next.js application where each utility is a self-contained component — making it easy to extend with new tools without touching existing ones. The interface is intentionally minimal: no accounts, no friction, just open and use.',
-    impact:
-      'Reduces the small but constant workflow interruptions caused by hunting for the right tool — keeping focus intact and day-to-day tasks moving faster.',
-    tags: ['Next.js', 'TypeScript', 'Vercel']
-  },
-
-  {
-    slug: 'specghost',
-    title: 'SpecGhost',
     category: 'Developer Tooling',
     year: '2026',
     status: 'Live',
-    href: 'https://specghost.ayteelabs.com',
+    href: 'https://moditquick.ayteelabs.com',
     blurb:
-      'AI-powered spec generation tool that turns requirements and user stories into structured test specifications instantly.',
+      'A bulk file and folder renaming tool built for developers and power users — with pattern matching, regex support and live preview before any changes are committed.',
     mission:
-      'To eliminate the manual overhead of writing test specs from scratch by generating structured, readable specifications directly from requirements.',
+      'To give developers and power users a fast, safe way to rename files and folders in bulk without resorting to brittle shell scripts or manual effort.',
     overview:
-      'SpecGhost takes raw requirement input and produces clean, structured test specifications using AI — reducing spec-writing time and improving consistency across QA workflows.',
+      'ModitQuick provides a clean interface for defining rename rules using plain text patterns or regex, previewing every change before applying it, and executing bulk renames with a single action. It handles edge cases like duplicate names, nested structures and extension preservation — making complex renaming tasks reproducible and reversible.',
     impact:
-      'Accelerates test planning cycles and standardises specification quality across engineering teams.',
-    tags: ['Next.js', 'TypeScript', 'AI', 'Vercel']
-  },
-
-  {
-    slug: 'bugreporter',
-    title: 'BugReporter',
-    category: 'Developer Tooling',
-    year: '2026',
-    status: 'Live',
-    href: 'https://bugreporter.ayteelabs.com',
-    blurb:
-      'Structured bug reporting tool that generates clean, consistent defect reports ready to paste into any tracker.',
-    mission:
-      'To remove the inconsistency and friction from writing bug reports by providing a guided, structured reporting workflow.',
-    overview:
-      'BugReporter guides users through a structured defect form — capturing steps to reproduce, expected vs actual behaviour, environment details and severity — then exports a clean, formatted report.',
-    impact:
-      'Improves defect communication quality and reduces back-and-forth between testers and developers.',
+      'Eliminates hours of manual renaming work and script-writing — giving developers a reliable, auditable tool for file system operations that are typically error-prone.',
     tags: ['Next.js', 'TypeScript', 'Tailwind', 'Vercel']
   },
 
@@ -237,6 +200,70 @@ export const projects: Project[] = [
     impact:
       'Redefines the browser as a productivity tool rather than an advertising platform — a long-term bet on focused computing.',
     tags: ['Chromium', 'C++', 'JavaScript', 'Browser Engineering', 'Privacy']
+  },
+
+  {
+    slug: 'portix',
+    title: 'Portix',
+    category: 'Developer Tooling',
+    year: '2026',
+    status: 'Live',
+    href: 'https://portix.ayteelabs.com',
+    highlight: 'New',
+    blurb:
+      'A developer tool that instantly exposes your localhost to a secure public URL — with Git branch awareness and a floating feedback overlay so collaborators can comment directly on what they see.',
+    mission:
+      'To remove the friction of sharing local development work by combining tunnelling, branch context and live feedback into a single, zero-config tool.',
+    overview:
+      'Portix runs as a lightweight CLI that establishes a secure tunnel to your localhost and generates a shareable URL. It detects your current Git branch automatically and surfaces that context alongside the link — so collaborators always know what they\'re reviewing. A floating overlay on the shared page lets reviewers leave pinned comments tied to specific elements, removing the need for back-and-forth in Slack or email.',
+    impact:
+      'Collapses the feedback loop between developers and stakeholders — making local work instantly shareable and reviewable without deployments, staging environments or screen sharing.',
+    tags: [
+      'Developer Tooling',
+      'CLI',
+      'Tunnelling',
+      'Git Integration',
+      'Real-time Feedback',
+      'Next.js',
+      'TypeScript',
+      'Node.js',
+      'Vercel'
+    ]
+  },
+
+  {
+    slug: 'specghost',
+    title: 'SpecGhost',
+    category: 'Developer Tooling',
+    year: '2026',
+    status: 'Live',
+    href: 'https://specghost.ayteelabs.com',
+    blurb:
+      'AI-powered spec generation tool that turns requirements and user stories into structured test specifications instantly.',
+    mission:
+      'To eliminate the manual overhead of writing test specs from scratch by generating structured, readable specifications directly from requirements.',
+    overview:
+      'SpecGhost takes raw requirement input and produces clean, structured test specifications using AI, reducing spec-writing time and improving consistency across QA workflows.',
+    impact:
+      'Accelerates test planning cycles and standardises specification quality across engineering teams.',
+    tags: ['Next.js', 'TypeScript', 'AI', 'Vercel']
+  },
+
+  {
+    slug: 'bugreporter',
+    title: 'BugReporter',
+    category: 'Developer Tooling',
+    year: '2026',
+    status: 'Live',
+    blurb:
+      'A structured defect reporting tool that guides testers through capturing everything a developer needs — steps, environment, severity and expected behaviour — then exports a clean, formatted report.',
+    mission:
+      'To raise the quality of defect communication by replacing inconsistent, freeform bug reports with a structured capture flow that produces developer-ready output every time.',
+    overview:
+      'BugReporter guides users through a structured defect form — capturing steps to reproduce, expected vs actual behaviour, environment details and severity — then exports a clean, formatted report.',
+    impact:
+      'Improves defect communication quality and reduces back-and-forth between testers and developers.',
+    tags: ['Next.js', 'TypeScript', 'Tailwind', 'Vercel']
   },
 
   {
