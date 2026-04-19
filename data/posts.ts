@@ -494,5 +494,76 @@ The thing I find most interesting about building products like this is how much 
 
 If you want to try it, it is at linkdrop.ayteelabs.com. Free, no credit card, takes about a minute to set up.
     `.trim()
+  },
+
+  {
+    slug: 'building-burnbin',
+    title: 'BurnBin: Why I Built a Tool That Destroys Itself',
+    date: '19 April 2026',
+    category: 'Build Notes',
+    readTime: '8 min read',
+    excerpt:
+      'Every time I shared a credential over Slack or email I knew it was sitting there forever. BurnBin is the tool I built to fix that — private, self-destructing snippet sharing with burn-after-read, expiry, and password protection.',
+    content: `
+There is a problem every developer runs into. You need to share something sensitive, an API key, a database password, a private config, and you reach for the nearest communication channel. Slack. Teams. Email. A quick DM.
+
+And the moment you do that, it lives there forever. Indexed. Searchable. Archived. Sitting in someone's inbox or chat history long after it needed to exist.
+
+That bothered me enough to build BurnBin.
+
+**Why I built it**
+
+I have worked in QA and test engineering for nine years. Credentials get shared constantly across teams, between developers, QA engineers, DevOps, support. And the tooling most teams reach for was not built with privacy in mind.
+
+Pastebin is public by default. Slack stores everything. Email is forever. Even private links on most sharing tools are just obscure, not actually protected. The content persists indefinitely on a server somewhere.
+
+What I wanted was something where the default behaviour is destruction, not persistence. Where sharing a password means it ceases to exist the moment it has been read. Where privacy is not a premium feature, it is the entire point.
+
+**What I built**
+
+BurnBin is a private snippet sharing tool. You paste content, set the rules, get a secret link.
+
+Burn after read is the headline feature. When a paste is set to burn, the moment a recipient opens it the server marks it as destroyed in the database. Not hidden. Gone. Subsequent requests return a 410 Gone response regardless of who is asking.
+
+Time-based expiry lets you set a paste to vanish after 1 hour, 24 hours, 7 days, or 30 days. Good for temporary sharing where you do not need the drama of burn-after-read but still want things to clean up after themselves.
+
+Password protection adds a second layer. Recipients hit a lock screen before the content is revealed. Passwords are hashed server-side with SHA-256, never stored in plain text, never sent back to the client.
+
+Private links mean every paste gets a random 10-character slug. No public index, no discovery, no search engine crawling. The only way to see a paste is to have the exact URL.
+
+Syntax highlighting via Monaco Editor, the same editor that powers VS Code, gives you proper colour coding for 20+ languages. Because there is no reason a private tool should look worse than a public one.
+
+A raw endpoint at /api/raw/{slug} returns plain text for curl and automation use cases. Useful when you want to pipe a shared script directly into your terminal.
+
+The whole thing is built on Next.js, Supabase, and deployed on Vercel.
+
+**The challenges**
+
+Getting burn-after-read to actually work sounds simple. Mark a record as burned when it is viewed. Check if it is burned on subsequent requests. Done.
+
+In practice it took an embarrassingly long time to get right.
+
+The first issue was the Supabase JavaScript client caching query results in memory. The first fetch would correctly return burned: false, burn the record, and set burned: true in the database. But the second fetch, even after a hard refresh in a different browser, was returning the same cached response. The JS client was serving stale data from memory, completely bypassing the database.
+
+The fix was to stop using the Supabase JS client for reads entirely and go directly to the Supabase REST API via fetch with cache: no-store. No client-side caching, no stale data, every request hits the database fresh. Simple fix. Hours to find.
+
+React hydration errors on the landing page came next. The landing page needed custom CSS that was not part of the Tailwind system. My first approach was to inline the styles inside the component as a style tag. Next.js did not like this. The server renders the component one way, the client rehydrates it slightly differently, and React throws a hydration mismatch error that kills the whole page. The fix was to move all styles into a separate CSS file imported at the top of the component.
+
+Rate limiting without infrastructure was another one. I wanted basic rate limiting, 10 pastes per IP per hour, without adding Redis or any external service. The solution was a simple in-memory Map on the server. It is not perfect and it resets on server restart, but for a side project getting modest traffic it is entirely sufficient and adds zero complexity to the infrastructure.
+
+The node_modules git disaster was entirely on me. I added the .gitignore file after running git add, which meant 27,000 node_modules files were already staged. The first push failed because a compiled binary inside the Next.js SWC package was 109MB and GitHub's file size limit is 100MB. The fix was to nuke the git history and start fresh. Lesson learned: always create .gitignore before your first git add.
+
+**What I learned**
+
+Caching is everywhere and it will bite you. The burn-after-read bug was purely a caching issue. When you are building anything where data freshness is critical, and for a burn-after-read tool it is the whole product, you have to be paranoid about every layer of the stack that might cache your reads.
+
+Simple security is better than complex security. SHA-256 password hashing, server-side checks on every request, no trust of the client for any security decision. None of it is complicated but it is solid. Getting the basics right consistently matters more than over-engineering.
+
+The landing page is part of the product. I spent as much time on it as I did on some of the core features. A product without a clear front door is not really a product.
+
+Ship the weird edge cases. The raw endpoint, the character counter, the save this link now warning. None of these were in the original spec. They all came from thinking about how people actually use a tool like this. Building for real usage patterns matters.
+
+BurnBin is live at burnbin.ayteelabs.com. It works, it is production-ready, and it solves the problem I set out to solve.
+    `.trim()
   }
 ]
