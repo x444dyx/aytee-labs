@@ -84,39 +84,37 @@ export const projects: Project[] = [
   },
 
   {
-    slug: 'clickument',
-    title: 'Clickument',
+    slug: 'burnbin',
+    title: 'BurnBin',
     category: 'Product',
     year: '2026',
     status: 'Live',
-    href: 'https://clickument.com',
+    href: 'https://burnbin.ayteelabs.com',
+    highlight: 'New',
     blurb:
-      'A Chrome extension that captures your workflow step-by-step — with screenshots, annotations and structured exports — turning manual processes into clean, shareable documentation in minutes.',
+      'A private snippet sharing tool built around burn-after-read destruction — share code, keys or text via a secret link that vanishes after first view, with password protection and expiry timers.',
     mission:
-      'To eliminate the time sink of manual documentation by automating the capture and formatting of step-by-step processes directly inside the browser.',
+      'To give developers and teams a frictionless, private way to share sensitive content — where the default is destruction, not persistence, and privacy is guaranteed by design.',
     overview:
-      'Clickument sits inside Chrome and records each action as a numbered step with an accompanying screenshot. Users can annotate, reorder and export their documentation into clean formats ready for internal wikis, client handoffs or team onboarding — without ever leaving the browser.',
+      'BurnBin is a full-stack Next.js application backed by Supabase that lets users paste any content, configure expiry behaviour, and share a one-time secret link. Core features include burn-after-read self-destruction, time-based expiry (1h to 30d), optional password protection with server-side SHA-256 hashing, syntax highlighting via Monaco Editor for 20+ languages, a raw text endpoint for curl and automation, and a 50,000 character limit with live counter. The API is protected by IP-based rate limiting and request size validation. A landing page with scroll animations communicates the product clearly to non-technical users.',
     impact:
-      'Cuts documentation time dramatically and produces consistent, professional output — removing the inconsistency of manually written guides across teams.',
-    tags: ['JavaScript', 'Chrome Extension', 'Vercel']
-  },
-
-  {
-    slug: 'arcade',
-    title: 'Arcade',
-    category: 'Product',
-    year: '2026',
-    status: 'Live',
-    href: 'https://arcade.ayteelabs.com',
-    blurb:
-      'A collection of fast-paced browser games built around reaction timing, pattern recognition and escalating difficulty — designed to be instantly playable with no setup.',
-    mission:
-      'To build a tight, addictive arcade experience in the browser that proves you can deliver genuinely fun gameplay with lean, performant frontend code.',
-    overview:
-      'Arcade is built with React and TypeScript, prioritising smooth 60fps animation and responsive input handling. Each game is self-contained with its own difficulty curve, score tracking and restart flow — kept intentionally minimal so the gameplay does the talking.',
-    impact:
-      'Demonstrates rapid product iteration, frontend game architecture, and the ability to ship polished, complete experiences outside of traditional app frameworks.',
-    tags: ['React', 'TypeScript', 'Vercel']
+      'Demonstrates end-to-end product thinking — from security architecture and API design to UI polish and landing page copy — shipping a complete, production-ready tool with genuine utility for developers.',
+    tags: [
+      'Next.js',
+      'TypeScript',
+      'Supabase',
+      'PostgreSQL',
+      'Row Level Security',
+      'Monaco Editor',
+      'Syntax Highlighting',
+      'Rate Limiting',
+      'Password Hashing',
+      'SHA-256',
+      'REST API',
+      'Cron Jobs',
+      'Tailwind CSS',
+      'Vercel'
+    ]
   },
 
   {
@@ -150,21 +148,39 @@ export const projects: Project[] = [
   },
 
   {
-    slug: 'moditquick',
-    title: 'ModitQuick',
-    category: 'Developer Tooling',
+    slug: 'clickument',
+    title: 'Clickument',
+    category: 'Product',
     year: '2026',
     status: 'Live',
-    href: 'https://moditquick.ayteelabs.com',
+    href: 'https://clickument.com',
     blurb:
-      'A bulk file and folder renaming tool built for developers and power users — with pattern matching, regex support and live preview before any changes are committed.',
+      'A Chrome extension that captures your workflow step-by-step — with screenshots, annotations and structured exports — turning manual processes into clean, shareable documentation in minutes.',
     mission:
-      'To give developers and power users a fast, safe way to rename files and folders in bulk without resorting to brittle shell scripts or manual effort.',
+      'To eliminate the time sink of manual documentation by automating the capture and formatting of step-by-step processes directly inside the browser.',
     overview:
-      'ModitQuick provides a clean interface for defining rename rules using plain text patterns or regex, previewing every change before applying it, and executing bulk renames with a single action. It handles edge cases like duplicate names, nested structures and extension preservation — making complex renaming tasks reproducible and reversible.',
+      'Clickument sits inside Chrome and records each action as a numbered step with an accompanying screenshot. Users can annotate, reorder and export their documentation into clean formats ready for internal wikis, client handoffs or team onboarding — without ever leaving the browser.',
     impact:
-      'Eliminates hours of manual renaming work and script-writing — giving developers a reliable, auditable tool for file system operations that are typically error-prone.',
-    tags: ['Next.js', 'TypeScript', 'Tailwind', 'Vercel']
+      'Cuts documentation time dramatically and produces consistent, professional output — removing the inconsistency of manually written guides across teams.',
+    tags: ['JavaScript', 'Chrome Extension', 'Vercel']
+  },
+
+  {
+    slug: 'arcade',
+    title: 'Arcade',
+    category: 'Product',
+    year: '2026',
+    status: 'Live',
+    href: 'https://arcade.ayteelabs.com',
+    blurb:
+      'A collection of fast-paced browser games built around reaction timing, pattern recognition and escalating difficulty — designed to be instantly playable with no setup.',
+    mission:
+      'To build a tight, addictive arcade experience in the browser that proves you can deliver genuinely fun gameplay with lean, performant frontend code.',
+    overview:
+      'Arcade is built with React and TypeScript, prioritising smooth 60fps animation and responsive input handling. Each game is self-contained with its own difficulty curve, score tracking and restart flow — kept intentionally minimal so the gameplay does the talking.',
+    impact:
+      'Demonstrates rapid product iteration, frontend game architecture, and the ability to ship polished, complete experiences outside of traditional app frameworks.',
+    tags: ['React', 'TypeScript', 'Vercel']
   },
 
   {
@@ -203,35 +219,6 @@ export const projects: Project[] = [
   },
 
   {
-    slug: 'portix',
-    title: 'Portix',
-    category: 'Developer Tooling',
-    year: '2026',
-    status: 'Live',
-    href: 'https://portix.ayteelabs.com',
-    highlight: 'New',
-    blurb:
-      'A developer tool that instantly exposes your localhost to a secure public URL — with Git branch awareness and a floating feedback overlay so collaborators can comment directly on what they see.',
-    mission:
-      'To remove the friction of sharing local development work by combining tunnelling, branch context and live feedback into a single, zero-config tool.',
-    overview:
-      'Portix runs as a lightweight CLI that establishes a secure tunnel to your localhost and generates a shareable URL. It detects your current Git branch automatically and surfaces that context alongside the link — so collaborators always know what they\'re reviewing. A floating overlay on the shared page lets reviewers leave pinned comments tied to specific elements, removing the need for back-and-forth in Slack or email.',
-    impact:
-      'Collapses the feedback loop between developers and stakeholders — making local work instantly shareable and reviewable without deployments, staging environments or screen sharing.',
-    tags: [
-      'Developer Tooling',
-      'CLI',
-      'Tunnelling',
-      'Git Integration',
-      'Real-time Feedback',
-      'Next.js',
-      'TypeScript',
-      'Node.js',
-      'Vercel'
-    ]
-  },
-
-  {
     slug: 'specghost',
     title: 'SpecGhost',
     category: 'Developer Tooling',
@@ -264,6 +251,53 @@ export const projects: Project[] = [
     impact:
       'Improves defect communication quality and reduces back-and-forth between testers and developers.',
     tags: ['Next.js', 'TypeScript', 'Tailwind', 'Vercel']
+  },
+
+  {
+    slug: 'moditquick',
+    title: 'ModitQuick',
+    category: 'Developer Tooling',
+    year: '2026',
+    status: 'Live',
+    href: 'https://moditquick.ayteelabs.com',
+    blurb:
+      'A bulk file and folder renaming tool built for developers and power users — with pattern matching, regex support and live preview before any changes are committed.',
+    mission:
+      'To give developers and power users a fast, safe way to rename files and folders in bulk without resorting to brittle shell scripts or manual effort.',
+    overview:
+      'ModitQuick provides a clean interface for defining rename rules using plain text patterns or regex, previewing every change before applying it, and executing bulk renames with a single action. It handles edge cases like duplicate names, nested structures and extension preservation — making complex renaming tasks reproducible and reversible.',
+    impact:
+      'Eliminates hours of manual renaming work and script-writing — giving developers a reliable, auditable tool for file system operations that are typically error-prone.',
+    tags: ['Next.js', 'TypeScript', 'Tailwind', 'Vercel']
+  },
+
+  {
+    slug: 'portix',
+    title: 'Portix',
+    category: 'Developer Tooling',
+    year: '2026',
+    status: 'Live',
+    href: 'https://portix.ayteelabs.com',
+    highlight: 'New',
+    blurb:
+      'A developer tool that instantly exposes your localhost to a secure public URL — with Git branch awareness and a floating feedback overlay so collaborators can comment directly on what they see.',
+    mission:
+      'To remove the friction of sharing local development work by combining tunnelling, branch context and live feedback into a single, zero-config tool.',
+    overview:
+      'Portix runs as a lightweight CLI that establishes a secure tunnel to your localhost and generates a shareable URL. It detects your current Git branch automatically and surfaces that context alongside the link — so collaborators always know what they\'re reviewing. A floating overlay on the shared page lets reviewers leave pinned comments tied to specific elements, removing the need for back-and-forth in Slack or email.',
+    impact:
+      'Collapses the feedback loop between developers and stakeholders — making local work instantly shareable and reviewable without deployments, staging environments or screen sharing.',
+    tags: [
+      'Developer Tooling',
+      'CLI',
+      'Tunnelling',
+      'Git Integration',
+      'Real-time Feedback',
+      'Next.js',
+      'TypeScript',
+      'Node.js',
+      'Vercel'
+    ]
   },
 
   {
@@ -355,4 +389,5 @@ export const projects: Project[] = [
       'Multiple production-affecting issues resolved faster than the standard defect lifecycle would allow. Fixes I identified and verified have been implemented directly into release candidates, reducing customer-facing friction and support overhead. Demonstrates a QA approach that treats defect resolution as a collaborative engineering activity rather than a handoff process.',
     tags: ['Root Cause Analysis', 'Windows', 'Linux', 'Shell Scripting', 'Installer Engineering', 'Cross-Platform Testing', 'Environment Debugging', 'Dev Collaboration', 'Release Impact']
   }
+
 ]
