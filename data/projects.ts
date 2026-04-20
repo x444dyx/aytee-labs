@@ -259,7 +259,7 @@ export const projects: Project[] = [
     category: 'Developer Tooling',
     year: '2026',
     status: 'Live',
-    href: 'https://moditquick.ayteelabs.com',
+    href: 'https://www.moditquick.com',
     blurb:
       'A bulk file and folder renaming tool built for developers and power users — with pattern matching, regex support and live preview before any changes are committed.',
     mission:
