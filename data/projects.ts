@@ -84,6 +84,41 @@ export const projects: Project[] = [
   },
 
   {
+    slug: 'layerbuzz',
+    title: 'LayerBuzz',
+    category: 'Product',
+    year: '2026',
+    status: 'Live',
+    href: 'https://layerbuzz.ayteelabs.com',
+    highlight: 'New',
+    blurb:
+      'A creator marketplace for selling digital products — files, software, music, templates and more. Fair fees (3% per sale), beautiful storefronts, real analytics, and no surprise bans.',
+    mission:
+      'To build a fairer, more transparent alternative to Gumroad and Payhip — where creators keep more of what they earn, have full control over their products, and never have to worry about unexplained platform bans.',
+    overview:
+      'LayerBuzz is a full-stack digital marketplace built on Next.js 14, Supabase, Stripe Connect and Resend. Sellers can create a storefront, upload files or software licence keys, set prices, create discount codes, and track analytics — all from a clean dashboard. Buyers get instant download links or licence keys by email after purchase. The platform takes a 3% fee per sale with no monthly costs. Core infrastructure includes Stripe Connect for multi-party payments, Resend for transactional email, Supabase for auth and storage, and a custom licence key generation and validation system used directly by Portix.',
+    impact:
+      'Shipped a fully production-ready SaaS marketplace from scratch — covering payments, auth, file storage, email delivery, licence key infrastructure, a public API and a complete seller dashboard. Powers the commerce layer for Portix Pro directly.',
+    tags: [
+      'Next.js 14',
+      'TypeScript',
+      'Supabase',
+      'PostgreSQL',
+      'Row Level Security',
+      'Stripe Connect',
+      'Resend',
+      'Tailwind CSS',
+      'React',
+      'SaaS Architecture',
+      'Multi-party Payments',
+      'Licence Key System',
+      'File Storage',
+      'Transactional Email',
+      'Vercel'
+    ]
+  },
+
+  {
     slug: 'burnbin',
     title: 'BurnBin',
     category: 'Product',

@@ -565,5 +565,90 @@ Ship the weird edge cases. The raw endpoint, the character counter, the save thi
 
 BurnBin is live at burnbin.ayteelabs.com. It works, it is production-ready, and it solves the problem I set out to solve.
     `.trim()
+  },
+
+  {
+    slug: 'building-layerbuzz',
+    title: 'LayerBuzz: Building a Digital Marketplace From Scratch Because the Existing Ones Are Not Good Enough',
+    date: '24 April 2026',
+    category: 'Build Notes',
+    readTime: '10 min read',
+    excerpt:
+      'Gumroad bans creators without warning. Payhip takes a bigger cut than it lets on. I wanted something fairer, cleaner and honest about what it costs. So I built it.',
+    content: `
+I have been selling Portix Pro through a marketplace for a while. It works, technically. But every time I looked at the fees, the restrictions, and the horror stories from other creators getting banned without explanation, I felt the same thing I feel every time I use a tool that does not respect the person using it.
+
+I could build this better.
+
+LayerBuzz is the result. A digital marketplace where creators sell files, software, music, templates and anything else digital. Three percent per sale. No monthly fee. No surprise bans. Beautiful storefronts. Real analytics. And a licence key system built into the core for software sellers.
+
+**Why the existing platforms are not good enough**
+
+Gumroad is the name everyone knows. And Gumroad is also the platform that has banned creators mid-launch, held payouts without explanation, and changed its fee structure in ways that caught sellers off guard. The product itself is fine. The trust relationship is not.
+
+Payhip is more creator-friendly but the free tier takes five percent and the branding options are limited unless you pay for a subscription. Which is fine, but it means the headline pitch of zero monthly fees is technically true while obscuring the actual cost.
+
+Lemon Squeezy is good but it is aimed squarely at SaaS. If you are selling music, PDFs, Notion templates or design assets it is a slightly awkward fit.
+
+None of them have a built-in licence key system that actually works for software distribution. You can bolt one on with integrations but that is friction nobody needs.
+
+I wanted one platform that handled all of it cleanly.
+
+**What I built**
+
+LayerBuzz is a full-stack Next.js 14 application backed by Supabase and Stripe Connect.
+
+Sellers sign up, connect their Stripe account, and get a public storefront at layerbuzz.ayteelabs.com/store/username. From the dashboard they can create products, upload files, set prices, write descriptions, add cover images, configure discount codes, and track orders and analytics. The platform takes three percent of each sale and transfers the rest directly to the seller's Stripe account in real time.
+
+There are two product types. File products deliver a download link to the buyer by email immediately after purchase, with a configurable number of download attempts. Licence key products generate a unique key, store it in the database, and email it to the buyer with their custom licence subject and message. Both flows are triggered automatically by a Stripe webhook.
+
+The storefront system is properly themed. Sellers choose from five themes, Midnight, Slate, Nord, Violet, and Dawn, which control the colour palette across their entire store. The theme is applied server-side with an inline script in the head to prevent flash of unstyled content. Seller stores at /store/username use the seller's chosen theme. The landing page always uses Midnight.
+
+Social links are stored as a JSON array in the profiles table and render across both the store page and individual product pages. Twelve platforms are supported including Twitter, Instagram, TikTok, Spotify, SoundCloud and GitHub.
+
+The licence key system is the piece I am most proud of. Keys are generated with a seller-configured prefix, issued on purchase, stored in Supabase with activation tracking, and validated against a public API endpoint. Portix uses this endpoint directly. When someone buys Portix Pro on LayerBuzz, the key is generated, emailed, and immediately usable in the CLI. No manual step, no CSV download, no copy-paste from a dashboard.
+
+**The challenges**
+
+Stripe Connect in live mode requires significantly more setup than the sandbox suggests. You cannot just create connected accounts the moment you go live. Stripe requires you to complete a platform profile, acknowledge negative balance liability, acknowledge ongoing seller compliance, create a live customer, create a live invoice, and verify your identity before the Connect API will respond with anything other than an error. None of this is documented clearly in one place. I worked through it step by step on launch day.
+
+The webhook was the most painful debugging session of the build. The webhook fires, returns 200 OK, the order gets created in Supabase, and then nothing. No email, no licence key. The problem was a single missing method call. The Supabase insert was returning an array, not a single object, because I had not chained .select().single() onto the end. So newOrder.id was undefined. The licence issue call received a null order ID, failed silently, and the webhook returned 200 anyway because the order had been created successfully.
+
+Two hours of staring at Stripe logs before I noticed.
+
+The NEXT_PUBLIC_APP_URL environment variable was another quiet failure. The webhook fires server-side. When it tries to call the internal licence issue endpoint it constructs the URL from the app URL environment variable. In development I had not set this variable, so it was defaulting to localhost. The webhook was being delivered through a Portix tunnel but the internal fetch was trying to reach localhost, which from inside the server resolves to itself, not the tunnelled URL. Setting NEXT_PUBLIC_APP_URL to the tunnel URL fixed it immediately.
+
+Supabase auth emails were broken for the entire launch day because of a platform outage affecting new project DNS resolution. Nothing I could debug. Nothing I could fix. Just bad timing. I ended up manually creating user accounts via the Supabase dashboard while waiting for it to resolve.
+
+The image crop modal introduced a build error on Vercel because react-easy-crop was not installed. It worked locally because I had it in my global node modules. Clean installs on Vercel do not have that luxury. A reminder that your local environment lying to you is a real and constant risk.
+
+**The architecture decisions I would make again**
+
+Stripe Connect over manual payouts was the right call. The alternative is collecting all payments centrally and paying sellers out manually, which is a compliance and accounting nightmare. Connect handles the money movement, the tax reporting, and the identity verification at the seller level. Worth the setup pain.
+
+Supabase for everything was the right call. Auth, database, storage, row level security, realtime if I need it later. One platform, one dashboard, no stitching together multiple services. The free tier is generous enough that LayerBuzz can grow significantly before I need to think about costs.
+
+Server-side theme application with an inline script was the right call. The alternative, applying the theme in a client component on mount, produces a visible flash every time the page loads. For a marketplace where storefronts are the product, that flash is unacceptable.
+
+Resend for transactional email was the right call. The API is clean, the logs are clear, the deliverability is solid, and the free tier covers a serious volume of emails for a product at this stage.
+
+**What is missing and what comes next**
+
+The things I shipped intentionally without are subscriptions, affiliate codes, bundle pricing, a public discovery feed, and custom domain support for seller storefronts. All of them are on the list. None of them were right for v1.
+
+The discovery feed is probably the most important. Right now LayerBuzz is a tool for sellers who bring their own audience. For it to become a marketplace in the true sense, buyers need to be able to find products they were not already looking for. That requires a different kind of product thinking and I want to get the seller experience right first.
+
+Custom domains are the other one I keep coming back to. If you are a creator with your own brand, pointing shop.yourname.com at your LayerBuzz storefront changes the trust dynamic entirely. It is a meaningful feature for serious sellers and not technically complicated to build.
+
+**What I learned**
+
+Webhooks need to be treated like a different programming model entirely. They are not synchronous. They do not throw errors in places you can catch them. They arrive out of order, retry on failure, and your only debugging tool is logs. Every webhook handler I write from now on will have explicit logging at every step.
+
+Environment variables are a class of bug you cannot afford to be casual about. The difference between localhost and a real URL cost me two hours on launch day. I now have a pre-deployment checklist that includes every environment variable the application needs to function and I verify it before every push to production.
+
+Building the commerce layer for your own products first is the right way to validate a marketplace. Portix Pro sells through LayerBuzz. I am the first seller. I have direct skin in the game. If the licence key delivery breaks, I know about it immediately. If the checkout flow is confusing, I feel it. Building your own product on your own platform is the fastest quality feedback loop there is.
+
+LayerBuzz is live at layerbuzz.ayteelabs.com. Three percent per sale. No monthly fee. Start selling free.
+    `.trim()
   }
 ]
