@@ -650,5 +650,60 @@ Building the commerce layer for your own products first is the right way to vali
 
 LayerBuzz is live at layerbuzz.ayteelabs.com. Three percent per sale. No monthly fee. Start selling free.
     `.trim()
+  },
+
+  {
+    slug: 'one-commerce-layer-for-everything',
+    title: 'Why I Moved Every Product I Sell Onto LayerBuzz',
+    date: '25 April 2026',
+    category: 'Build Notes',
+    readTime: '5 min read',
+    excerpt:
+      'Portix was using Stripe directly. Ankoryn had its own checkout. Clickument pointed straight at a Stripe payment link. All three now sell through LayerBuzz. Here is why that was the right call.',
+    content: `
+When I shipped LayerBuzz I had three products already selling through different payment systems. Portix Pro had its own licence validation API and pointed buyers at a Stripe payment link. Ankoryn had a built-in checkout flow that called its own API routes to create Stripe sessions. Clickument had a hardcoded Stripe buy URL baked directly into the extension popup.
+
+All three worked. All three were also a maintenance problem waiting to happen.
+
+**The problem with three different commerce systems**
+
+Each product having its own payment system sounds fine until you think about what that actually means in practice.
+
+Portix had its own Stripe product, its own webhook, its own licence validation endpoint. When I needed to update how licence keys were issued, I had to touch Portix-specific code. When I wanted to see all my sales in one place, I could not. When I wanted to apply a discount code across my products, there was no concept of that.
+
+Ankoryn's checkout was the most elaborate. API routes for creating Stripe sessions, a webhook listener for purchase events, a separate licence verification flow. All of that living inside the Ankoryn codebase meant that any change to how I handled payments required touching the Ankoryn repository, running tests, deploying a new version. For a product that is otherwise stable, that is a lot of overhead for what should be a shared concern.
+
+Clickument was the simplest and also the most brittle. A hardcoded Stripe payment link in a Chrome extension means every time that link needs updating, a new extension version has to go through Chrome Web Store review. Which takes days.
+
+**The case for a single commerce layer**
+
+What I actually wanted was one place where all of my products live, one dashboard where I can see every order, one system for generating and validating licence keys, and one place to update pricing, apply discounts, or retire a product.
+
+That is exactly what LayerBuzz gives me now.
+
+Portix Pro is a product on LayerBuzz. The CLI validates licence keys against the LayerBuzz API. The purchase flow is the LayerBuzz checkout. If I want to offer a discount on Portix, I create a discount code in the LayerBuzz dashboard and it works immediately. No code changes, no deployment.
+
+Ankoryn Pro is the same. The upgrade button in the app now opens the LayerBuzz product page. The licence validation in the app calls the LayerBuzz validate endpoint. I removed an entire API directory from the Ankoryn codebase because LayerBuzz handles all of it.
+
+Clickument pointed directly at a Stripe payment link for years. Changing that required updating the extension and waiting for Chrome review. Now it points at the LayerBuzz product page. When I need to change the price, add a bundle, or run a promotion, I do it in the LayerBuzz dashboard and it is live immediately. The extension never needs to change unless the product itself changes.
+
+**The practical benefits**
+
+The most immediate one is visibility. Every sale across every product shows up in one orders table. I can see at a glance what is selling, when, and to whom. Before this, getting that picture required cross-referencing Stripe dashboards for three separate products.
+
+Licence key management is centralised. Every key that has ever been issued, for any product, lives in one database. If I need to revoke a key, update activation limits, or check whether a customer's key is valid, I have one place to look.
+
+Discount codes work across the catalogue. I can create a code that applies to a specific product or to everything. That flexibility did not exist when each product had its own system.
+
+The maintenance burden is dramatically lower. Portix, Ankoryn and Clickument do not need to care about payments anymore. They just need to know where to send someone who wants to buy, and where to validate a key. Both of those are now a single URL.
+
+**What this means for future products**
+
+Any product I build from here that needs a payment layer gets it from LayerBuzz. No Stripe integration to build, no webhook handler to write, no licence validation endpoint to maintain. Create a product in the dashboard, set the price, point the buy button at the product page. Done in ten minutes.
+
+That is the compound benefit of building the infrastructure once. The first product on LayerBuzz required months of work to get the commerce layer right. Every product after it gets that for free.
+
+If you are building multiple products and managing separate payment systems for each one, it is worth asking whether that complexity is actually buying you anything. In my case it was not. One commerce layer, properly built, is worth more than three separate ones held together with environment variables and crossed fingers.
+    `.trim()
   }
 ]
