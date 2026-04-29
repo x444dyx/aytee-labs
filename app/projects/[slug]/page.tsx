@@ -33,9 +33,6 @@ export default function ProjectPage({ params }: Props) {
 
   return (
     <main className="relative min-h-screen project-scroll">
-      <div className="pointer-events-none absolute inset-0 grid-overlay" />
-      <div className="grain" />
-
       <section className="project-section min-h-screen flex flex-col justify-center px-6 max-w-6xl mx-auto">
         <Link
           href="/"
@@ -90,40 +87,22 @@ export default function ProjectPage({ params }: Props) {
         <div className="grid md:grid-cols-2 gap-20 w-full">
           <div>
             <h2 className="text-5xl font-serif mb-10">The Mission</h2>
-
-            <p className="text-white/60 leading-relaxed text-lg">
-              {project.mission}
-            </p>
-
-            <p className="text-white/50 leading-relaxed text-base mt-8">
-              {project.overview}
-            </p>
+            <p className="text-white/60 leading-relaxed text-lg">{project.mission}</p>
+            <p className="text-white/50 leading-relaxed text-base mt-8">{project.overview}</p>
           </div>
 
           <div className="border-l border-white/10 pl-12 space-y-14">
             <div>
-              <p className="text-xs uppercase tracking-widest text-white/40 mb-3">
-                Status
-              </p>
+              <p className="text-xs uppercase tracking-widest text-white/40 mb-3">Status</p>
               <p className="text-4xl font-serif">{project.status}</p>
             </div>
-
             <div>
-              <p className="text-xs uppercase tracking-widest text-white/40 mb-3">
-                Impact
-              </p>
-              <p className="text-2xl font-serif text-white/80">
-                {project.impact}
-              </p>
+              <p className="text-xs uppercase tracking-widest text-white/40 mb-3">Impact</p>
+              <p className="text-2xl font-serif text-white/80">{project.impact}</p>
             </div>
-
             <div>
-              <p className="text-xs uppercase tracking-widest text-white/40 mb-3">
-                Category
-              </p>
-              <p className="text-2xl font-serif text-white/80">
-                {project.category}
-              </p>
+              <p className="text-xs uppercase tracking-widest text-white/40 mb-3">Category</p>
+              <p className="text-2xl font-serif text-white/80">{project.category}</p>
             </div>
           </div>
         </div>
@@ -131,7 +110,6 @@ export default function ProjectPage({ params }: Props) {
 
       <section className="project-section min-h-screen flex flex-col justify-center px-6 max-w-6xl mx-auto">
         <h2 className="text-5xl font-serif mb-20">Core Technologies</h2>
-
         <div className="grid md:grid-cols-3 gap-20">
           {project.tags.map((tag) => (
             <div key={tag} className="space-y-6">

@@ -12,9 +12,6 @@ export default function BlogPage() {
 
   return (
     <main className="relative min-h-screen">
-      <div className="pointer-events-none absolute inset-0 grid-overlay" />
-      <div className="grain" />
-
       <Nav />
 
       <section className="mx-auto w-full max-w-5xl px-5 pt-36 pb-12">
