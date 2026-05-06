@@ -36,9 +36,6 @@ export default function BlogPostPage({ params }: Props) {
 
   return (
     <main className="relative min-h-screen">
-      <div className="pointer-events-none absolute inset-0 grid-overlay" />
-      <div className="grain" />
-
       <Nav />
 
       <Link
