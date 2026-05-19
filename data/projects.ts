@@ -272,6 +272,24 @@ export const projects: Project[] = [
   },
 
   {
+    slug: 'specforge',
+    title: 'SpecForge',
+    category: 'Developer Tooling',
+    year: '2026',
+    status: 'Live',
+    href: 'https://specforge.ayteelabs.com',
+    blurb:
+      'Plain English in, structured test scenarios out. SpecForge generates Gherkin, Robot Framework, Cypress, Playwright, JUnit and Jest from a simple feature description — tabbed, ready to copy or export.',
+    mission:
+      'To eliminate the slow, repetitive work of translating feature descriptions into structured test syntax — giving testers a solid first draft in seconds rather than minutes.',
+    overview:
+      'SpecForge takes a plain English description of a feature or behaviour and generates test scenarios across whichever formats you need. You select the formats before generating and get tabbed output for each one. The input requires no knowledge of the output format — you describe what the feature does, the edge cases, what should and should not happen, and SpecForge handles the translation into structured test syntax with the right Given/When/Then coverage.',
+    impact:
+      'Cuts the time from requirement to structured test scenario dramatically. Testers review and refine rather than write from scratch — improving both speed and consistency of test coverage across formats.',
+    tags: ['Next.js', 'TypeScript', 'AI', 'Gherkin', 'Playwright', 'Cypress', 'Jest', 'JUnit', 'Robot Framework', 'Vercel']
+  },
+
+  {
     slug: 'bugreporter',
     title: 'BugReporter',
     category: 'Developer Tooling',
