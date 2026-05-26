@@ -126,49 +126,50 @@ If you work in QA and you're not experimenting with AI to handle the structural,
     excerpt:
       'Every AI conversation I had felt like starting from scratch. No context, no memory, no continuity. Ankoryn started as a frustration and turned into the most technically interesting thing I have built.',
     content: `
-Every AI conversation starts the same way. You open a new chat, you re-explain who you are, what you're working on, what context matters. The model has no idea. It's a blank slate every single time.
+I use AI constantly. For thinking through problems, drafting content, exploring ideas, working through technical decisions. But the thing that kept frustrating me was how every session started from zero.
 
-For casual use that's fine. For anyone using AI as a serious part of their workflow, it gets old fast.
+You explain your context again. You re-establish what you are working on. You remind the model what it said two days ago. If you switch between models, you lose everything. The AI is powerful but it has no memory of you, no continuity, no sense of the broader work you are doing.
 
-I wanted something that remembered. Not in a vague, approximate way, but in a way I could control, verify, and build on. That's what Ankoryn is.
+That friction compounded over time. I started keeping notes to paste in at the start of sessions. I tried various tools. Nothing felt right. So I built Ankoryn.
 
-**The core problem**
+**What I actually wanted**
 
-The frustration is specific. When I'm working on a project, I have a lot of context that's relevant to every AI interaction I have about it. The stack I'm using, decisions I've already made and why, constraints I'm working within, the shape of the problem. Re-establishing that context every time I open a new session is friction I shouldn't have to deal with.
+The core thing I wanted was simple to describe and hard to build. I wanted an AI workspace that remembered what I had told it, could summarise and compress older context so it did not eat the whole context window, and could route between different models depending on what I needed at any given moment.
 
-The workaround most people use is copying and pasting a context block at the start of each conversation. It works, sort of. It's also manual, easy to forget, and doesn't scale as your context grows. If your project context is five hundred words, you're pasting five hundred words every time. If it's two thousand words, you're not doing it at all.
+Not a chat interface with a nicer design. A genuine workspace layer that sat on top of the models and managed memory, context and routing in a structured way.
 
-I wanted the context to live somewhere persistent that I could build over time and have automatically available when I needed it.
+I also wanted it to feel like a place to work, not just a place to chat. There is a difference. Chat interfaces are disposable. A workspace has persistence, structure, and a sense that the work you do there accumulates into something.
 
-**What Ankoryn does**
+**The memory problem**
 
-Ankoryn is a persistent context and memory layer for AI sessions. You build up a library of context blocks, structured notes about projects, preferences, decisions, anything you want an AI to know, and Ankoryn surfaces the relevant ones when you start a session.
+The hardest part of building this was memory management. Language models have a finite context window. If you just keep appending conversation history, you hit the limit fast and older context gets dropped. So the question is how you compress and summarise what has come before without losing the things that actually matter.
 
-The key design decision was making the context explicit and editable. I didn't want a black box that was learning things about me without my knowledge. I wanted to be able to see exactly what context was being used, add to it deliberately, and remove things that were no longer relevant.
+I built a summarisation layer that periodically condenses older conversation segments into compressed summaries, storing them in IndexedDB via Dexie.js. When a new session starts, the relevant summaries are retrieved and injected back into the context alongside the recent conversation history. The model gets enough context to feel continuous without the full raw history eating the window.
 
-That transparency matters to me. If the AI is giving me a response that feels off, I want to be able to look at what context it was working with and understand why. Hidden memory is a debugging nightmare.
+Getting this right took longer than anything else in the project. The summarisation has to be aggressive enough to save space but careful enough not to throw away context that will matter later. I went through several iterations before it felt reliable.
 
-**The technical decisions**
+**Cross-model routing**
 
-The context retrieval problem is more interesting than it sounds. If you have fifty context blocks, you don't want all fifty of them prepended to every conversation. You want the relevant ones. That means some form of semantic matching between what you're asking about and what context blocks are likely to be useful.
+The other thing I wanted was the ability to use different models for different tasks without having to manage multiple interfaces. OpenAI for some things, Gemini for others. The routing layer in Ankoryn lets me switch between them inside the same workspace without losing the thread of what I am working on.
 
-I used embeddings for this. Each context block gets embedded when it's saved. When you start a session and provide an initial prompt, that prompt gets embedded too and the closest context blocks are retrieved and included. It's not perfect but it's significantly better than no retrieval at all.
+This sounds straightforward but there are edge cases everywhere. Different models handle context differently. Token limits vary. The way you structure a system prompt that works well in one model does not always translate directly to another. A lot of the work was making the routing feel seamless even when the underlying models behave differently.
 
-The other decision was around context block structure. Freeform text is flexible but hard to match reliably. I settled on a lightweight schema, a title, a category, and the content itself. The category layer gives you a crude but useful filter before you even get to semantic matching. If you're asking about a technical problem, context blocks in the technical category should score higher than ones about design preferences.
+**What I use it for now**
+
+Ankoryn is my primary AI interface for serious work. When I am working through a complex technical problem, writing something that needs multiple drafts, or planning a new project, I do it in Ankoryn because I know the context will be there when I come back to it.
+
+It is also where I test a lot of ideas before they become products. The workspace structure means I can keep separate threads for different projects without them bleeding into each other.
 
 **What building it taught me**
 
-Embeddings and vector search are genuinely underused by solo developers. The perception is that they're complicated and expensive. In practice, with the right tools, they're neither. The retrieval quality you get from even a basic embedding approach is dramatically better than keyword matching, and for a context problem like this it makes the whole thing feel much more intelligent than it actually is.
+The biggest lesson was about the gap between what AI demos show and what reliable AI-powered products actually need. A demo of persistent memory is easy. A system that manages memory correctly across hundreds of sessions, different models, varying context lengths and real user behaviour is a different problem entirely.
 
-The harder problem was the UX of building and maintaining context. Creating context blocks has to be low friction or people won't do it, including me. If adding a new piece of context requires more effort than just re-explaining it in the chat, you've lost. I spent more time on the input and management experience than on the retrieval side, which in hindsight was the right call.
+I also learned a lot about context engineering, which I think is going to become a recognised discipline in the same way prompt engineering has. How you structure the information you give a model, what you include, what you compress, what you leave out, has a massive impact on output quality. Building Ankoryn forced me to think about this at a level I had not before.
 
-**Where it is now**
-
-Ankoryn is live and I use it daily. The context library I've built up over the last few months is something I'd genuinely miss if it disappeared. That's the test I apply to all of these tools: would I notice if it was gone? For Ankoryn, yes. Immediately.
-
-The next direction is integration. Right now Ankoryn is a standalone tool. The longer term vision is that context should be available wherever you're using AI, not just in a dedicated app. That's a harder problem but it's the one that would make it genuinely indispensable.
+If you are building anything AI-powered and you are not thinking carefully about context management, that is probably where your quality problems are coming from.
     `.trim()
   },
+
 
   {
     slug: 'building-portix',
@@ -179,43 +180,46 @@ The next direction is integration. Right now Ankoryn is a standalone tool. The l
     excerpt:
       'I was sick of waiting for staging deployments just to test a new feature. Portix came from wanting developers to share their work directly with me, earlier, so I could give feedback while it still mattered.',
     content: `
-The feedback loop between development and QA is broken in most teams I've worked in. Not because people don't want it to work, but because the tooling creates friction at exactly the wrong point.
+The thing that broke me was the wait.
 
-Here's the pattern I kept seeing. A developer finishes a feature on their local machine. It works. They push it. It goes into a queue. It gets reviewed. It gets merged. It gets deployed to staging. Then QA looks at it. By that point, the developer has moved on to something else entirely. If there's a problem, the context switch cost is enormous.
+As a QA lead, a big part of my job is testing new features early and giving developers fast, useful feedback. But the workflow was slowing everything down. A developer would build something locally, I would not be able to see it until it was deployed to a staging environment, and by the time it got there it had usually gone through several more changes. The feedback loop was too long and too slow.
 
-I wanted to close that gap. Portix is how I did it.
+Staging deployments take time. They require the feature to be in a state someone is comfortable putting on a shared environment. That means by the time I am looking at something, it is already further along than it needed to be for me to give useful input. Catching a problem at that point costs more to fix than catching it when the work is fresh.
 
-**The actual problem**
+What I actually needed was a way for developers to share what they were building directly from their local machine, before it was ready for staging, so I could see it, test it, and give feedback immediately. Not a screen share. Not a description. The actual running thing, with a URL I could open and interact with properly.
 
-The specific friction point is the gap between a developer's local environment and the first time QA can see the work. In most workflows, that gap is measured in hours or days. A staging deployment pipeline is not a fast thing. Review queues are not a fast thing.
+I looked at what existed. Ngrok does the tunnelling but it is generic, has no context about what is being shared or why, and the free tier limits made it awkward for regular daily use. Nothing I found had a feedback layer built in, which meant any comments still had to go through Slack or Jira anyway.
 
-What I wanted was a way for a developer to share what they're looking at right now, directly, without any of that pipeline. If I could see the feature running on the developer's machine while they're still building it, I can give feedback while it's still cheap to act on. Before the PR is raised, before the review cycle, before the mental context is gone.
+So I built Portix.
 
-**What Portix does**
+**How it works**
 
-Portix creates a secure public tunnel to a local development server. The developer runs the CLI, gets a URL, shares it. I open the URL and I'm looking at exactly what they're looking at on their machine, in real time.
+Portix runs a lightweight tunnel from your local machine to a public URL hosted on an Oracle Cloud VM behind NGINX. When you start it, you get a URL you can share immediately. The tunnel stays open as long as you need it and closes cleanly when you are done.
 
-That's the core. No deployment. No staging environment. No waiting. The developer doesn't have to change their workflow, they just share a URL when they want feedback.
+The Git integration came from a practical problem. Developers are often working across multiple branches and when they share a link I need to know immediately what I am looking at. Is this the feature branch or main? Is this the fix or the original issue? Portix picks up the current branch name and labels the preview URL with it so when I open the link I can see exactly which branch I am testing. Small thing but it removes a whole category of confusion before the feedback even starts.
 
-The security side of this matters. Exposing a localhost server to the public internet is not something you do carelessly. Portix sessions are authenticated, time-limited by default, and can be password protected for sensitive work. The URL you get is not guessable and it expires when the session ends.
+The feedback overlay is a floating widget that appears on the shared page. Reviewers can pin comments to specific areas of the page without needing any account or setup. The comments come back to me in real time via WebSockets. No email thread, no separate feedback tool, no trying to decode written descriptions of visual problems.
 
-**Why I built it instead of using ngrok**
+**The infrastructure decisions**
 
-ngrok exists. I've used it. For casual use it's fine. The problems start when you want to use it seriously as part of a QA workflow.
+Running a tunnelling tool means I needed something persistent on the server side. I went with an Oracle Cloud VM because the free tier is genuinely usable, NGINX to handle the routing and SSL termination, PM2 to keep the Node process running reliably, and Cloudflare in front for DNS and additional protection.
 
-The free tier limitations are real. The random subdomain you get changes every time you start a new session, which means you can't give anyone a consistent URL to check back on. The dashboard is designed for developers, not for QA engineers trying to manage multiple active sessions across a team.
+The WebSocket layer for real time feedback was the trickiest part to get stable. Keeping connections alive reliably across different network conditions, handling reconnects gracefully, making sure feedback posted from a reviewer actually arrives even if there is a brief drop in connectivity, all of that needed more attention than I expected.
 
-What I wanted was something built specifically for this use case, with the right defaults and the right UX for both sides of the handoff. The developer side should be as simple as running one command. The reviewer side should just be a URL that works.
+**What it changed about the QA workflow**
 
-**What I learned building it**
+The feedback loop is genuinely faster now. Developers share a Portix link when something is ready for a first look, I open it, test it properly in the browser rather than watching someone scroll around on a call, pin my comments directly onto the relevant parts of the page, and they have actionable feedback within minutes.
 
-The tunnelling layer is the part that looks scary but isn't. Once you understand the mechanics of how a TCP tunnel works, the implementation is reasonably straightforward. The harder part was the session management and the authentication layer. Getting those right, reliably, across different network conditions, took more iteration than the core tunnelling code.
+The quality of the feedback has improved too. When I am actually interacting with a feature rather than watching a demo, I find things I would not have found otherwise. Real interactions, real edge cases, the kind of stuff that only surfaces when you are actually using the thing.
 
-The CLI UX also took longer than I expected. The command should be memorable and the output should be immediately clear. Port sharing tools have a reputation for being developer tools that only developers understand. I wanted Portix to be something a non-technical QA lead could install and use without a tutorial.
+The other shift is that developers share earlier now because the barrier is low. There is no deployment, no preparation, just a link. That means I am seeing features at a stage where changing direction is still cheap. That is exactly where QA input should be landing.
 
-Portix is live and available now. If your current process involves waiting for staging deployments to get feedback to developers, it's worth a look.
+Before Portix I was either waiting for staging or asking developers to walk me through things on a call. Both options were slower, more disruptive, and produced worse feedback. Removing that friction changed how the whole team works together.
+
+It is available at portix.ayteelabs.com if you want to try it.
     `.trim()
   },
+
 
   {
     slug: 'shipping-products-full-time-job',
@@ -226,49 +230,51 @@ Portix is live and available now. If your current process involves waiting for s
     excerpt:
       'I work full time as a Test Lead. I also build and maintain a portfolio of independent products. Here is how I actually make that work without burning out.',
     content: `
-I get asked about this fairly regularly, usually by people who are thinking about doing something similar and want to know if it's actually possible or if I'm just making it sound easier than it is.
+People ask me how I find the time. The honest answer is that I do not find it, I make deliberate choices about where my time goes and I have built habits that make building sustainable rather than exhausting.
 
-The honest answer is that it's possible, it's not always easy, and the way I make it work is probably not what most productivity advice would suggest.
+I am not going to pretend I have some perfect system. Some weeks I ship a lot. Some weeks the day job is intense and the side work barely moves. But over time, across a full year, the output has been real. Multiple live products, a growing portfolio, things I am genuinely proud of.
 
-**The actual constraints**
+Here is what actually works for me.
 
-I work full time as a Test Lead. That's not a light job. It involves real responsibilities, a team to support, and a workload that doesn't stay neatly within business hours. I also have a life outside both of those things. The idea that I have eight spare hours a day to build products is not accurate.
+**Scope is everything**
 
-What I actually have is evenings, some weekends, and the occasional focused stretch when things align. That's it. Everything I've shipped has been built in that time.
+The biggest mistake I see people make with side projects is building something too large to finish in the time they have. You start something ambitious, life gets in the way, the project stalls, and then the half-finished thing sits there making you feel bad every time you think about it.
 
-The constraint forces something useful though. When your building time is genuinely limited, you make different decisions. You scope more tightly. You cut more aggressively. You ship earlier because you can't afford to keep polishing indefinitely.
+I deliberately scope everything small. Not because I lack ambition, but because a finished small thing is worth more than an unfinished big thing in every possible way. It is in front of users. It is building evidence of what I can do. It is teaching me things.
 
-**How I choose what to build**
+BugReporter and SpecGhost were both built in a few evenings. Deliberately. I could have added ten more features to each of them before shipping. I chose not to. Get it out, see if it is useful, iterate from there.
 
-The filter I use is: does this solve a real problem I actually have? Not a hypothetical problem. Not a problem I've read about. A problem I personally run into and find frustrating enough that I'd use a tool to fix it.
+**Protect the hours that work for you**
 
-This sounds obvious but it rules out a lot of ideas that seem compelling until you ask the question honestly. Products built to scratch a real personal itch have a different quality to them than products built because the market opportunity looked interesting.
+I know when I do my best building work and I protect those hours. For me it is early morning before the day job starts and sometimes late evening after everything else is done. Not every day, but consistently enough to keep momentum.
 
-The other filter is: can I build a useful v1 in a reasonable amount of time with the skills I have right now? If the answer is no, I either break it into something smaller or I put it aside. I don't have the runway to spend six months on something before getting any signal on whether it's useful.
+The key thing is not trying to build in whatever time is left over. Leftover time is fragmented, low energy and easily stolen by other things. If building matters to you, you have to treat it like it matters and give it time that is actually yours.
 
-**The rhythm that actually works**
+**The day job makes me a better builder**
 
-I don't try to build every day. The advice to work on your projects for thirty minutes every morning sounds good and works terribly for me. Thirty minutes is enough time to get into something but not enough to make real progress. It mostly produces the frustration of starting without finishing.
+This is something I genuinely believe. Working as a Test Lead means I think about quality, reliability and user experience constantly. I think about what breaks, what confuses people, what makes software painful to use. That perspective feeds directly into the products I build.
 
-What works better is longer, less frequent sessions. An evening where I have two or three hours and a clear goal is worth more than five scattered thirty-minute sessions that don't connect to each other. I'd rather have two or three of those a week than try to maintain a daily streak.
+I also work in an AI-driven product environment, which means I am seeing how AI features behave in production, what the real failure modes are, what users actually struggle with. That informs how I build tools like Ankoryn and SpecGhost in ways that purely academic building would not.
 
-The other thing that helps is knowing exactly what I'm going to work on before I sit down. Context switching is expensive when your time is limited. If I have to spend twenty minutes remembering where I was and deciding what to do next, I've lost a significant chunk of a short session. I keep a running list of the next concrete thing to do on each project so I can sit down and start immediately.
+The two things are not in competition. They inform each other.
 
-**What I've had to give up**
+**Keep a short list**
 
-There's a version of this where you pretend it's all fine and nothing costs anything. That version isn't honest.
+I keep a list of things I want to build. Not a backlog with priorities and estimates, just a short list of ideas I am genuinely excited about. When I have time to start something new I look at the list and pick the thing I am most motivated by right now.
 
-Building products in evenings and weekends means less time for other things. Some weeks that's fine. Some weeks it's not. Learning to read which is which, and being willing to close the laptop and do something else when the balance is off, has been important.
+Motivation matters more than most productivity advice acknowledges. If I am building something I am genuinely interested in, I will find time for it. If I am building something that feels like obligation, it will stall.
 
-I've also had to accept that some projects move slowly. Kinka has been in development for a long time relative to how far along it is. That's because it's genuinely complex and the time I can give it is genuinely limited. That's okay. Not everything needs to move at the same pace.
+**Ship before it feels ready**
 
-**What makes it sustainable**
+This one took me a while to internalise. The version of the product in my head is always better than the version I can build in the time I have. If I wait until it matches the version in my head I will never ship it.
 
-The thing that keeps it going is that I find it interesting. Not every day, not every session, but overall. Building products is a different kind of thinking to my day job and I like having both. When one is frustrating, the other is usually not.
+Shipping something imperfect that works is more valuable than not shipping something perfect. The feedback you get from real users is worth more than any amount of internal iteration. And honestly, the things I thought were imperfect when I shipped them have almost never been the things users cared about.
 
-The portfolio aspect also helps. Having multiple projects means that if one is stuck or stale, I can shift attention to another one. I'm rarely in a position where everything is blocked at the same time. There's usually something I can make progress on.
+**The compound effect**
 
-If you're thinking about doing something similar, the honest version is: start with one thing, keep it small, and find out whether you actually enjoy the building part before you commit to making it a habit. Some people do, some people don't. Both are fine.
+The thing I would tell anyone who is thinking about starting is that the value compounds. The first project teaches you things. The second is faster because of the first. By the time you have several things live, you have a body of work that speaks for itself without you having to explain it.
+
+That is where I am trying to get to. Not a single impressive project but a consistent track record of building things, shipping them, and learning from them. Over time that becomes something that is hard to argue with.
     `.trim()
   },
 
@@ -281,33 +287,39 @@ If you're thinking about doing something similar, the honest version is: start w
     excerpt:
       'Volume 1 launched with three games and proved the concept. Now Volumes 2 and 3 are live, four more games are playable, and Volume 4 is already in the works.',
     content: `
-Arcade started as a simple idea. A collection of fast, minimal games built for short sessions. No accounts, no progression systems, no friction. Just open it and play.
+When I launched Arcade with Volume 1, the idea was simple. Three minimal browser games, no accounts, no installs, just open and play. Pulse, Sync and Fold. Each one testing something different: timing, pattern recognition, spatial reasoning. The response was good enough to keep going.
 
-Volume 1 proved that was the right call. Three games, clean design, straightforward. People used it. That was enough to keep going.
+So I kept going.
 
-**What's in Volumes 2 and 3**
+**Volume 2: New Challenges**
 
-Volume 2 added two games that pushed in a slightly different direction. Where Volume 1 was mostly reflex-based, Volume 2 introduced more pattern recognition and spatial thinking. The goal was to give the collection more variety without losing the fast, frictionless feel.
+Volume 2 adds three new games and pushes the difficulty in a different direction. Where Volume 1 was about rhythm and flow, Volume 2 is about pressure and memory.
 
-Volume 3 continued that. Two more games, both designed around the same constraint: the core loop should be understandable in under ten seconds. If someone has to read instructions before they can start, the game hasn't done its job.
+Pair puts a grid of shapes in front of you and asks you to find the only matching pair before time runs out. Every level has exactly one correct match hidden in plain sight. It sounds straightforward until the grid gets bigger and the shapes start looking very similar very quickly.
 
-That constraint shapes every design decision. Controls have to be obvious. The objective has to be visible. Feedback has to be immediate. When you're building for short attention spans and zero onboarding, there's no room for anything unclear.
+Recall is the most cognitively demanding game in the collection so far. You watch a sequence of shapes appear, then you have to recreate it from memory. Each round adds to the sequence. It is a direct test of visual working memory and it gets uncomfortable fast in the best possible way.
 
-**The design philosophy hasn't changed**
+Adapt is probably my favourite of the three. The rules change as you play. You might be told to tap circles, then the rule flips and you have to tap triangles, then it changes again. Staying sharp when the ground keeps shifting under you is a different kind of challenge to anything in Volume 1.
 
-The temptation with a growing collection is to add complexity. Leaderboards, achievements, unlockables. All of the things that game designers reach for to increase engagement.
+**Volume 3: In Motion**
 
-I've deliberately avoided all of it. Not because those things are bad in general, but because they change what Arcade is. Arcade is a place to play something for three minutes and then close the tab. The moment it asks you to sign in to save your score, it's a different product.
+Volume 3 is a single game and it earns that focus entirely.
 
-There's real value in tools and products that don't want anything from you. No sign up, no tracking, no dark patterns. Just the thing itself. Arcade is an exercise in that. Keeping it that way as the collection grows requires saying no to a lot of things that would technically make sense.
+Flow is a trail navigation game where you move through obstacles as your path grows behind you. The rule is simple: do not cross your own trail. The execution gets harder the longer you survive because every move you make narrows the space available for future moves. It has that quality where you understand immediately what you did wrong the moment it goes wrong, and you want to try again immediately.
 
-**Volume 4**
+It is the kind of game I could play for twenty minutes without noticing.
 
-Volume 4 is already in progress. Three games are in some stage of design or build. I'm not going to say which ones because the details tend to change significantly between concept and shipped, but the direction is toward games that are slightly more strategic without sacrificing the instant accessibility that makes the collection work.
+**Volume 4: Coming Soon**
 
-The target is to keep the volume cadence roughly monthly. Not because there's a deadline, but because the rhythm keeps me honest about scope. If I'm not ready to ship a volume in a month, I've probably let the scope creep beyond what Arcade is supposed to be.
+Volume 4 is in progress and the theme is Control Systems. Three games: Shift, Split and Stack. I am not revealing too much yet but the direction is about managing multiple moving parts at the same time rather than responding to a single challenge. It is going to be the most complex volume yet.
 
-Arcade is free, no sign up required, and available at arcade.ayteelabs.com. Volume 4 when it's ready.
+**Why I am building this in volumes**
+
+The volume structure was a deliberate choice. Launching everything at once would have meant either shipping fewer games or taking much longer to ship anything. Releasing in volumes means each release is a real event, each one adds to something that already exists, and the collection grows in a way that feels intentional rather than random.
+
+It also keeps me honest. Each volume has to have a coherent identity. Volume 1 is The Originals. Volume 2 is New Challenges. Volume 3 is In Motion. Volume 4 is Control Systems. That framing forces me to think about what each game is actually testing and whether it belongs in the set.
+
+Arcade is at arcade.ayteelabs.com. Everything is free, no account needed. Go play something.
     `.trim()
   },
 
@@ -320,35 +332,43 @@ Arcade is free, no sign up required, and available at arcade.ayteelabs.com. Volu
     excerpt:
       'I am still working on it. Google OAuth in a custom Chromium build is a different problem to Google OAuth in a web app and I want to be honest about why.',
     content: `
-Most OAuth implementations are straightforward. Register an application, get a client ID, redirect to Google, get a token back. An afternoon of work, maybe two.
+I want to write about something I have not solved yet. That feels important to say upfront. Most build notes are retrospectives. This one is not. This is an honest account of a problem I am still working through.
 
-Google OAuth in a custom Chromium fork is not that. I've been at this for a while and I want to write down what I've found because the information out there is scattered and a lot of it is out of date.
+Google authentication in Kinka is not working the way I want it to. And the reason is not simple.
 
-**Why it's different**
+**Why this is harder than it sounds**
 
-When you build a web app and implement OAuth, Google is issuing tokens to a web application it can identify by its registered origin. The flow is well-documented, the error messages are mostly useful, and the edge cases are well-trodden.
+If you have ever implemented Google OAuth in a web app or a standard Electron app, you might assume it is the same problem in a Chromium fork. It is not. Not even close.
 
-When you build a Chromium fork, you're not a web application. You're a browser. The identity that Google uses to determine whether to issue tokens is tied to Chromium's internal application identity system, which is not something you can just reconfigure by changing a client ID.
+Google's OAuth flow involves a redirect back to a registered URI after authentication. In a web app that URI is a domain you control. In a standard app it might be a localhost callback or a custom protocol handler. Both of those are well-documented, well-supported paths.
 
-Kinka inherits Chromium's application identity by default. That means it presents itself to Google as Chromium, which sounds fine until you realise that the specific token scopes and capabilities available to a browser application versus a third-party application are different, and the documentation for exactly what is available to whom is not clear.
+In a custom Chromium fork you are in different territory. The browser itself is the client. You are not just implementing OAuth inside a browser, you are implementing it as a browser. The way Chromium handles OAuth internally for Google services like Chrome Sync involves APIs and credential flows that are not part of the public Chromium source in a clean, drop-in way. They are tied to Google's internal infrastructure and the keys that ship with the official Chrome binary.
 
-**The specific problems I've hit**
+**The key problem**
 
-The first issue was with the OAuth redirect flow. Standard web OAuth uses redirect URIs. Browser OAuth uses a different mechanism involving native messaging and internal browser callbacks. Getting that plumbing right in a fork requires understanding how Chromium handles auth callbacks internally, which is not well documented outside of the Chromium source itself.
+When you build Chromium from source, you can apply for API keys from Google to enable certain services. The process is documented, but the approval and scope of what those keys give you access to is limited compared to what ships in the official Chrome build.
 
-The second issue is around application verification. For certain Google services, Google wants to verify that the application requesting access is what it claims to be. For web apps this is handled through the developer console. For browser forks it's significantly more complicated and involves a verification process that assumes you're shipping a browser at a scale that justifies Google's attention.
+For basic OAuth flows where a user is logging into a website through Kinka, this is not the issue. That works fine because the browser is just a container for a standard web OAuth flow. The problem is when I want Kinka itself to have a deeper integration, where the browser has its own authenticated identity, where features inside Kinka can interact with Google services on behalf of the user at a browser level rather than a page level.
 
-The third issue is the one I'm still working through, which is around the specific permission scopes available to browser applications for things like bookmark sync and account integration. There are capabilities that Chrome has access to that are not available to forks through the standard OAuth flow.
+That is the thing I am trying to build and that is where it gets complicated.
 
-**What I'm doing about it**
+**Where I am right now**
 
-The short-term solution is to scope down what Kinka uses Google auth for. The sync features that require deep browser-level OAuth are not essential for the core Kinka experience. The features that just need basic account identification, like knowing who's logged in for personalisation purposes, can work with a more standard OAuth flow that doesn't require browser-level identity.
+I have been working through a few different approaches. The first was trying to use the standard OAuth flow with a custom URI scheme registered for Kinka. That gets partway there but the callback handling inside a Chromium fork requires more plumbing than I initially expected, particularly around how the browser processes the redirect and surfaces the token to the right internal component.
 
-The longer-term answer probably involves either applying for the specific permissions Google makes available to browser vendors, which is a process I'm still investigating, or building the features that would have required deep Google integration in a way that doesn't depend on it.
+The second approach has been looking at how other Chromium-based browsers have handled this. Brave, Vivaldi, Arc. They have all had to solve versions of this problem. The solutions are not always documented publicly but reading through their open source repositories and issue trackers gives you a clearer picture of what is involved.
 
-This is one of the less glamorous parts of building a browser. The core browsing experience is surprisingly achievable. The integration layer with the broader internet ecosystem, especially Google's ecosystem, is where the real complexity lives.
+I am still in that phase. Reading, experimenting, hitting walls, trying something different.
 
-I'll write more on this when I have a resolution. For now it's ongoing.
+**Why I am writing about this now**
+
+Because I think there is value in being honest about the parts of building that are not going well yet. Everything I write here about Kinka could be polished into a neat narrative of progress and forward momentum. But that would not be fully accurate.
+
+Kinka is a real project with real technical challenges. Some of those challenges are taking longer than I would like. Google auth is one of them. I am not shelving it, I am not giving up on it, but I am also not pretending it is solved.
+
+When I do get it working I will write about that too. The full picture of what the problem actually was and what the solution turned out to be. That post will be more useful to anyone else building in this space than a vague success story would be.
+
+For now, it is still in progress. And that is fine.
     `.trim()
   },
 
@@ -361,41 +381,47 @@ I'll write more on this when I have a resolution. For now it's ongoing.
     excerpt:
       'There is a version of QA that stops at the ticket. Reproduce it, log it, move on. I have been doing something different lately and the difference in impact is hard to ignore.',
     content: `
-I have been in QA long enough to see both versions of the role. The version that stays in the test case and the version that gets into the code. The gap in impact between them is significant and I think it's worth being direct about why.
+There is a version of QA that stops at the ticket. You find a bug, you write it up clearly with steps to reproduce, you assign it to a developer, and you wait. That is the job done, technically. The defect is documented. The ball is in someone else's court.
 
-**What surface-level QA looks like**
+I have never been fully satisfied with that version of the job.
 
-The reproduce-and-report model of QA is not useless. Structured defect reports matter. Regression coverage matters. Consistent test execution matters. All of that is real work that catches real problems.
+The issues I have been working through recently made this clearer than ever. Three separate problems, all complex, all cross-platform, all the kind of thing that could sit in a backlog for weeks if the approach was purely to log and wait. In each case I went further than the ticket.
 
-But it has a ceiling. If your entire understanding of a defect is what you can observe through the UI, your ability to communicate that defect usefully to a developer is limited. You can describe what happened. You cannot say where it probably happened. You cannot identify the likely class of problem. You cannot suggest what related areas might be affected.
+**The certificate configuration failure**
 
-The developer has to do all of that work themselves. Which is fine, it's their job, but it means the QA engineer's contribution stops at the point where it could have continued.
+The first was a fatal error thrown by a configuration tool when processing custom CA certificates. The error message pointed to a missing executable in the system PATH. On the surface it looked like an environment issue. The kind of thing that gets closed as works on my machine and handed back to the customer.
 
-**What changes when you understand the code**
+I dug into it. The tool was running as its own process, which meant it did not inherit user-level PATH changes. The bundled Java runtime had the keytool executable right there in the installation directory but the system PATH did not include it. The fix was a single PowerShell command to add the correct path at the machine level rather than the user level.
 
-When I look at a defect now, I'm thinking about what in the codebase could produce the behaviour I'm seeing. Not because I'm going to fix it, but because that framing changes what I do next.
+I verified it worked, documented exactly why it had to be the system PATH specifically, and handed it to the team with a working solution rather than a problem.
 
-It changes where I look for related issues. If I understand roughly how a feature is implemented, I have a much better sense of what other areas are likely to be affected by the same underlying problem. Surface-level testing finds the defect that was reported. Code-informed testing finds the defects that weren't.
+**The missing directory on Windows**
 
-It changes how I write the report. Instead of logging observed behaviour and leaving the root cause as unknown, I can include a hypothesis. This is the right level of depth for a developer to engage with. It saves them a diagnostic step and it makes the QA engineer part of the problem-solving conversation rather than just the observation layer.
+The second issue was subtler. A folder that should have existed after installation was simply not there on Windows. The same process worked fine on Linux because the directory gets created as part of the Docker image build. On Windows, the installer was not explicitly told to create it.
 
-It changes how I talk to developers. The conversations I have with developers now are different to the ones I was having three years ago. They're faster, more specific, and more useful. Developers talk differently to testers who understand code. They share more context, they engage with the analysis rather than just the report, and the feedback loop tightens.
+I traced it to the installer configuration file. Inno Setup will not create an empty directory unless you tell it to in the dirs section explicitly. One line needed adding, matching the pattern already used for a similar directory in the same installer. I identified the fix, explained why it behaved differently across platforms, and it went straight into the next release.
 
-**How I got here**
+**The Linux upgrade script**
 
-I want to be honest that this didn't happen overnight. I've been building things in my own time for years, side projects, tools, experiments. That practice is what built the skill. Not formal training, not a certification, just the habit of building.
+The third had been broken since February. An upgrade script on Linux was failing silently and nobody had had a stable Linux environment to test on properly until I got access to one. I found the issue, identified a one line fix in the shell script, verified it worked, and got it into the April release.
 
-The things I've built for AyTee Labs have directly made me better at my day job. When I build a feature and then test it myself, I understand the testing problem differently to when I'm testing someone else's work blind. That understanding transfers.
+That last one is worth dwelling on. A broken upgrade path is a serious thing. Customers hitting it would have no clean way forward without support intervention. A one line fix, verified and documented, got it resolved before it became a wide-scale problem.
 
-I'm not saying every QA engineer needs to become a developer. I'm saying that the QA engineers who are curious about how the things they test are built, and who do something with that curiosity, end up being a different calibre of contributor.
+**What this has to do with understanding code**
 
-**What teams should be looking for**
+None of those investigations would have gone the way they did if I had treated them as black box defects. Understanding how system PATH resolution works, how installer tools handle directory creation, how shell scripts behave differently across environments. That knowledge is what turned three vague problems into three specific, actionable fixes.
 
-If you're hiring in QA and you're not asking about technical depth, you're probably optimising for the wrong thing. Not test case volume, not tool familiarity, but the ability to understand a system well enough to test it intelligently.
+QA is often described as finding problems. I think the more accurate and more valuable version is understanding problems. There is a meaningful difference. Finding tells you something is wrong. Understanding tells you why, where, and what it would take to fix it.
 
-The QA engineers who ask developers questions about architecture are more valuable than the ones who don't. The ones who can read a pull request and ask a useful question about it are more valuable than the ones who wait for the deployment. The ones who understand what they're testing, not just how to test it, are the ones worth building a team around.
+A QA engineer who can read code can look at a failing test and understand whether the test is wrong or the product is wrong. They can look at a stack trace and know which layer of the system to focus on. They can look at a configuration file and spot what is missing. These are not developer skills that QA engineers happen to have. They are QA skills that become significantly more powerful when paired with technical literacy.
 
-That version of QA is also more interesting to do. The ceiling on impact is much higher and the work is genuinely harder in the right ways.
+**The practical argument**
+
+The team I work with trusts me to go deep on problems rather than just surface them. That trust was built over time by consistently doing exactly that. When something breaks in an unusual way, the expectation is that I will come back with more than a reproduction case. I will come back with a theory, often a fix, and always a clearer picture of what actually happened.
+
+That changes how quickly things get resolved. It changes how the relationship between QA and development works. It changes what gets into releases and what gets deprioritised.
+
+If you are a QA engineer and you are not investing in your technical skills, I would genuinely encourage you to start. Not to become a developer. But because the problems you are paid to understand are almost always technical at their root, and understanding them properly makes everything you do more valuable.
     `.trim()
   },
 
@@ -408,317 +434,125 @@ That version of QA is also more interesting to do. The ceiling on impact is much
     excerpt:
       'Linkdrop is live. A full-stack link-in-bio platform with auth, analytics, themes, QR codes and an explore page — built in a single sprint. Here is the honest version of how that went.',
     content: `
-Link-in-bio tools are a solved problem. Linktree exists. Beacons exists. There are dozens of them. Building another one is the kind of decision that requires either a good reason or no self-awareness. I'll let you decide which applies here.
+Linkdrop is live at linkdrop.ayteelabs.com.
 
-The actual reason was technical. I wanted to build a full-stack product with auth, a user-facing dashboard, public profile pages, analytics, and a proper data layer, under time pressure, to see how fast I could ship something coherent. Linkdrop was the vehicle for that experiment.
+The pitch is simple. A link-in-bio tool that actually looks good, gives you real data, and does not charge you for features that should be free. Four layouts. Full theming. Click analytics. Profile views. Password-protected builder. An explore page where you can browse other profiles and copy themes. QR codes. All of it free.
 
-**What Linkdrop actually is**
+I want to write about how it was actually built, what was harder than expected, and why I made the decisions I did.
 
-Linkdrop lets you create a personalised link page with your links, your branding, and your theme. You get a public URL at linkdrop.ayteelabs.com/yourhandle that you can point people to. Standard stuff.
+**Why I built it**
 
-Where I spent more time than expected was on the features that make it feel like a real product rather than a demo. Theme customisation. QR code generation for your profile. An explore page that surfaces public profiles. Analytics showing you which links are getting clicked and by whom.
+I have used Linktree. Most people in the space have. It works, but it has always frustrated me. The free tier is aggressively limited. The paid features are things that should be table stakes. The design is generic. You can tell immediately when someone is using it because everything looks the same.
 
-None of those are technically difficult in isolation. Getting them all working together, with a proper auth layer, on a real database, with a UI that doesn't feel like a tutorial project, takes more time than a features list suggests.
+I wanted something with a distinct aesthetic. Something that felt like it belonged in the same visual world as Nothing's products, minimal, high contrast, intentional. And I wanted analytics without a paywall. Knowing which links people are actually clicking is not a premium insight. It is just useful information.
 
-**The auth decision**
+So I built it.
 
-I used NextAuth, now Auth.js, for authentication. Google and GitHub providers, magic link email fallback.
+**The stack**
 
-The decision I'd make differently is around session handling. I went with JWT sessions for simplicity and hit the predictable problem: when a user updates their profile, the session token doesn't automatically reflect those changes until it expires and is refreshed. For a profile-heavy product where the session data includes display information, this produces subtle inconsistencies that feel like bugs even when they aren't. Database sessions would have avoided this. I'll use them next time.
+Next.js App Router, Supabase for the database and auth, TypeScript throughout, deployed on Vercel. No UI library. Every component written from scratch with inline styles.
 
-**The analytics layer**
+The decision to avoid a UI library was deliberate. I wanted full control over the aesthetic. When you are building something with a specific visual identity, the compromises you make to fit a component library's opinions show up everywhere. Inline styles with a consistent set of colour variables gave me exactly what I wanted.
 
-I built a lightweight analytics system rather than dropping in a third-party tool. Each link click writes an event to the database with a timestamp and a hashed IP for rough geographic deduplication. The dashboard aggregates those events into a simple view.
+Supabase handled more than I initially expected it to. Database, auth, storage for profile photos and link images, row-level security policies, even the password reset flow via their built-in email provider. It is genuinely impressive how much you can build on top of it without reaching for additional services.
 
-The reason for building rather than buying was control. Third-party analytics tools introduce a script on every page load, terms of service you're agreeing to on behalf of your users, and a dependency you can't easily remove. For a product where trust is the thing you're selling, those feel like the wrong tradeoffs.
+**What went well**
 
-The downside is that it's simpler than something like Plausible or Fathom. It doesn't do geographic breakdown or referrer analysis. For v1 that's fine. Click counts and trends are the things users actually care about at this stage.
+The builder came together faster than I expected. The core loop of editing profile data and seeing it update in the preview in real time is satisfying to build. React's state model is well suited to that kind of immediate feedback, and keeping the profile object as a derived value from all the individual state slices meant the preview was always in sync without any extra work.
 
-**What broke on launch**
+The theme system was also straightforward once I committed to how it should work. Five presets, each with a background and accent colour pair, plus custom hex pickers that let you override both independently. The accent colour does a lot of work throughout the profile, text, borders, interactive states, so getting that right mattered. The contrast auto-detection that flips text dark or light based on the background luminance was a small detail that made a big difference to how profiles look across different themes.
 
-Two things broke that shouldn't have.
+The explore page ended up being one of the more interesting surfaces to design. The idea of showing real profile previews rather than static cards was the right call. You immediately understand what the product does just by looking at it.
 
-The image upload flow had a race condition. The upload completes and immediately triggers a profile refresh. If the refresh beats the propagation of the new image URL to the CDN edge, the profile loads with a broken image reference. The fix was adding a short delay before the refresh, which is the wrong kind of fix but works in practice.
+**What was harder than expected**
 
-The image crop modal introduced a build error on Vercel because react-easy-crop was not installed. It worked locally because I had it in my global node modules. Clean installs on Vercel do not have that luxury. A reminder that your local environment lying to you is a real and constant risk.
+Auth took longer than it should have. Not the implementation itself, Supabase's auth APIs are clean, but all the edge cases around it. Account lockout after failed attempts. Clearing that lockout after a password reset. Making sure the apply-theme feature required password verification so nobody could change your theme without permission. The forgot password flow that validates both handle and email before sending a reset link. Each of those individually is not complicated. The combination of them adds up.
 
-**What I'd do differently**
+The explore page card alignment was a rabbit hole. The core problem was that I was using CSS transform scale to shrink the profile previews down to card size. Transform scale shrinks the visual representation but the browser still reserves the original layout space, so the footer below each card floated in empty space. I went through several approaches before landing on CSS zoom, which unlike transform actually collapses the layout to match the visual size. Once I understood that distinction the fix was one line. Getting to that understanding took considerably longer.
 
-Database sessions over JWT. I've made the JWT tradeoff twice now and regretted it both times.
+Link click tracking introduced a subtle bug that took me a while to track down. The click handler was only wired up on one layout variant. Rows worked. Bubbles, grid and icons silently dropped the event. The fix was straightforward once I found it, but it is a good example of how easy it is to miss something when you are building quickly and not testing every variant systematically after every change.
 
-More conservative dependency management. The react-easy-crop incident was embarrassing and entirely preventable. I now run a clean install in a temp directory before any production deployment.
+The QR code was a nice problem to solve. I did not want to just call a third-party API and display the result. The branded version uses a canvas element where I draw the QR code, overlay the Linkdrop logo mark in the centre, add the LINKDROP header, the dot matrix, the handle and URL in the footer. The result looks like it belongs to the product rather than a generic QR generator.
 
-More time on the explore page. It's functional but the discoverability mechanism is basic. For a product where the network effect matters, the explore experience should be something people actually want to use rather than something that exists to say it exists.
+**The deploy pipeline**
 
-**What worked**
+Vercel connected to GitHub. Push to main, auto-deploy. Env vars set in the Vercel dashboard, never committed to the repo. Custom subdomain via a CNAME record pointing at Vercel's edge network. The whole process from first deployment to custom domain took about twenty minutes once the build errors were fixed.
 
-The theme system worked better than I expected. Letting users choose from a set of pre-designed themes rather than building a freeform customisation tool was the right call. Freeform customisation is a feature that sounds good and produces a lot of ugly profiles. Curated themes are easier to build and produce better results.
+There was one build error. A duplicate onClick attribute on an anchor element in the PublicProfile component. TypeScript catches that at build time but not in local dev, which is the kind of thing that only shows up when you run a proper production build. The lesson there is to run next build locally before pushing rather than treating Vercel as your build system.
 
-The QR code feature gets more use than I expected. People are using Linkdrop for physical contexts, event badges, business cards, printed materials. The QR code is the bridge between the physical and the digital and it costs almost nothing to implement.
+**What is next for it**
 
-Linkdrop is live at linkdrop.ayteelabs.com. Free to use, no credit card, your page is live in under two minutes.
+A few things I want to add. The main one is scheduled link expiry, the ability to set a date after which a link automatically deactivates. Useful for time-limited offers or events. Profile verification badges are another, something that differentiates claimed and verified accounts on the explore page.
+
+The analytics layer could go deeper too. Right now it tracks total profile views and per-link clicks. Time-series data, referrer information, geographic breakdown, those would all be genuinely useful. The data is already being collected, it is just a question of what surfaces to build on top of it.
+
+**The honest summary**
+
+Linkdrop took roughly three weeks of evenings and weekends to get from nothing to deployed. It is a complete product. Auth, analytics, theming, QR codes, explore, docs, a landing page. Not a prototype. Not an MVP with obvious gaps. A thing I would actually use and be comfortable pointing people at.
+
+The thing I find most interesting about building products like this is how much the difficulty is distributed differently to where you expect. The things that sound complicated, a full auth system, real-time preview, a QR code generator, end up being tractable with the right tools. The things that sound trivial, card alignment on an explore page, consistent click tracking across layout variants, end up consuming disproportionate amounts of time.
+
+If you want to try it, it is at linkdrop.ayteelabs.com. Free, no credit card, takes about a minute to set up.
     `.trim()
   },
 
   {
-    slug: 'building-burnbin',
-    title: 'BurnBin: Why I Built a Tool That Destroys Itself',
-    date: '19 April 2026',
+    slug: 'building-skopix',
+    title: 'My Team Was About to Pay for a Test Automation Tool. I Built One Instead.',
+    date: '26 May 2026',
     category: 'Build Notes',
-    readTime: '8 min read',
+    readTime: '7 min read',
     excerpt:
-      'Every time I shared a credential over Slack or email I knew it was sitting there forever. BurnBin is the tool I built to fix that — private, self-destructing snippet sharing with burn-after-read, expiry, and password protection.',
+      'When the conversation came up about investing in a commercial tool to bridge the gap between manual testing and automation, I quietly went away and built Skopix instead. Three weeks later it was live.',
     content: `
-Every developer has done it. You need to share a credential with a colleague. You drop it in Slack. You send it in an email. You paste it into a Jira comment. You know, as you're doing it, that this is not the right way to handle sensitive information. You do it anyway because there's no better option that's fast enough to actually use.
+A few months ago the conversation came up at work about a tool called Qure, a JetBrains product that turns manual web testing flows into automated tests. The idea behind it is solid. You record what you do in the browser and the tool handles the automation code. The pitch is that it lowers the barrier between manual testers and the automation pipeline.
 
-BurnBin is the better option.
+I understood the appeal immediately. The problem it is solving is one I live with every day.
 
-**The problem in detail**
+But I also thought: I could build this.
 
-The issue with sharing secrets through normal channels is permanence. Slack messages sit in your history indefinitely. Email threads get forwarded. Jira tickets get exported. A credential that was supposed to be temporary becomes permanently accessible to anyone who can read those channels, now or in the future.
+**The problem it solves**
 
-This is not a theoretical risk. Leaked credentials in internal communication tools are a real and common cause of security incidents. The friction of using a proper secrets management tool means people reach for whatever's convenient instead.
+The overhead of automation in most QA teams sits in a specific place. It is not that engineers do not know how to write Playwright or Selenium tests. It is that the gap between a manual tester identifying something worth automating and that thing actually becoming an automated test is too wide and too slow.
 
-The gap I was trying to close was between the secure option and the convenient option. BurnBin needed to be fast enough to actually use under pressure, or it would lose to Slack every time.
+A manual tester finds a flow that should be regression tested. They write it up. It goes into a backlog. The SDET picks it up when they have capacity. They figure out the selectors, write the test, get it reviewed, merge it. By the time that flow is actually in the suite, weeks have passed and the feature has moved on.
 
-**What BurnBin does**
+What I wanted was a way for non-technical testers to create something an SDET could actually use. Not just a description. A real artefact. A recorded flow with stable selectors and generated Playwright code that drops straight into the existing test setup with minimal rework.
 
-BurnBin lets you create an encrypted snippet with a self-destructing link. You paste your secret, set an expiry, optionally set a password, and you get a URL. Share the URL. When the recipient opens it, the content is shown once and then deleted. If someone else opens the same URL, it's gone.
+That is what Skopix does.
 
-The burn-after-read behaviour is the core thing. The link doesn't expire after a time period, it expires after a read. Which means the window of exposure is as short as possible. You share it, they read it, it's gone.
+**How it works**
 
-The encryption is client-side. The server never sees the plaintext content. What gets stored in the database is already encrypted, with the decryption key embedded in the URL fragment, which is never sent to the server in a standard HTTP request. Even if the database were compromised, the stored content is not useful without the corresponding URL.
+The tester opens Skopix, clicks record, and a real Chrome window opens. They use the app exactly as they normally would. Click, type, navigate, scroll. Every action is captured. They add assertions by clicking a button in a floating toolbar, picking an element, and choosing what to verify. No knowledge of selectors, no code, no configuration.
 
-**The technical decisions**
+When they stop recording, an LLM processes the raw steps. It rewrites fragile positional selectors into stable semantic equivalents, data-testid attributes, aria-labels, semantic HTML. It generates complete Playwright test code in both JavaScript and TypeScript. The tester ends up with a named test, a step-by-step description of what it does, and production-ready code.
 
-Client-side encryption with the key in the URL fragment is a pattern that tools like PrivateBin use. The fragment, the part of the URL after the hash, is not included in HTTP requests to the server. That means the server genuinely cannot see the content. It's not a policy claim, it's a technical constraint.
+The SDET gets that file, reviews it, drops it into the CI pipeline, done. The automation overhead shrinks dramatically because the first draft is already done and done properly.
 
-The encryption itself uses AES-GCM through the Web Crypto API. Browser-native, no dependencies, well-audited. The key is generated client-side at creation time, embedded in the fragment, and used client-side at read time for decryption.
+**Why I built it instead of buying**
 
-The expiry system has two layers. Time-based expiry runs as a scheduled cleanup job. Read-based expiry triggers immediately on the first successful decryption. A snippet that hasn't been read but has passed its expiry window gets cleaned up on the next run. A snippet that gets read is deleted immediately, regardless of its expiry time.
+Partly because I genuinely believed I could. Partly because building it would teach me things that buying it would not. And partly because a tool built specifically for how my team works will always fit better than a commercial product designed for everyone.
 
-Password protection adds an additional layer. The password is used to derive an additional encryption key that wraps the primary key. Knowing the URL alone is not enough to read the content if a password is set. This is useful for particularly sensitive content where you want to make sure the recipient is who you intended.
+Qure is a solid product. JetBrains build good software. But it is a desktop app with its own conventions and its own way of doing things. Skopix is self-hosted, runs as a local dashboard, works in solo mode for individuals and team mode for a shared QA setup, and integrates with Portix for remote sharing. It is built around how I actually work.
 
-**What I got wrong first**
+There is also something worth saying about the cost. A commercial tool at scale is not cheap. Skopix is free, open source, and runs entirely on your own machine. If you use Ollama for the AI processing, not a single byte of your test data leaves your network.
 
-The first version stored the encrypted content in memory between creation and the redirect. Under any load, this produced race conditions where a snippet that had just been created couldn't be found because the write hadn't completed before the redirect triggered the read. Moving to a write-then-confirm pattern with an explicit read-back before issuing the redirect fixed this.
+**Three weeks to build it**
 
-The burn logic also had a subtle bug where concurrent reads, two people opening the link at the same time, could both succeed before either triggered the delete. I fixed this with a database-level atomic update that sets a burned flag and returns whether the update was the first one. Only the first successful read shows the content. Subsequent reads see a burned message.
+The core recording and replay loop came together in the first week. Capturing browser actions via a Chrome extension, streaming them back to the dashboard, storing them as structured YAML, replaying them deterministically. That is the heart of the product and it works cleanly.
 
-**How it fits into a workflow**
+The second week was mostly the AI processing layer and the team mode infrastructure. Getting the LLM to consistently produce stable selectors and clean Playwright code required more prompt engineering than I expected. The model needs to understand the difference between a selector that will survive a UI change and one that will not. Getting that right reliably took iteration.
 
-BurnBin is fast enough to use without thinking about it. Create a snippet, share the URL, done. It takes about fifteen seconds. That's the threshold that determines whether people will actually change their behaviour. If it's slower than dropping something in Slack, people will keep dropping things in Slack.
+The third week was polish, edge cases, and the features that make it feel like a real product rather than a prototype. Debug recording, where you can set a breakpoint on any step and Skopix replays up to that point then hands control back to you. Setup flows, where you record your login once and every other test can reference it. Credential management so passwords are never stored in plain text in the test YAML. The HTML session reports with video and screenshots.
 
-The extension I'm thinking about is a CLI tool that pipes stdin directly to BurnBin and returns the URL. For developers working in the terminal, that would make it genuinely faster than any alternative.
+**What it means for the team**
 
-BurnBin is live at burnbin.ayteelabs.com. Free to use. Your secrets don't have to live forever.
-    `.trim()
-  },
+The goal was always to reduce the automation overhead without reducing the quality of what gets automated. A non-technical tester can now create something an SDET can genuinely use. The manual testing knowledge that existed in people's heads can be captured as a reusable artefact rather than evaporating at the end of a test session.
 
-  {
-    slug: 'building-layerbuzz',
-    title: 'Building LayerBuzz: A Marketplace for Digital Products With Stripe Connect and No Monthly Fee',
-    date: '22 April 2026',
-    category: 'Build Notes',
-    readTime: '9 min read',
-    excerpt:
-      'I wanted a marketplace I could use to sell my own products without paying a monthly platform fee. LayerBuzz is what I built — Stripe Connect, licence key generation, seller storefronts, and a three percent transaction fee.',
-    content: `
-The products I build at AyTee Labs needed somewhere to live commercially. I had Portix Pro, Ankoryn Pro, Clickument. Each was using its own payment system. Stripe here, a payment link there, a custom checkout elsewhere. It worked but it was fragmented and increasingly hard to maintain.
+That shift matters more than any individual feature in the tool. The bottleneck was always the translation step between knowing something should be automated and it actually being automated. Skopix removes most of that friction.
 
-I looked at the obvious options. Gumroad. Lemon Squeezy. Paddle. All of them have monthly fees or percentage cuts that compound as your volume grows. All of them are also someone else's platform, with someone else's design decisions about what your product page looks like and what data you can access.
-
-I decided to build my own.
-
-**What LayerBuzz is**
-
-LayerBuzz is a marketplace for digital products. Sellers create a storefront, list their products, set their prices. Buyers browse, purchase, receive licence keys or download links. LayerBuzz takes three percent per transaction. No monthly fee.
-
-The three percent is lower than every platform I looked at. Gumroad is ten percent. Lemon Squeezy starts at five. Paddle is higher. The trade-off I'm making is volume over margin. I'd rather have more sellers using the platform because the economics make sense than fewer sellers because the fee structure doesn't.
-
-**The Stripe Connect decision**
-
-Stripe Connect is the right architecture for a marketplace and also the most complex part of the build. Standard Stripe processes payments into your account and you pay sellers. Connect processes payments directly into seller accounts with a platform fee withheld. The money never touches LayerBuzz's bank account.
-
-That distinction matters for several reasons. It simplifies the accounting. It removes the liability of holding other people's money. It makes the tax reporting situation significantly cleaner. And it means sellers get paid immediately rather than waiting for a weekly or monthly payout cycle.
-
-The setup process for Connect is longer than standard Stripe. Sellers go through an onboarding flow that collects identity information and bank details. That flow is handled by Stripe, not by me, which means the compliance and regulatory burden sits with Stripe. That's the trade-off you're making when you use Connect rather than managing payouts manually.
-
-**Licence key generation**
-
-Most digital products sold on LayerBuzz include licence keys. The key generation system creates unique keys at purchase time, associates them with the buyer's email and the product, and provides a validation endpoint that products can call to verify a key is legitimate and active.
-
-The validation endpoint is what allows products to implement proper licence enforcement rather than just trusting that the buyer paid. Portix validates its licence against this endpoint every time it runs. If the key isn't valid, or has been revoked, or has exceeded its activation limit, the product can respond appropriately.
-
-The key format is designed to be human-readable enough to be entered manually if necessary while still being long enough to be practically unguessable. Four groups of six alphanumeric characters. Not cryptographically interesting but fit for purpose.
-
-**Seller storefronts**
-
-Every seller on LayerBuzz gets a public storefront at layerbuzz.ayteelabs.com/seller/username. This is the page you send people to if you want to browse everything a particular seller offers.
-
-The storefront design is intentionally minimal. Name, short bio, product grid. The focus is on the products, not on the storefront chrome. I looked at a lot of creator marketplace storefronts while building this and the ones that work best are the ones that get out of the way and let the products speak.
-
-Theme customisation is on the list for a future version. For v1 the priority was making the storefront fast, clean, and trustworthy rather than endlessly configurable.
-
-**What broke**
-
-Webhooks broke first. Stripe webhooks arrive asynchronously after the checkout session completes. In my first implementation, the success page read the order status from the database before the webhook had written it. This produced a gap where buyers saw a confirmation page but couldn't yet access their purchase.
-
-The fix was adding a polling mechanism on the success page that checks for the order up to ten times with a short delay between attempts. It's not elegant but it handles the race condition in practice. A better fix would be to make the checkout flow explicitly wait for order confirmation before redirecting, which is something I'll implement properly in the next version.
-
-The image crop modal introduced a build error on Vercel because react-easy-crop was not installed. It worked locally because I had it in my global node modules. Clean installs on Vercel do not have that luxury. A reminder that your local environment lying to you is a real and constant risk.
-
-**The architecture decisions I would make again**
-
-Stripe Connect over manual payouts was the right call. The alternative is collecting all payments centrally and paying sellers out manually, which is a compliance and accounting nightmare. Connect handles the money movement, the tax reporting, and the identity verification at the seller level. Worth the setup pain.
-
-Supabase for everything was the right call. Auth, database, storage, row level security, realtime if I need it later. One platform, one dashboard, no stitching together multiple services. The free tier is generous enough that LayerBuzz can grow significantly before I need to think about costs.
-
-Server-side theme application with an inline script was the right call. The alternative, applying the theme in a client component on mount, produces a visible flash every time the page loads. For a marketplace where storefronts are the product, that flash is unacceptable.
-
-Resend for transactional email was the right call. The API is clean, the logs are clear, the deliverability is solid, and the free tier covers a serious volume of emails for a product at this stage.
-
-**What is missing and what comes next**
-
-The things I shipped intentionally without are subscriptions, affiliate codes, bundle pricing, a public discovery feed, and custom domain support for seller storefronts. All of them are on the list. None of them were right for v1.
-
-The discovery feed is probably the most important. Right now LayerBuzz is a tool for sellers who bring their own audience. For it to become a marketplace in the true sense, buyers need to be able to find products they were not already looking for. That requires a different kind of product thinking and I want to get the seller experience right first.
-
-Custom domains are the other one I keep coming back to. If you are a creator with your own brand, pointing shop.yourname.com at your LayerBuzz storefront changes the trust dynamic entirely. It is a meaningful feature for serious sellers and not technically complicated to build.
-
-**What I learned**
-
-Webhooks need to be treated like a different programming model entirely. They are not synchronous. They do not throw errors in places you can catch them. They arrive out of order, retry on failure, and your only debugging tool is logs. Every webhook handler I write from now on will have explicit logging at every step.
-
-Environment variables are a class of bug you cannot afford to be casual about. The difference between localhost and a real URL cost me two hours on launch day. I now have a pre-deployment checklist that includes every environment variable the application needs to function and I verify it before every push to production.
-
-Building the commerce layer for your own products first is the right way to validate a marketplace. Portix Pro sells through LayerBuzz. I am the first seller. I have direct skin in the game. If the licence key delivery breaks, I know about it immediately. If the checkout flow is confusing, I feel it. Building your own product on your own platform is the fastest quality feedback loop there is.
-
-LayerBuzz is live at layerbuzz.ayteelabs.com. Three percent per sale. No monthly fee. Start selling free.
-    `.trim()
-  },
-
-  {
-    slug: 'one-commerce-layer-for-everything',
-    title: 'Why I Moved Every Product I Sell Onto LayerBuzz',
-    date: '25 April 2026',
-    category: 'Build Notes',
-    readTime: '5 min read',
-    excerpt:
-      'Portix was using Stripe directly. Ankoryn had its own checkout. Clickument pointed straight at a Stripe payment link. All three now sell through LayerBuzz. Here is why that was the right call.',
-    content: `
-When I shipped LayerBuzz I had three products already selling through different payment systems. Portix Pro had its own licence validation API and pointed buyers at a Stripe payment link. Ankoryn had a built-in checkout flow that called its own API routes to create Stripe sessions. Clickument had a hardcoded Stripe buy URL baked directly into the extension popup.
-
-All three worked. All three were also a maintenance problem waiting to happen.
-
-**The problem with three different commerce systems**
-
-Each product having its own payment system sounds fine until you think about what that actually means in practice.
-
-Portix had its own Stripe product, its own webhook, its own licence validation endpoint. When I needed to update how licence keys were issued, I had to touch Portix-specific code. When I wanted to see all my sales in one place, I could not. When I wanted to apply a discount code across my products, there was no concept of that.
-
-Ankoryn's checkout was the most elaborate. API routes for creating Stripe sessions, a webhook listener for purchase events, a separate licence verification flow. All of that living inside the Ankoryn codebase meant that any change to how I handled payments required touching the Ankoryn repository, running tests, deploying a new version. For a product that is otherwise stable, that is a lot of overhead for what should be a shared concern.
-
-Clickument was the simplest and also the most brittle. A hardcoded Stripe payment link in a Chrome extension means every time that link needs updating, a new extension version has to go through Chrome Web Store review. Which takes days.
-
-**The case for a single commerce layer**
-
-What I actually wanted was one place where all of my products live, one dashboard where I can see every order, one system for generating and validating licence keys, and one place to update pricing, apply discounts, or retire a product.
-
-That is exactly what LayerBuzz gives me now.
-
-Portix Pro is a product on LayerBuzz. The CLI validates licence keys against the LayerBuzz API. The purchase flow is the LayerBuzz checkout. If I want to offer a discount on Portix, I create a discount code in the LayerBuzz dashboard and it works immediately. No code changes, no deployment.
-
-Ankoryn Pro is the same. The upgrade button in the app now opens the LayerBuzz product page. The licence validation in the app calls the LayerBuzz validate endpoint. I removed an entire API directory from the Ankoryn codebase because LayerBuzz handles all of it.
-
-Clickument pointed directly at a Stripe payment link for years. Changing that required updating the extension and waiting for Chrome review. Now it points at the LayerBuzz product page. When I need to change the price, add a bundle, or run a promotion, I do it in the LayerBuzz dashboard and it is live immediately. The extension never needs to change unless the product itself changes.
-
-**The practical benefits**
-
-The most immediate one is visibility. Every sale across every product shows up in one orders table. I can see at a glance what is selling, when, and to whom. Before this, getting that picture required cross-referencing Stripe dashboards for three separate products.
-
-Licence key management is centralised. Every key that has ever been issued, for any product, lives in one database. If I need to revoke a key, update activation limits, or check whether a customer's key is valid, I have one place to look.
-
-Discount codes work across the catalogue. I can create a code that applies to a specific product or to everything. That flexibility did not exist when each product had its own system.
-
-The maintenance burden is dramatically lower. Portix, Ankoryn and Clickument do not need to care about payments anymore. They just need to know where to send someone who wants to buy, and where to validate a key. Both of those are now a single URL.
-
-**What this means for future products**
-
-Any product I build from here that needs a payment layer gets it from LayerBuzz. No Stripe integration to build, no webhook handler to write, no licence validation endpoint to maintain. Create a product in the dashboard, set the price, point the buy button at the product page. Done in ten minutes.
-
-That is the compound benefit of building the infrastructure once. The first product on LayerBuzz required months of work to get the commerce layer right. Every product after it gets that for free.
-
-If you are building multiple products and managing separate payment systems for each one, it is worth asking whether that complexity is actually buying you anything. In my case it was not. One commerce layer, properly built, is worth more than three separate ones held together with environment variables and crossed fingers.
-    `.trim()
-  },
-
-  {
-    slug: 'building-specforge',
-    title: 'SpecForge: I Got Tired of Writing Test Scenarios From Scratch So I Built Something That Does It',
-    date: '5 May 2026',
-    category: 'QA & AI',
-    readTime: '6 min read',
-    excerpt:
-      'SpecGhost generates specs. BugReporter generates reports. But neither one gave me the raw test scenario output in the exact format my team actually uses. SpecForge fills that gap — plain English in, Gherkin, Cypress, Playwright, Robot Framework and more out.',
-    content: `
-I have been building QA tooling for a while now. BugReporter handles defect reporting. SpecGhost handles test specification generation. Both have been useful and both have taught me something about where the real friction in QA workflows sits.
-
-The feedback I kept getting, and the gap I kept feeling myself, was about format. QA teams do not all work in the same way. Some write Gherkin. Some write Robot Framework test suites. Some write Cypress or Playwright tests directly. A tool that generates output in one format is useful to some teams and useless to others.
-
-SpecForge is the answer to that.
-
-**What it does**
-
-SpecForge takes a plain English description of a feature or behaviour and generates test scenarios in whichever formats you need. Gherkin, Robot Framework, Cypress, Playwright, JUnit, Jest. You select the formats before you generate and you get tabbed output for each one, ready to copy or export.
-
-The input is genuinely plain English. You do not need to know anything about the output format to use it. You describe what the feature does, what the edge cases are, what should and should not happen, and SpecForge handles the translation into structured test syntax.
-
-That translation step is where the value is. Writing Gherkin from scratch is not hard but it is slow. Getting the Given/When/Then structure right, covering the right scenarios, including the edge cases that matter, that work takes time. SpecForge does the first draft in seconds. A tester reviews it, adjusts it, and ends up with something usable in a fraction of the time.
-
-**Why multiple formats**
-
-The decision to support multiple formats from the start came from watching how different teams work.
-
-A team using Cucumber and Java writes Gherkin feature files. A team using Robot Framework writes .robot test suites. A team using Playwright writes TypeScript spec files. If your tool only speaks one of those languages, you are forcing teams to translate, which defeats a significant part of the point.
-
-SpecForge gives you the output in the format you actually use. No translation step. No reformatting. You generate, you review, you use it.
-
-The other reason is that test coverage often lives across multiple tools. You might write Gherkin for your acceptance tests and Cypress for your integration tests. Being able to generate both from the same description, in the same session, is useful in ways that a single-format tool is not.
-
-**The AI provider choice**
-
-One of the design decisions I felt strongly about was giving users control over the AI model running the generation. SpecForge works with Claude, OpenAI, and local models via Ollama or LM Studio.
-
-The local model support matters more than it might seem. A lot of teams working on enterprise software cannot send feature descriptions to an external API. The data governance considerations alone rule out cloud AI for a significant portion of the market. If your only option is a local model, SpecForge still works. You configure the endpoint, you pick your model, you generate.
-
-The quality difference between a large cloud model and a small local model is real, especially for structured output like Gherkin. Claude and GPT-4o produce cleaner, more consistent output than llama3.2 running locally. But llama3.1 or mistral-nemo on a decent machine produce results that are genuinely useful. The tool works across the range.
-
-**What the output actually looks like**
-
-The Gherkin output includes Feature declarations, Scenario and Scenario Outline blocks with appropriate Given/When/Then structure, tags for smoke and regression coverage, and Examples tables where parameterisation makes sense. It is not perfect on every input but it is a solid first draft that covers the main cases.
-
-The framework-specific outputs, Cypress, Playwright, JUnit, Jest, are structured correctly for each framework. Cypress output uses describe and it blocks with cy commands. Playwright output uses TypeScript with page locators and expect assertions. JUnit output uses JUnit 5 annotations and Assertions. Each format gets the idioms right for its ecosystem.
-
-**How it fits with BugReporter and SpecGhost**
-
-The three tools are complementary rather than competing.
-
-SpecGhost is for generating full test specifications from requirements. It produces structured test cases with preconditions, steps, and expected results. That output is what you'd put in a test management tool.
-
-SpecForge is for generating executable test scenarios in automation framework syntax. It produces the code or feature files you'd put directly in a test suite. The focus is on the format your automation tooling actually consumes.
-
-BugReporter is for when things go wrong. Structured defect reports that go into Jira or whatever tracker you use.
-
-Together they cover the main places where QA engineers spend time on structure rather than thinking. The thinking is still yours. The scaffolding is not.
-
-**What comes next**
-
-The obvious next step is letting you feed in an existing spec or user story directly and have SpecForge use that as the source rather than requiring you to rephrase it as plain English. That removes a translation step for teams that already have documentation.
-
-Custom templates are also on the list. If your team has a specific Gherkin style guide or a preferred way of structuring Playwright tests, you should be able to tell SpecForge about that and have the output conform to it.
-
-SpecForge is live at specforge.ayteelabs.com. Your API key never leaves your browser. Pick your formats, describe your feature, get your scenarios.
+It is live at skopix.ayteelabs.com and on GitHub. Free, self-hosted, one command to get started.
     `.trim()
   }
+
 ]

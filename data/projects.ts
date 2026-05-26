@@ -119,6 +119,40 @@ export const projects: Project[] = [
   },
 
   {
+    slug: 'skopix',
+    title: 'Skopix',
+    category: 'Product',
+    year: '2026',
+    status: 'Live',
+    href: 'https://skopix.ayteelabs.com',
+    highlight: 'Flagship',
+    blurb:
+      'A browser-based QA platform that records your test flows and replays them deterministically. AI stabilises selectors, generates Playwright code, and catches regressions before your users do.',
+    mission:
+      'To eliminate the gap between how QA engineers actually work and how test automation tools expect them to work, recording real interactions instead of writing scripts, and using AI to make those recordings stable and reusable.',
+    overview:
+      'Skopix lets you use your app normally while it records every action. After recording, an LLM stabilises fragile selectors into semantic equivalents and generates complete Playwright test code in JavaScript and TypeScript. Replay is fully deterministic with zero AI calls. The platform supports solo and team modes, setup and teardown flows, debug recording from any step, credential management, suite running, session history with video, and full HTML reports. Supports Gemini, OpenAI, and Ollama for local AI with no data leaving your machine.',
+    impact:
+      'Removes the need to write test scripts from scratch. A complete QA platform that takes teams from manual testing to repeatable automated regression coverage without the overhead of traditional automation engineering.',
+    tags: [
+      'Node.js',
+      'TypeScript',
+      'Playwright',
+      'AI',
+      'Gemini API',
+      'OpenAI API',
+      'Ollama',
+      'Chrome',
+      'npm',
+      'Self-hosted',
+      'Team Mode',
+      'CI/CD',
+      'WebSockets',
+      'GitHub'
+    ]
+  },
+
+  {
     slug: 'burnbin',
     title: 'BurnBin',
     category: 'Product',
