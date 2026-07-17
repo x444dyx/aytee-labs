@@ -119,6 +119,24 @@ export const projects: Project[] = [
   },
 
   {
+    slug: 'clarisk',
+    title: 'Clarisk',
+    category: 'Developer Tooling',
+    year: '2026',
+    status: 'Live',
+    href: 'https://clarisk.ayteelabs.com',
+    blurb:
+      'Drop in a ZAP HTML report and Clarisk turns it into a plain-English summary anyone can read — no scanner jargon, no wall of raw HTTP requests.',
+    mission:
+      'To make security scan output accessible to everyone on a team, not just the person who ran the scan. ZAP produces detailed, technical reports that are hard to act on without security knowledge. Clarisk removes that barrier.',
+    overview:
+      'Clarisk parses the HTML report that OWASP ZAP generates and produces a clean, readable summary of every finding. Vulnerabilities are explained in plain English with clear severity levels, what was found, why it matters, and what to do about it. No account needed, no data sent to a server — everything runs in the browser.',
+    impact:
+      'Makes security testing findings actionable for developers, product managers and stakeholders who would otherwise struggle to interpret raw scanner output — closing the gap between running a scan and understanding what it means.',
+    tags: ['HTML', 'JavaScript', 'ZAP', 'Security Testing', 'OWASP', 'Browser-based', 'Vercel']
+  },
+
+  {
     slug: 'skopix',
     title: 'Skopix',
     category: 'Product',
