@@ -119,6 +119,24 @@ export const projects: Project[] = [
   },
 
   {
+    slug: 'clarun',
+    title: 'Clarun',
+    category: 'Developer Tooling',
+    year: '2026',
+    status: 'Live',
+    href: 'https://clarun.ayteelabs.com',
+    blurb:
+      'Drop in a Locust HTML report and Clarun turns it into a plain-English summary — no percentiles, no jargon, just what happened and whether it is a problem.',
+    mission:
+      'To make load testing results readable for everyone on a team, not just the engineer who ran the test. Locust produces detailed statistical output that is hard to interpret without performance testing knowledge. Clarun removes that barrier.',
+    overview:
+      'Clarun parses the HTML report that Locust generates and produces a clean, readable summary of the performance test results. Response times, failure rates, throughput and bottlenecks are explained in plain English with clear verdicts on whether each metric is a concern. No account needed, no data sent to a server — everything runs in the browser.',
+    impact:
+      'Makes load testing results actionable for developers, product managers and stakeholders who would otherwise struggle to interpret raw Locust output — closing the gap between running a performance test and understanding what it means.',
+    tags: ['HTML', 'JavaScript', 'Locust', 'Performance Testing', 'Browser-based', 'Vercel']
+  },
+
+  {
     slug: 'clarisk',
     title: 'Clarisk',
     category: 'Developer Tooling',
